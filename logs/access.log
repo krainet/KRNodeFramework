@@ -1,0 +1,13 @@
+[0mGET /users [36m304 [0m141.493 ms - -[0m
+[0mGET /users [33m403 [0m120.575 ms - 48[0m
+[0mGET /users [33m403 [0m115.358 ms - 48[0m
+[0mGET /users [33m403 [0m1.221 ms - 48[0m
+[0mGET /users [33m403 [0m131.752 ms - 48[0m
+[0mGET /users?token=234234 [31m500 [0m7.909 ms - 1117[0m
+[0mGET /users?token=234234 [32m200 [0m126.198 ms - 59[0m
+[0mGET /messages [31m500 [0m98.253 ms - 2313[0m
+[0mGET /favicon.ico [31m500 [0m4.750 ms - 2313[0m
+[0mGET /messages [31m500 [0m110.162 ms - 2263[0m
+[0mGET /favicon.ico [31m500 [0m12.497 ms - 2263[0m
+[0mGET /messages [33m404 [0m121.768 ms - 21[0m
+[0mGET /favicon.ico [33m404 [0m0.440 ms - 24[0m

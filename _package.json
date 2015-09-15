@@ -1,0 +1,24 @@
+{
+  "name": "MQ1PushApi",
+  "description": "API for push notifications",
+  "version": "0.1.0",
+  "repository": "http://github.com/krainet/pushnotifications.git",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "colors": "^0.6.2",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.0.5",
+    "lodash": "2.3.0",
+    "method-override": "^2.3.5",
+    "moment": "2.4.0",
+    "morgan": "^1.6.1",
+    "mysql": "^2.9.0",
+    "nodemon": "0.7.10",
+    "orm": "^2.1.27",
+    "pg": "2.6.2"
+  },
+  "scripts": {
+    "start": "script/start",
+    "reset": "script/reset"
+  }
+}
