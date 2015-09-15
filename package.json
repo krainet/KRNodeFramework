@@ -15,7 +15,8 @@
     "mysql": "^2.9.0",
     "nodemon": "^0.7.10",
     "orm": "^2.1.27",
-    "pg": "^2.6.2"
+    "pg": "^2.6.2",
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^0.7.10"

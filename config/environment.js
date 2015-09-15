@@ -7,20 +7,22 @@ var logger          = require('morgan');
 var methodOverride  = require('method-override');
 var apiRouter       = require('../app/routes');
 var fs              = require('fs');
+var favicon         = require('serve-favicon');
 
 module.exports = function (app) {
 
     app.use(express.static(path.join(settings.path, 'public')));
 
-
-    var accessLogStream = fs.createWriteStream(settings.logsdir, {flags: 'a'})
+    var accessLogStream = fs.createWriteStream(settings.logsdir, {flags: 'a'});
     app.use(logger('dev', {stream: accessLogStream}));
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
 
+    app.use(favicon(__dirname + '/../public/favicon.ico'));
 
     app.use(methodOverride());
+
     app.use(function (req, res, next) {
         models(function (err, db) {
             if (err) return next(err);
@@ -30,7 +32,7 @@ module.exports = function (app) {
 
             return next();
         });
-    })
+    });
 
     //Set routing system
     apiRouter(app);

@@ -16,6 +16,9 @@ var settings = {
         }
     },
     logsdir     : __dirname + '/../logs/access.log',
-    secret_jwt  : "crypt_key123"
+    secret_jwt  : "crypt_key123",
+    protected   : {
+        "users" : ["get","put","delete"] //Protected , auth methods
+    }
 };
 module.exports = settings;

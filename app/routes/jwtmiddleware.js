@@ -3,8 +3,13 @@
  */
 var jwt                 = require('jsonwebtoken');
 var settings            = require('../../config/settings');
+var _                   = require('lodash');
 
 module.exports = function (router,req,res,next) {
+
+    //TODO: Handle only protected routes:
+
+
     // route middleware to verify a token
     router.use(function(req, res, next) {
         // check header or url parameters or post parameters for token

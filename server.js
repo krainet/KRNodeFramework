@@ -10,7 +10,7 @@ module.exports.start = function (done) {
   environment(app);
 
   app.listen(settings.port, function () {
-    console.log( ("Listening  on port " + settings.port).yellow );
+    console.log( ("KRNodeFramework listening on port " + settings.port).yellow );
 
     if (done) {
 
