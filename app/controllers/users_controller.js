@@ -3,7 +3,6 @@ var helpers = require('./_helpers');
 
 module.exports = {
     list: function (req, res, next) {
-        console.log(req.baseUrl);
         req.models.user.find().order('-id').all(function (err, users) {
             if (err) return next(err);
 

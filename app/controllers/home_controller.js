@@ -1,5 +1,30 @@
 var settings = require('../../config/settings');
 
-module.exports = function (req, res, next) {
-  res.sendfile(settings.path + '/public/index.html');
+var _       = require('lodash');
+var helpers = require('./_helpers');
+
+module.exports = {
+  list: function (req, res, next) {
+    req.models.user.find().order('-id').all(function (err, users) {
+      if (err) return next(err);
+
+      var items = users.map(function (m) {
+        return m.serialize();
+      });
+
+      res.send({ items: items });
+    });
+  },
+  get: function (req, res, next) {
+    req.models.user.get(req.params.id,function (err, user) {
+      if (err) {
+        res.json({success:false,errors:err});
+        return next(err);
+      }
+      var items = user.serialize();
+      res.json({success:true,data:items});
+    });
+
+  }
 };
+

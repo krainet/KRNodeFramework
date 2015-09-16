@@ -22,6 +22,7 @@ var settings = {
             disallow : ["get","put","delete"], //Only allow this methods to auth-users
             allow    : ["post"] //Not auth user can make post
         }
-    }
+    },
+    api_prefix  : '/api'
 };
 module.exports = settings;

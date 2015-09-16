@@ -17,7 +17,7 @@ module.exports = function (app) {
     app.use(logger('dev', {stream: accessLogStream}));
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(favicon(__dirname + '/../public/favicon.ico'));
 

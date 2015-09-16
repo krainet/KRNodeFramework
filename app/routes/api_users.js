@@ -3,8 +3,8 @@ var router              = express.Router();
 var users_controller    = require('../controllers/users_controller');
 var jwtmiddleware       = require('./jwtmiddleware');
 
-jwtmiddleware(router);
 
+jwtmiddleware(router);
 
 /* GET users listing. */
 router.get('/',users_controller.list);

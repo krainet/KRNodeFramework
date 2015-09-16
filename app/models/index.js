@@ -4,8 +4,6 @@ var settings = require('../../config/settings');
 var connection = null;
 
 function setup(db, cb) {
-  require('./message')(orm, db);
-  require('./comment')(orm, db);
   require('./user')(orm, db);
   require('./customer')(orm, db);
   require('./devicetoken')(orm, db);
