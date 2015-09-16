@@ -33,3 +33,5 @@
 [0mGET /customers/10 [36m304 [0m114.886 ms - -[0m
 [0mGET /customers/10 [32m200 [0m113.007 ms - 104[0m
 [0mGET /customers/10 [36m304 [0m119.844 ms - -[0m
+[0mGET /messages [33m404 [0m112.557 ms - 21[0m
+[0mGET /users?token=234234 [36m304 [0m2.647 ms - -[0m
