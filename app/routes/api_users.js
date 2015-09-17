@@ -4,6 +4,7 @@ var users_controller    = require('../controllers/users_controller');
 var jwtmiddleware       = require('./jwtmiddleware');
 
 
+
 jwtmiddleware(router);
 
 /* GET users listing. */

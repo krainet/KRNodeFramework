@@ -28,6 +28,7 @@ module.exports = {
         });
     },
     get: function (req, res, next) {
+
         req.models.user.get(req.params.id,function (err, user) {
             if (err) {
                 res.json({success:false,errors:err});

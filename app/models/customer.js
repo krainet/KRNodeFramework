@@ -29,6 +29,7 @@ module.exports = function (orm, db) {
                         id_customer           : this.id_customer,
                         device_token_count    : this.device_token_count,
                         deleted               : this.deleted,
+                        devicetokens          : this.devicetokens,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()
                     };

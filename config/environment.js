@@ -25,7 +25,10 @@ module.exports = function (app) {
 
     app.use(function (req, res, next) {
         models(function (err, db) {
-            if (err) return next(err);
+            if (err) {
+                res.status(500).json({success:false,message:'Unable to connect to DB'});
+                return next(err);
+            }
 
             req.models = db.models;
             req.db     = db;

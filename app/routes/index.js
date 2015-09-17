@@ -21,5 +21,5 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/customers',customer_routes);
 
     //Web routes
-    app.use(settings.api_prefix+'/',home_routes);
+    app.use('/',home_routes);
 }

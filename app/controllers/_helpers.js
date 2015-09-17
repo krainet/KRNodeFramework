@@ -1,6 +1,9 @@
 
 module.exports = {
     formatErrors: function(errorsIn) {
+        var response = {};
+        response.success = false;
+
         var errors = {};
         var a, e;
 
@@ -10,7 +13,8 @@ module.exports = {
             errors[e.property] = errors[e.property] || [];
             errors[e.property].push(e.msg);
         }
-        return errors;
+        response.errors=errors;
+        return response;
     },
     returnError: function(err,res,next) {
         var response = {

@@ -4,6 +4,7 @@
   "description": "Basic api node with orm kickstarter",
   "main": "server.js",
   "dependencies": {
+    "async": "^1.4.2",
     "body-parser": "^1.13.3",
     "colors": "^0.6.2",
     "express": "^4.13.3",

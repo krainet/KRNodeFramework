@@ -10,16 +10,16 @@ module.exports = function (router,req,res,next) {
     // route middleware to verify a token
     router.use(function(req, res, next) {
 
-        //Handle only protected routes for API:
-        var controller = req.baseUrl.substr(1);
-        controller=controller.replace(settings.api_prefix.substr(1),'').substr(1)
+        //console.log(req.baseUrl);
+        var controller = req.baseUrl.replace(settings.api_prefix,'').substr(1);
+        //console.log(controller);
+        var method = req.method.toLowerCase();
+        //console.log(method);
+        var allowed_methods = settings.auth_perms[controller]?settings.auth_perms[controller].allow:[];
+        //console.log(allowed_methods);
 
-        var method = req.method.toLocaleLowerCase();
-        var allowed_methods = settings.auth_perms[controller].allow;
 
-
-
-        if(_.contains(allowed_methods,method)){
+        if(allowed_methods.length>0 && _.contains(allowed_methods,method)){
             //If method is allowed in settings don't use JWT
             next();
         } else {

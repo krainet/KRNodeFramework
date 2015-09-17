@@ -5,8 +5,8 @@ module.exports = function (orm, db) {
             token               : { type: 'text', size:254 },
             push_count          : {type: 'number', defaultValue:0},
             deleted             : {type: 'boolean', defaultValue:false},
-            date_add            : { type: 'date', required: true, time: false },
-            date_upd            : { type: 'date', required: true, time: true }
+            date_add            : { type: 'date', required: false, time: false },
+            date_upd            : { type: 'date', required: false, time: true }
         },
         {
             hooks: {
@@ -31,5 +31,5 @@ module.exports = function (orm, db) {
                 }
             }
         });
-    Devicetoken.hasOne('owner', db.models.customer, { required: true, reverse: 'customer', autoFetch: true });
+    Devicetoken.hasOne('owner', db.models.customer, { required: true, reverse: 'devicetokens', autoFetch: true });
 };
