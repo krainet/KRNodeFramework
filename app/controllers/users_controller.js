@@ -1,5 +1,7 @@
-var _       = require('lodash');
-var helpers = require('./_helpers');
+var _               = require('lodash');
+var helpers         = require('./_helpers');
+
+var controller_name = 'users';
 
 module.exports = {
     list: function (req, res, next) {
@@ -10,7 +12,7 @@ module.exports = {
                 return m.serialize();
             });
 
-            res.send({ items: items });
+            res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
         });
     },
     create: function (req, res, next) {
@@ -18,24 +20,24 @@ module.exports = {
         req.models.user.create(params, function (err, users) {
             if(err) {
                 if(Array.isArray(err)) {
-                    return res.send(200, { errors: helpers.formatErrors(err) });
+                    res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 } else {
                     return next(err);
                 }
             }
 
-            return res.send(200, users.serialize());
+            res.status(200).json(helpers.formatResponse(controller_name,req.method,users.serialize()));
         });
     },
     get: function (req, res, next) {
 
         req.models.user.get(req.params.id,function (err, user) {
             if (err) {
-                res.json({success:false,errors:err});
+                res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 return next(err);
             }
             var items = user.serialize();
-            res.json({success:true,data:items});
+            res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
         });
 
     },
@@ -43,7 +45,7 @@ module.exports = {
         var params = _.pick(req.body, 'username', 'email','password');
         req.models.user.get(req.params.id,function (err, user) {
             if(err){
-                res.json({success:false,errors:err});
+                res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 return next(err);
             }
             user.save(params);
@@ -53,8 +55,9 @@ module.exports = {
         req.models.user.get(req.params.id,function (err, user) {
             user.remove(function(err){
                 if(err){
-                    console.log(err);
+                    res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 }
+                res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'item deleted'));
             })
         });
     }

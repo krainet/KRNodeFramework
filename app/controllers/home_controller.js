@@ -22,7 +22,7 @@ module.exports = {
         return next(err);
       }
       var items = user.serialize();
-      res.json({success:true,data:items});
+      res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
     });
 
   }
