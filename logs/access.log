@@ -61,3 +61,12 @@
 [0mPOST /api/customers [32m200 [0m116.476 ms - 240[0m
 [0mPUT /api/customers/1 [32m200 [0m122.118 ms - 59[0m
 [0mGET /api/customers [32m200 [0m134.482 ms - 398[0m
+[0mPUT /api/customers/1 [32m200 [0m111.455 ms - 403[0m
+[0mGET /api/devicetokens [33m404 [0m127.638 ms - 29[0m
+[0mGET /api/devicetokens [32m200 [0m136.456 ms - 194[0m
+[0mGET /api/devicetokens [32m200 [0m110.519 ms - 391[0m
+[0mGET /api/devicetokens [32m200 [0m96.323 ms - 194[0m
+[0mGET /api/devicetokens [32m200 [0m148.956 ms - 391[0m
+[0mPOST /api/devicetokens/ [32m200 [0m103.623 ms - 107[0m
+[0mPOST /api/devicetokens/ [32m200 [0m69.901 ms - 202[0m
+[0mPUT /api/devicetokens/ [33m404 [0m127.699 ms - 30[0m

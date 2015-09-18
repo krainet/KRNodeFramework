@@ -66,16 +66,21 @@ module.exports = {
     },
     put: function(req,res,next) {
         var params = _.pick(req.body, 'username', 'email','password','id_customer','token');
-        req.models.customer.get(req.params.id,function (err, user) {
+        req.models.customer.get(req.params.id,function (err, customer) {
             if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            user.save(params);
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,user.seri));
+            customer.save(params);
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
         });
     },
     delete: function(req,res,next) {
         req.models.customer.get(req.params.id,function (err, user) {
             user.remove(function(err){
-                if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                if(err) {
+                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                }else{
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Customer deleted'));
+                }
+
             })
         });
     }

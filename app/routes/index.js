@@ -4,8 +4,9 @@
 var settings = require('../../config/settings');
 
 //API ROUTES
-var user_routes = require('./api_users');
-var customer_routes = require('./api_customers');
+var user_routes         = require('./api_users');
+var customer_routes     = require('./api_customers');
+var devicetoken_routes  = require('./api_devicetokens');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
@@ -19,6 +20,7 @@ module.exports = function (app) {
 
     app.use(settings.api_prefix+'/users',user_routes);
     app.use(settings.api_prefix+'/customers',customer_routes);
+    app.use(settings.api_prefix+'/devicetokens',devicetoken_routes);
 
     //Web routes
     app.use('/',home_routes);
