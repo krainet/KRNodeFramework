@@ -5,7 +5,8 @@ var jwt                 = require('jsonwebtoken');
 var settings            = require('../../config/settings');
 var _                   = require('lodash');
 
-module.exports = function (router,req,res,next) {
+
+module.exports = function (router) {
 
     // route middleware to verify a token
     router.use(function(req, res, next) {
@@ -52,20 +53,17 @@ module.exports = function (router,req,res,next) {
             }
         }
     });
-}
+};
 
 
 
 /*
 
- // if user is found and password is right
- // create a token
- var token = jwt.sign(user, app.get('superSecret'), {
- expiresInMinutes: 1440 // expires in 24 hours
- });
-
-
-
+// if user is found and password is right
+// create a token
+var token = jwt.sign(user, app.get('superSecret'), {
+expiresInMinutes: 1440 // expires in 24 hours
+});
 
  */
 

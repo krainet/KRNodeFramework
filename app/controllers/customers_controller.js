@@ -13,12 +13,12 @@ module.exports = {
     list: function (req, res, next) {
 
         req.models.customer.find().order('-id').all(function (err, customers) {
-            if (err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+            if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
             var items = customers.map(function (m) {
                 return m.serialize();
             });
 
-            res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
         });
     },
     create: function (req, res, next) {
@@ -30,10 +30,10 @@ module.exports = {
             function(next){
                 req.models.devicetoken.count({token:tokenparams.token},function(err,devicetoken_count){
                     if(err){
-                        res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                        return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                     }else{
                         if(devicetoken_count>0){
-                            res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Duplicated deviceToken'));
+                            return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Duplicated deviceToken'));
                         }else{
                             next();
                         }
@@ -43,39 +43,38 @@ module.exports = {
             //If not registered - register user & token
             function(next){
                 req.models.customer.create(params, function(err,customer){
-                    if (err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                    if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
 
                     tokenparams.owner_id = customer.id;
                     req.models.devicetoken.create(tokenparams, function (err, devicetoken) {
-                        if(err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                        if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
                     });
-                    res.status(200).json();
-                    res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
                 });
             }
         ],function(err,result){
-            if(err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
         });
     },
     get: function (req, res, next) {
         req.models.customer.get(req.params.id,function (err, customer) {
-            if(err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
             var items = customer.serialize();
-            res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
         });
 
     },
     put: function(req,res,next) {
         var params = _.pick(req.body, 'username', 'email','password');
         req.models.customer.get(req.params.id,function (err, user) {
-            if(err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
             user.save(params);
         });
     },
     delete: function(req,res,next) {
         req.models.customer.get(req.params.id,function (err, user) {
             user.remove(function(err){
-                if(err) res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
             })
         });
     }
