@@ -1,27 +1,27 @@
-var path            = require('path');
-var express         = require('express');
-var settings        = require('./settings');
-var models          = require('../app/models/');
-var bodyParser      = require('body-parser');
-var logger          = require('morgan');
-var methodOverride  = require('method-override');
-var apiRouter       = require('../app/routes/router_api');
-var webRouter       = require('../app/routes/router_web');
-var fs              = require('fs');
-var favicon         = require('serve-favicon');
+var path              = require('path');
+var express           = require('express');
+var settings          = require('./settings');
+var models            = require('../app/models/');
+var bodyParser        = require('body-parser');
+var logger            = require('morgan');
+var methodOverride    = require('method-override');
+var applicationRouter = require('../app/routes/');
+var fs                = require('fs');
+var favicon           = require('serve-favicon');
 
 module.exports = function (app,config) {
 
-
-    app.use(express.static(path.join(settings.path, 'public')));
-
     var accessLogStream = fs.createWriteStream(settings.logsdir, {flags: 'a'});
     app.use(logger('dev', {stream: accessLogStream}));
+    app.use(express.static(path.join(settings.path, 'public')));
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(favicon(__dirname + '/../public/favicon.ico'));
+
+    app.set('views', path.join(__dirname, '../app/views'));
+    app.set('view engine', 'jade');
 
     app.use(methodOverride());
 
@@ -39,15 +39,7 @@ module.exports = function (app,config) {
         });
     });
 
-
-    //Diferent routing system for diferent APPS (Express)
-    if(config && config==='WEB'){
-        webRouter(app);
-    }else if(config && config==='API'){
-        apiRouter(app);
-    }else{
-        apiRouter(app);
-    }
+    applicationRouter(app);
 
 
 };

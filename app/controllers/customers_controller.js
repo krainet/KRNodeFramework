@@ -38,7 +38,6 @@ module.exports = {
                             next();
                         }
                     }
-                    next();
                 });
             },
             //If not registered - register user & token
@@ -66,10 +65,11 @@ module.exports = {
 
     },
     put: function(req,res,next) {
-        var params = _.pick(req.body, 'username', 'email','password');
+        var params = _.pick(req.body, 'username', 'email','password','id_customer','token');
         req.models.customer.get(req.params.id,function (err, user) {
             if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
             user.save(params);
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,user.seri));
         });
     },
     delete: function(req,res,next) {

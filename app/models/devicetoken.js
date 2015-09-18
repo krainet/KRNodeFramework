@@ -31,5 +31,5 @@ module.exports = function (orm, db) {
                 }
             }
         });
-    Devicetoken.hasOne('owner', db.models.customer, { required: true, reverse: 'devicetokens', autoFetch: true });
+    Devicetoken.hasOne('owner', db.models.customer, { required: false, reverse: 'devicetokens', autoFetch: true });
 };
