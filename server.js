@@ -5,11 +5,12 @@ var environment = require('./config/environment');
 var colors      = require('colors');
 
 module.exports.start = function (done) {
-  var app = express();
+  var app_api = express();
+  var app_web = express();
 
-  environment(app);
+  environment(app_api);
 
-  app.listen(settings.port, function () {
+  app_api.listen(settings.port, function () {
     console.log( ("KRNodeFramework listening on port " + settings.port).yellow );
 
     if (done) {

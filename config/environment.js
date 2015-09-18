@@ -5,11 +5,13 @@ var models          = require('../app/models/');
 var bodyParser      = require('body-parser');
 var logger          = require('morgan');
 var methodOverride  = require('method-override');
-var apiRouter       = require('../app/routes');
+var apiRouter       = require('../app/routes/router_api');
+var webRouter       = require('../app/routes/router_web');
 var fs              = require('fs');
 var favicon         = require('serve-favicon');
 
-module.exports = function (app) {
+module.exports = function (app,config) {
+
 
     app.use(express.static(path.join(settings.path, 'public')));
 
@@ -37,7 +39,15 @@ module.exports = function (app) {
         });
     });
 
-    //Set routing system
-    apiRouter(app);
+
+    //Diferent routing system for diferent APPS (Express)
+    if(config && config==='WEB'){
+        webRouter(app);
+    }else if(config && config==='API'){
+        apiRouter(app);
+    }else{
+        apiRouter(app);
+    }
+
 
 };

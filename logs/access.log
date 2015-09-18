@@ -1,0 +1,7 @@
+[0mGET /api/users [32m200 [0m410.721 ms - 77[0m
+[0mGET /api/users [32m200 [0m78.350 ms - 77[0m
+[0mGET /api/users [32m200 [0m107.428 ms - 77[0m
+[0mPOST /api/customers [32m200 [0m51.079 ms - 104[0m
+[0mGET /api/customers [32m200 [0m24.309 ms - 1739[0m
+[0mGET /api/customers [32m200 [0m8.461 ms - 1739[0m
+[0mGET /api/customers [32m200 [0m188.266 ms - 1739[0m

@@ -38,6 +38,7 @@ module.exports = {
                             next();
                         }
                     }
+                    next();
                 });
             },
             //If not registered - register user & token
