@@ -7,12 +7,7 @@ module.exports = {
     list: function (req, res, next) {
         req.models.user.find().order('-id').all(function (err, users) {
             if (err) return next(err);
-
-            var items = users.map(function (m) {
-                return m.serialize();
-            });
-
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(users)));
         });
     },
     create: function (req, res, next) {
@@ -36,8 +31,7 @@ module.exports = {
                 return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 return next(err);
             }
-            var items = user.serialize();
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,user.serialize()));
         });
 
     },

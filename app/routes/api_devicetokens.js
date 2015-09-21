@@ -9,6 +9,7 @@ jwtmiddleware(router);
 
 router.get('/',devicetoken_controller.list);
 router.get('/:id',devicetoken_controller.get);
+router.get('/:id/:searchtoken',devicetoken_controller.get);
 router.post('/',devicetoken_controller.create);
 router.put('/:id',devicetoken_controller.put);
 router.delete('/:id',devicetoken_controller.delete);

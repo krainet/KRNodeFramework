@@ -11,14 +11,12 @@ var controller_name = 'customers';
 
 module.exports = {
     list: function (req, res, next) {
-
         req.models.customer.find().order('-id').all(function (err, customers) {
-            if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            var items = customers.map(function (m) {
-                return m.serialize();
-            });
-
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            if (err) {
+                return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+            }else{
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(customers)));
+            }
         });
     },
     create: function (req, res, next) {
@@ -47,7 +45,11 @@ module.exports = {
 
                     tokenparams.owner_id = customer.id;
                     req.models.devicetoken.create(tokenparams, function (err, devicetoken) {
-                        if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+
+                        if(err) {
+                            console.log('llegamo3');
+                            return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                        }
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
                     });
                 });
@@ -59,8 +61,7 @@ module.exports = {
     get: function (req, res, next) {
         req.models.customer.get(req.params.id,function (err, customer) {
             if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            var items = customer.serialize();
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
         });
 
     },

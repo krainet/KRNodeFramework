@@ -14,11 +14,7 @@ module.exports = {
 
         req.models.devicetoken.find().order('-id').all(function (err, devicetokens) {
             if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            var items = devicetokens.map(function (m) {
-                return m.serialize();
-            });
-
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(devicetokens)));
         });
     },
     create: function (req, res, next) {
@@ -39,24 +35,55 @@ module.exports = {
         });
     },
     get: function (req, res, next) {
-        req.models.devicetoken.get(req.params.id,function (err, devicetoken) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            var items = devicetoken.serialize();
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,items));
-        });
+        var searchtoken = req.params.searchtoken?req.params.searchtoken:null;
 
+        if(searchtoken){
+            req.models.devicetoken.find({token:searchtoken},function (err, devicetoken) {
+                if(err)
+                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                else
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(devicetoken)));
+            });
+        }else{
+            req.models.devicetoken.get(req.params.id,function (err, devicetoken) {
+                if(err)
+                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                else
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize()));
+            });
+        }
     },
     put: function(req,res,next) {
-        var params = _.pick(req.body, 'username', 'email','password','token');
-        req.models.devicetoken.find({token:params.token},function (err, devicetoken) {
+        var params = _.pick(req.body, 'email', 'token','id_customer');
+        req.models.devicetoken.get(req.params.id,function (err, devicetoken) {
             if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            console.log(devicetoken);
-            devicetoken.save(params);
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize()));
+            devicetoken.hasOwner(function(err,hasowner){
+                if(!hasowner){
+                    if(params.id_customer || params.email){
+                        console.log('No owner, creating one');
+                        req.models.customer.create(params, function(err,customer){
+                            devicetoken.setOwner(customer, function(err,devicetoken){
+                                if(err) {
+                                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+                                }
+                                else {
+                                    delete  params['token'];
+                                    //devicetoken.save(params);
+                                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize()));
+                                }
+                            });
+                        });
+                    }else{
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize(),'No info provided to update owner of token'));
+                    }
+                }else{
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize(),'This devicetoken has owner yet'));
+                }
+            });
         });
     },
     delete: function(req,res,next) {
-        req.models.devicetoken.get(req.params.id,function (err, user) {
+        req.models.devicetoken.get(req.params.id,function (err, devicetoken) {
             user.remove(function(err){
                 if(err) {
                     return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));

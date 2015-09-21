@@ -2,7 +2,7 @@ var moment = require('moment');
 
 module.exports = function (orm, db) {
     var Customer = db.define('customer', {
-            email               : { type: 'text', size:254 },
+            email               : { type: 'text', size:254, required:true, unique: 'email' },
             id_customer         : {type: 'number', defaultValue:0},
             push_count          : {type: 'number', defaultValue:0},
             device_token_count  : {type: 'number', defaultValue:0},
@@ -13,6 +13,7 @@ module.exports = function (orm, db) {
         {
             hooks: {
                 beforeValidation: function () {
+                    console.log('hook');
                     this.date_add = new Date();
                     this.date_upd = new Date();
                 }
