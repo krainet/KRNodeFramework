@@ -47,7 +47,6 @@ module.exports = {
                     req.models.devicetoken.create(tokenparams, function (err, devicetoken) {
 
                         if(err) {
-                            console.log('llegamo3');
                             return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                         }
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));

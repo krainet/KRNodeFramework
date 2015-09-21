@@ -4,6 +4,7 @@
 var jwt                 = require('jsonwebtoken');
 var settings            = require('../../config/settings');
 var _                   = require('lodash');
+var helpers             = require('../controllers/_helpers.js')
 
 
 module.exports = function (router) {
@@ -36,6 +37,7 @@ module.exports = function (router) {
                         return res.json({success: false, message: 'Failed to authenticate token.'});
                     } else {
                         // if everything is good, save to request for use in other routes
+
                         req.decoded = decoded;
                         next();
                     }
@@ -45,11 +47,7 @@ module.exports = function (router) {
 
                 // if there is no token
                 // return an error
-                return res.status(403).send({
-                    success: false,
-                    message: 'No token provided.'
-                });
-
+                return res.status(403).json(helpers.formatErrors(null,controller,req.method,'No token provided'));
             }
         }
     });

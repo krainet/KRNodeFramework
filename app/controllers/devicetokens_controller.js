@@ -60,7 +60,6 @@ module.exports = {
             devicetoken.hasOwner(function(err,hasowner){
                 if(!hasowner){
                     if(params.id_customer || params.email){
-                        console.log('No owner, creating one');
                         req.models.customer.create(params, function(err,customer){
                             devicetoken.setOwner(customer, function(err,devicetoken){
                                 if(err) {

@@ -17,10 +17,23 @@ var settings = {
     },
     logsdir     : __dirname + '/../logs/access.log',
     secret_jwt  : "crypt_key123",
+    //Auth permisions for controller routes
     auth_perms  : {
         "users" : {
-            disallow : ["get","put","delete"], //Only allow this methods to auth-users
-            allow    : ["post"] //Not auth user can make post
+            disallow : [],                      //Only allow this methods to auth-users
+            allow    : ["post"]           //Not auth user can make post
+        },
+        "customers" : {
+            disallow : [],
+            allow    : ["post"]
+        },
+        "devicetokens" : {
+            disallow : [],
+            allow    : ["post"]
+        },
+        "auth" : {
+            disallow : [],
+            allow    : ["post","get"]
         }
     },
     api_prefix  : '/api'

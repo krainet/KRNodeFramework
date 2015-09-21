@@ -13,7 +13,6 @@ module.exports = function (orm, db) {
         {
             hooks: {
                 beforeValidation: function () {
-                    console.log('hook');
                     this.date_add = new Date();
                     this.date_upd = new Date();
                 }
