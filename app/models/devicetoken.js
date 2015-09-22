@@ -25,6 +25,7 @@ module.exports = function (orm, db) {
                         token                 : this.token,
                         push_count            : this.push_count,
                         deleted               : this.deleted,
+                        segments              : this.segments,
                         owner                 : this.owner,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()

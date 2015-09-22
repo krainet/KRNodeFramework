@@ -30,8 +30,10 @@ module.exports = function (orm, db) {
                         id                    : this.id,
                         name                  : this.name,
                         description           : this.description,
-                        configuration         : this.configuration,
+                        configuration         : JSON.parse(this.configuration),
                         orphan_tokens         : this.orphan_tokens,
+                        devicetokens          : this.devicetokens,
+                        customers             : this.customers,
                         deleted               : this.deleted,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()
@@ -39,5 +41,6 @@ module.exports = function (orm, db) {
                 }
             }
         });
-    Segment.hasMany('devicetokens', db.models.devicetoken, { why: String }, { reverse: 'segments', key: true })
+    Segment.hasMany('devicetokens', db.models.devicetoken, { why: String }, { reverse: 'segments', key: true, autoFetch: true })
+    Segment.hasMany('customers', db.models.customer, { why: String }, { reverse: 'segments', key: true, autoFetch: true })
 };

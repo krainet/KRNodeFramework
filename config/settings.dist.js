@@ -34,6 +34,10 @@ var settings = {
         "auth" : {
             disallow : [],
             allow    : ["post","get"]
+        },
+        "segments" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
         }
     },
     api_prefix  : '/api'

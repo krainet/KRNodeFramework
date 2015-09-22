@@ -5,6 +5,7 @@ module.exports = function (orm, db) {
             name                 : {type: 'text', size:254, required:true},
             msg_text             : {type: 'text', size:254, required:true},
             is_draft             : {type: 'boolean', defaultValue:true},
+            processed            : {type: 'boolean', defaultValue:false},
             deleted              : {type: 'boolean', defaultValue:false},
             date_to_send         : {type: 'date', required: true, time: true},
             date_sent            : {type: 'date', required: false, time: true},
