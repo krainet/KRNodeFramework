@@ -2,7 +2,7 @@ var moment = require('moment');
 
 module.exports = function (orm, db) {
     var Devicetoken = db.define('devicetoken', {
-            token               : { type: 'text', size:254 },
+            token               : { type: 'text', size:254,unique: 'token' },
             push_count          : {type: 'number', defaultValue:0},
             deleted             : {type: 'boolean', defaultValue:false},
             date_add            : { type: 'date', required: false, time: false },
@@ -32,5 +32,5 @@ module.exports = function (orm, db) {
                 }
             }
         });
-    Devicetoken.hasOne('owner', db.models.customer, { required: false, reverse: 'devicetokens', autoFetch: true });
+    Devicetoken.hasOne('owner', db.models.customer, { required: false, reverse: 'devicetoken', autoFetch: true });
 };

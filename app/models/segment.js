@@ -1,13 +1,15 @@
+/**
+ * Created by ramon on 22/09/15.
+ */
 var moment = require('moment');
 
 module.exports = function (orm, db) {
-    var Scheduller = db.define('scheduller', {
+    var Segment = db.define('segment', {
             name                 : {type: 'text', size:254, required:true},
-            msg_text             : {type: 'text', size:254, required:true},
-            is_draft             : {type: 'boolean', defaultValue:true},
+            description          : {type: 'text', size:254, required:true},
+            configuration        : {type: 'text', big:true},
+            orphan_tokens        : {type: 'boolean', defaultValue:false},
             deleted              : {type: 'boolean', defaultValue:false},
-            date_to_send         : {type: 'date', required: true, time: true},
-            date_sent            : {type: 'date', required: false, time: true},
             date_add             : {type: 'date', required: true, time: true},
             date_upd             : {type: 'date', required: true, time: true}
         },
@@ -27,17 +29,15 @@ module.exports = function (orm, db) {
                     return {
                         id                    : this.id,
                         name                  : this.name,
-                        msg_text              : this.msg_text,
-                        is_draft              : this.is_draft,
+                        description           : this.description,
+                        configuration         : this.configuration,
+                        orphan_tokens         : this.orphan_tokens,
                         deleted               : this.deleted,
-                        date_to_send          : this.date_to_send,
-                        date_sent             : this.date_sent,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()
                     };
                 }
             }
         });
-    Scheduller.hasOne('owner', db.models.user, { required: true, reverse: 'scheduller', autoFetch: true });
-    Scheduller.hasOne('segment', db.models.segment, { required: true, reverse: 'scheduller', autoFetch: true });
+    Segment.hasMany('devicetokens', db.models.devicetoken, { why: String }, { reverse: 'segments', key: true })
 };

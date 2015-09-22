@@ -8,6 +8,7 @@ function setup(db, cb) {
     require('./customer')(orm, db);
     require('./devicetoken')(orm, db);
     require('./scheduller')(orm, db);
+    require('./segment')(orm, db);
 
 
     return cb(null, db);

@@ -2,9 +2,9 @@ var moment = require('moment');
 
 module.exports = function (orm, db) {
     var User = db.define('user', {
-            username     : { type: 'text', required: true },
-            password     : { type: 'text', required: true,  big:  true },
-            email        : { type: 'text', required: true,  big:  true },
+            username     : { type: 'text', size:50, required: true, unique: 'username' },
+            password     : { type: 'text', required: true , defaultValue:'mq1234'},
+            email        : { type: 'text', size:255 ,required: true, unique: 'email' },
             date_add     : { type: 'date', required: true, time: true },
             date_upd     : { type: 'date', required: true, time: true }
         },
