@@ -9,6 +9,7 @@ var user_routes         = require('./api_users');
 var customer_routes     = require('./api_customers');
 var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
+var scheduller_routes   = require('./api_schedullers');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
@@ -23,6 +24,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/customers',customer_routes);
     app.use(settings.api_prefix+'/devicetokens',devicetoken_routes);
     app.use(settings.api_prefix+'/segments',segment_routes);
+    app.use(settings.api_prefix+'/schedullers',scheduller_routes);
 
 
     //Web routes

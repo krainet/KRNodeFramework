@@ -43,4 +43,5 @@ module.exports = function (orm, db) {
         });
     Segment.hasMany('devicetokens', db.models.devicetoken, { why: String }, { reverse: 'segments', key: true, autoFetch: true })
     Segment.hasMany('customers', db.models.customer, { why: String }, { reverse: 'segments', key: true, autoFetch: true })
+    Segment.hasMany('schedullers', db.models.scheduller, { why: String }, { reverse: 'segments', key: true, autoFetch: true })
 };

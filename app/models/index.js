@@ -5,11 +5,11 @@ var connection = null;
 
 function setup(db, cb) {
     require('./user')(orm, db);
-    require('./customer')(orm, db);
+    require('./platform')(orm, db);
     require('./devicetoken')(orm, db);
-    require('./scheduller')(orm, db);
+    require('./customer')(orm, db);
     require('./segment')(orm, db);
-
+    require('./scheduller')(orm, db);
 
     return cb(null, db);
 }

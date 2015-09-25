@@ -2,11 +2,11 @@ var moment = require('moment');
 
 module.exports = function (orm, db) {
     var Devicetoken = db.define('devicetoken', {
-            token               : { type: 'text', size:254,unique: 'token' },
+            token               : {type: 'text', size:254, unique: 'token'},
             push_count          : {type: 'number', defaultValue:0},
             deleted             : {type: 'boolean', defaultValue:false},
-            date_add            : { type: 'date', required: false, time: false },
-            date_upd            : { type: 'date', required: false, time: true }
+            date_add            : {type: 'date', required: false, time: false},
+            date_upd            : {type: 'date', required: false, time: true}
         },
         {
             hooks: {
@@ -27,6 +27,7 @@ module.exports = function (orm, db) {
                         deleted               : this.deleted,
                         segments              : this.segments,
                         owner                 : this.owner,
+                        platform              : this.platform,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()
                     };
@@ -34,4 +35,5 @@ module.exports = function (orm, db) {
             }
         });
     Devicetoken.hasOne('owner', db.models.customer, { required: false, reverse: 'devicetoken', autoFetch: true });
+    Devicetoken.hasOne('platform', db.models.platform, { required: false, reverse: 'devicetoken', autoFetch: true });
 };

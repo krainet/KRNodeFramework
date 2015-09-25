@@ -33,6 +33,8 @@ module.exports = function (orm, db) {
                         deleted               : this.deleted,
                         date_to_send          : this.date_to_send,
                         date_sent             : this.date_sent,
+                        segments              : this.segment,
+                        owner                 : this.owner,
                         date_add              : moment(this.date_add).fromNow(),
                         date_upd              : moment(this.date_upd).fromNow()
                     };
@@ -40,5 +42,4 @@ module.exports = function (orm, db) {
             }
         });
     Scheduller.hasOne('owner', db.models.user, { required: true, reverse: 'scheduller', autoFetch: true });
-    Scheduller.hasOne('segment', db.models.segment, { required: true, reverse: 'scheduller', autoFetch: true });
 };
