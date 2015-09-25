@@ -1,39 +1,19 @@
-var moment = require('moment');
+/**
+ * Created by ramon on 25/09/15.
+ */
+"use strict";
 
-module.exports = function (orm, db) {
-    var Devicetoken = db.define('devicetoken', {
-            token               : {type: 'text', size:254, unique: 'token'},
-            push_count          : {type: 'number', defaultValue:0},
-            deleted             : {type: 'boolean', defaultValue:false},
-            date_add            : {type: 'date', required: false, time: false},
-            date_upd            : {type: 'date', required: false, time: true}
-        },
-        {
-            hooks: {
-                beforeValidation: function () {
-                    this.date_add = new Date();
-                    this.date_upd = new Date();
-                }
-            },
-            validations: {
-
-            },
-            methods: {
-                serialize: function () {
-                    return {
-                        id                    : this.id,
-                        token                 : this.token,
-                        push_count            : this.push_count,
-                        deleted               : this.deleted,
-                        segments              : this.segments,
-                        owner                 : this.owner,
-                        platform              : this.platform,
-                        date_add              : moment(this.date_add).fromNow(),
-                        date_upd              : moment(this.date_upd).fromNow()
-                    };
-                }
+module.exports = function(sequelize, DataTypes) {
+    var Devicetoken = sequelize.define("Devicetoken", {
+        token : DataTypes.STRING,
+        active      : DataTypes.BOOLEAN
+    }, {
+        classMethods: {
+            associate: function(models) {
+                Devicetoken.hasOne(models.Platform)
             }
-        });
-    Devicetoken.hasOne('owner', db.models.customer, { required: false, reverse: 'devicetoken', autoFetch: true });
-    Devicetoken.hasOne('platform', db.models.platform, { required: false, reverse: 'devicetoken', autoFetch: true });
+        }
+    });
+
+    return Devicetoken;
 };

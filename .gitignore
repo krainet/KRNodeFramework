@@ -3,3 +3,4 @@
 .idea/*
 /config/settings.js
 /logs/access.log
+app/config/*
