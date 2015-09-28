@@ -18,35 +18,15 @@ module.exports = {
         });
     },
     create: function (req, res, next) {
-        req.models.segment.create(req.body,function(err,segment){
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,segment.serialize()));
-        });
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     get: function (req, res, next) {
-        req.models.segment.get(req.params.id,function (err, segment) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,segment.serialize()));
-        });
-
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     put: function(req,res,next) {
-        req.models.segment.get(req.params.id,function (err, segment) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            segment.save(req.body);
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,segment.serialize()));
-        });
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     delete: function(req,res,next) {
-        req.models.segment.get(req.params.id,function (err, segment) {
-            segment.remove(function(err){
-                if(err) {
-                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                }else{
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Segment deleted'));
-                }
-
-            })
-        });
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     }
 };

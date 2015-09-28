@@ -20,39 +20,15 @@ module.exports = {
     },
     create: function (req, res, next) {
         var params = _.pick(req.body, 'name','active');
-
-        req.models.scheduller.create(params,function(err,scheduller){
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,scheduller.serialize()));
-        });
-
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     get: function (req, res, next) {
-        req.models.scheduller.get(req.params.id,function (err, scheduller) {
-            if(err)
-                return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            else
-                return res.status(200).json(helpers.formatResponse(controller_name,req.method,scheduller.serialize()));
-        });
-
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     put: function(req,res,next) {
-        var params = _.pick(req.body, 'name', 'active');
-        req.models.scheduller.get(req.params.id,function (err, scheduller) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            else scheduller.save(params);
-
-        });
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     },
     delete: function(req,res,next) {
-        req.models.scheduller.get(req.params.id,function (err, scheduller) {
-            scheduller.remove(function(err){
-                if(err) {
-                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                }else{
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'scheduller deleted'));
-                }
-
-            })
-        });
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     }
 };

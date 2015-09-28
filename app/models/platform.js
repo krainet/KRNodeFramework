@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     },{
         classMethods : {
             associate : function(models){
-                Platform.hasMany(models.Devicetoken);
+                Platform.hasMany(models.Devicetoken,{as: 'Devicetoken'});
             }
         }
     });

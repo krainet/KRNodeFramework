@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods : {
             associate : function(models){
                 Customer.belongsToMany(models.Segment,{through:'segment_customer'});
-                Customer.hasMany(models.Devicetoken);
+                Customer.hasMany(models.Devicetoken,{as: 'Devicetoken'});
             }
         }
     });

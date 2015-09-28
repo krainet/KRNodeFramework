@@ -8,9 +8,9 @@ var crypto      = require('crypto');
 models.sequelize.sync({force:true,omitNull:true}).then(function() {
 
     var user_data = [
-        {username: 'krainet1', password: 'Basura1', email: 'krainet1@gmail.com'},
-        {username: 'krainet2', password: 'Basura2', email: 'krainet2@gmail.com'},
-        {username: 'krainet3', password: 'Basura3', email: 'krainet3@gmail.com'}
+        {username: 'krainet1', password: 'Basura1', email: 'krainet1@gmail.com',level:10},
+        {username: 'krainet2', password: 'Basura2', email: 'krainet2@gmail.com',level:5},
+        {username: 'krainet3', password: 'Basura3', email: 'krainet3@gmail.com',level:0}
     ];
 
     var customer_data = [
@@ -118,6 +118,13 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
 
                 }
             );
+        },
+        function(next){
+            models.Scheduller.bulkCreate(user_data)
+                .then(function(result){
+                    console.log(result);
+                    next();
+                })
         }
     ], function (err, result) {
         if (err) {
