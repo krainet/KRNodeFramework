@@ -1,3 +1,3 @@
 # KRNodeFramework
-Basic API Skeleton - NodeJS (ORM node-orm) , with CRUD y Permissions Tokenized
+Basic API Skeleton - NodeJS (ORM sequelizer) , with CRUD y Permissions Tokenized
 
