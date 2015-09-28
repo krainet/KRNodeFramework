@@ -14,7 +14,8 @@ module.exports = {
     list: function (req, res, next) {
         models.Devicetoken.findAll({
             include: [ models.Platform ],
-            include: [ models.Segment ]
+            include: [ models.Segment ],
+            include: [ models.Customer ]
         }).then(function(devicetoken) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken));
         });
@@ -25,11 +26,8 @@ module.exports = {
 
         if(params.token && params.platform){
             Devicetoken
-                .findOrCreate({where: {token: params.token}, defaults: {PlatformId: 3}})
-                .spread(function(user, created) {
-                    console.log(user.get({
-                        plain: true
-                    }))
+                .findOrCreate({where: {token: params.token}})
+                .spread(function(devicetoken, created) {
                     console.log(created);
                 });
         }

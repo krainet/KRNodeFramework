@@ -20,42 +20,39 @@ module.exports = {
         });
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'email', 'id_customer');
-        var tokenparams = _.pick(req.body, 'token');
+        var params = _.pick(req.body, 'email', 'id_customer','token','platform');
+        //Check if device token is registered
 
-        async.waterfall([
-            //Check if device token is registered
-            function(next){
-                req.models.devicetoken.count({token:tokenparams.token},function(err,devicetoken_count){
-                    if(err){
-                        return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+        if(params.token && params.platform && params.id_customer){ //Devicetoken and id_customer
+            models.Devicetoken
+                .findOrCreate({where: {token: params.token}})
+                .spread(function(devicetoken, created) {
+                    if(created){
+                        models.Customer
+                            .findOrCreate({where:{id_customer: params.id_customer}})
+                            .spread(function(customer,created){
+                                if(created){
+                                    //Creamos customer (primer customer y token)
+                                    customer.addDevicetoken(devicetoken);
+                                }else{
+                                    //Ya existia el customer
+                                    customer.addDevicetoken(devicetoken);
+                                }
+                            });
                     }else{
-                        if(devicetoken_count>0){
-                            return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Duplicated deviceToken'));
-                        }else{
-                            next();
-                        }
+                        return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Device token allredy exist'));
                     }
-                });
-            },
-            //If not registered - register user & token
-            function(next){
-                req.models.customer.create(params, function(err,customer){
-                    if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
 
-                    tokenparams.owner_id = customer.id;
-                    req.models.devicetoken.create(tokenparams, function (err, devicetoken) {
-
-                        if(err) {
-                            return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                        }
-                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
-                    });
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken,'Created!'));
                 });
-            }
-        ],function(err,result){
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-        });
+        }else if(params.token && params.platform){ //Only devicetoken
+            Devicetoken
+                .findOrCreate({where: {token: params.token}})
+                .spread(function(devicetoken, created) {
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken,'Created!'));
+
+                });
+        }
     },
     get: function (req, res, next) {
         req.models.customer.get(req.params.id,function (err, customer) {

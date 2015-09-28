@@ -10,8 +10,8 @@ module.exports = function(sequelize, DataTypes) {
     },{
         classMethods : {
             associate : function(models){
-                Customer.hasMany(models.Devicetoken);
                 Customer.belongsToMany(models.Segment,{through:'segment_customer'});
+                Customer.hasMany(models.Devicetoken);
             }
         }
     });
