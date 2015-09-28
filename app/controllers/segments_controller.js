@@ -4,17 +4,17 @@
 var _               = require('lodash');
 var helpers         = require('./_helpers');
 var settings        = require('../../config/settings');
+var models          = require('../models');
 
 var controller_name = 'segments';
 
 module.exports = {
     list: function (req, res, next) {
-        req.models.segment.find().order('-id').all(function (err, segments) {
-            if (err) {
-                return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            }else{
-                return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(segments)));
-            }
+        models.Segment.findAll({
+            //include: [{model: models.Devicetoken, as: 'Devicetokens', include: [{model: models.Platform, as: 'Platform'}]}]
+            include: [{model: models.Customer, as: 'Customers'}]
+        }).then(function(customers) {
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customers));
         });
     },
     create: function (req, res, next) {

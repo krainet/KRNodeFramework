@@ -25,7 +25,7 @@ module.exports = function (app) {
 
     app.use(methodOverride());
 
-    app.set('')
+    app.set('');
 
     applicationRouter(app);
 

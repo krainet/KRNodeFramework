@@ -5,53 +5,40 @@ var _               = require('lodash');
 var helpers         = require('./_helpers');
 var settings        = require('../../config/settings');
 var async           = require('async');
+var models          = require('../models');
 
 var controller_name = 'devicetokens';
 
 
 module.exports = {
     list: function (req, res, next) {
-
-        req.models.devicetoken.find().order('-id').all(function (err, devicetokens) {
-            if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(devicetokens)));
+        models.Devicetoken.findAll({
+            include: [ models.Platform ],
+            include: [ models.Segment ]
+        }).then(function(devicetoken) {
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken));
         });
+
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'token');
+        var params = _.pick(req.body, 'token','platform');
 
-        req.models.devicetoken.count({token:params.token},function(err,devicetoken_count){
-            if(err){
-                return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            }else{
-                if(devicetoken_count>0){
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Duplicated deviceToken'));
-                }else{
-                    req.models.devicetoken.create(params,function(err,devicetoken){
-                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize()));
-                    });
-                }
-            }
-        });
+        if(params.token && params.platform){
+            Devicetoken
+                .findOrCreate({where: {token: params.token}, defaults: {PlatformId: 3}})
+                .spread(function(user, created) {
+                    console.log(user.get({
+                        plain: true
+                    }))
+                    console.log(created);
+                });
+        }
+
+
     },
     get: function (req, res, next) {
         var searchtoken = req.params.searchtoken?req.params.searchtoken:null;
 
-        if(searchtoken){
-            req.models.devicetoken.find({token:searchtoken},function (err, devicetoken) {
-                if(err)
-                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                else
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(devicetoken)));
-            });
-        }else{
-            req.models.devicetoken.get(req.params.id,function (err, devicetoken) {
-                if(err)
-                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                else
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken.serialize()));
-            });
-        }
     },
     put: function(req,res,next) {
         var params = _.pick(req.body, 'email', 'token','id_customer');

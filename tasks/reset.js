@@ -5,7 +5,7 @@ var colors      = require('colors');
 var crypto      = require('crypto');
 
 
-models.sequelize.sync({force:true}).then(function() {
+models.sequelize.sync({force:true,omitNull:true}).then(function() {
 
     var user_data = [
         {username: 'krainet1', password: 'Basura1', email: 'krainet1@gmail.com'},
@@ -23,11 +23,11 @@ models.sequelize.sync({force:true}).then(function() {
 
 
     var devicetoken_data = [
-        {token: crypto.createHash('md5').update('krainet1@gmail.com').digest("hex")},
-        {token: crypto.createHash('md5').update('krainet2@gmail.com').digest("hex")},
-        {token: crypto.createHash('md5').update('krainet3@gmail.com').digest("hex")},
-        {token: crypto.createHash('md5').update('krainet4@gmail.com').digest("hex")},
-        {token: crypto.createHash('md5').update('krainet5@gmail.com').digest("hex")}
+        {token: crypto.createHash('md5').update('krainet1@gmail.com').digest("hex"),PlatformId:1,CustomerId:1},
+        {token: crypto.createHash('md5').update('krainet2@gmail.com').digest("hex"),PlatformId:1,CustomerId:1},
+        {token: crypto.createHash('md5').update('krainet3@gmail.com').digest("hex"),PlatformId:2,CustomerId:3},
+        {token: crypto.createHash('md5').update('krainet4@gmail.com').digest("hex"),PlatformId:2,CustomerId:4},
+        {token: crypto.createHash('md5').update('krainet5@gmail.com').digest("hex"),PlatformId:1,CustomerId:5}
     ];
 
     var segment1 = {id_customer: {'<': 3}};
@@ -40,21 +40,19 @@ models.sequelize.sync({force:true}).then(function() {
     var scheduller_data = [
         {
             name: 'Campaña 1',
-            msg_text: 'Compra en MeQuedoUno cupon SOLOAPP',
+            message: 'Compra en MeQuedoUno cupon SOLOAPP',
             is_draft: 1,
             processed: 0,
-            date_to_send: new Date(),
-            owner_id: 1,
-            segment_id: 1
+            date_send: new Date(),
+            SegmentId: 1
         },
         {
             name: 'Campaña 2',
-            msg_text: 'Compra en MeQuedoUno cupon SOLOAPP2',
+            message: 'Compra en MeQuedoUno cupon SOLOAPP2',
             is_draft: 0,
             processed: 1,
-            date_to_send: new Date(),
-            owner_id: 2,
-            segment_id: 2
+            date_send: new Date(),
+            SegmentId: 2
         }
     ];
 
@@ -67,20 +65,57 @@ models.sequelize.sync({force:true}).then(function() {
 
     async.waterfall([
         function (next) {
-            console.log('Creating dummy user data...'.green);
-            models.Devicetoken.bulkCreate(devicetoken_data)
+            models.Platform.bulkCreate(platforms_data)
                 .then(function () {
-                    console.log('done');
                     next();
                 }
             );
         },
         function (next) {
-            console.log('Creating dummy user data...'.green);
-            models.Platform.bulkCreate(platforms_data)
+            models.Customer.bulkCreate(customer_data)
                 .then(function () {
-                    console.log('done');
                     next();
+                }
+            );
+        },
+        function (next) {
+            models.Segment.bulkCreate(segment_data)
+                .then(function () {
+                    next();
+                }
+            );
+        },
+        function (next) {
+            models.Devicetoken.bulkCreate(devicetoken_data)
+                .then(function (insertedObjects) {
+                    models.Segment.findByPrimary(1)
+                        .then(function(segment){
+                            segment.addDevicetoken([1,2,3,4,5]);
+                            next();
+                        });
+
+                });
+        },
+        function(next){
+            models.Segment.findByPrimary(2)
+                .then(function(segment){
+                    segment.addDevicetokens([3,4]);
+                    next();
+                });
+        },
+        function (next) {
+            models.Scheduller.bulkCreate(scheduller_data)
+                .then(function (result) {
+                    models.Segment.findByPrimary(1)
+                        .then(function(segment){
+                            segment.addScheduller([1]);
+                            models.Segment.findByPrimary(1)
+                                .then(function(segment2){
+                                    segment2.addScheduller([2,1]).then(function(){next()});
+                                });
+                        });
+
+
                 }
             );
         }
@@ -89,7 +124,7 @@ models.sequelize.sync({force:true}).then(function() {
             console.log('ERROR'.red);
             return err;
         } else {
-            console.log('TOT BEEE'.yellow)
+            console.log('All inserted OK'.yellow);
             return result;
         }
     });

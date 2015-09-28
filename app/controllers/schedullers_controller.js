@@ -5,16 +5,17 @@ var _               = require('lodash');
 var helpers         = require('./_helpers');
 var settings        = require('../../config/settings');
 var async           = require('async');
+var models          = require('../models');
 
 var controller_name = 'schedullers';
 
 
 module.exports = {
     list: function (req, res, next) {
-
-        req.models.scheduller.find().order('-id').all(function (err, schedullers) {
-            if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(schedullers)));
+        models.Scheduller.findAll({
+            include: [{model: models.Segment, as: 'Segments'}]
+        }).then(function(schedullers) {
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,schedullers));
         });
     },
     create: function (req, res, next) {

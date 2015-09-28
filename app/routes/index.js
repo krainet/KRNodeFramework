@@ -6,6 +6,7 @@ var settings = require('../../config/settings');
 //API ROUTES
 var auth_routes         = require('./api_auth');
 var user_routes         = require('./api_users');
+var platform_routes     = require('./api_platforms');
 var customer_routes     = require('./api_customers');
 var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
@@ -25,6 +26,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/devicetokens',devicetoken_routes);
     app.use(settings.api_prefix+'/segments',segment_routes);
     app.use(settings.api_prefix+'/schedullers',scheduller_routes);
+    app.use(settings.api_prefix+'/platforms',platform_routes);
 
 
     //Web routes

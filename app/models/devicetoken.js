@@ -7,10 +7,11 @@ module.exports = function(sequelize, DataTypes) {
     var Devicetoken = sequelize.define("Devicetoken", {
         token : DataTypes.STRING,
         active      : DataTypes.BOOLEAN
-    }, {
-        classMethods: {
-            associate: function(models) {
-                Devicetoken.hasOne(models.Platform)
+    },{
+        classMethods : {
+            associate : function(models){
+                Devicetoken.belongsTo(models.Platform);
+                Devicetoken.belongsToMany(models.Segment,{through:'segment_devicetoken'});
             }
         }
     });
