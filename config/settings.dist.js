@@ -7,8 +7,8 @@ var settings = {
         protocol : "mysql",
         host     : "127.0.0.1",
         database : "your_database",
-        user     : "db_user",
-        password : "db_password",
+        user     : "your_user",
+        password : "your_password",
         query    : {
             pool : false, //CACHE querys
             debug: true
@@ -42,8 +42,18 @@ var settings = {
         "schedullers" : {
             disallow : [],
             allow    : ["post","get","put","delete"]
+        },
+        "platforms" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
+        },
+        "pushlauncher" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
         }
     },
-    api_prefix  : '/api'
+    api_prefix  : '/api',
+    push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
+    push_key_ios: 'certificate.cer'
 };
 module.exports = settings;
