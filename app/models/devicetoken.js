@@ -5,8 +5,8 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Devicetoken = sequelize.define("Devicetoken", {
-        token : DataTypes.STRING,
-        active      : DataTypes.BOOLEAN
+        token : {type: DataTypes.STRING,allowNull:false},
+        active      : {type: DataTypes.BOOLEAN,defaultValue:true}
     },{
         classMethods : {
             associate : function(models){

@@ -5,8 +5,8 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Customer = sequelize.define("Customer", {
-        id_customer : DataTypes.STRING,
-        deleted     : DataTypes.BOOLEAN
+        id_customer : {type:DataTypes.STRING,allowNull:true,defaultValue:0},
+        deleted     : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false}
     },{
         classMethods : {
             associate : function(models){

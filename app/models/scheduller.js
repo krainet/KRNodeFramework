@@ -5,12 +5,12 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Scheduller = sequelize.define("Scheduller", {
-        name     : DataTypes.STRING,
-        message  : DataTypes.STRING,
-        date_send: DataTypes.DATE,
-        is_draft : DataTypes.BOOLEAN,
-        processed: DataTypes.BOOLEAN,
-        deleted  : DataTypes.BOOLEAN
+        name     : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
+        message  : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
+        date_send: {type:DataTypes.DATE,allowNull:false,defaultValue:sequelize.NOW},
+        is_draft : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:true},
+        processed: {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false},
+        deleted  : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false}
     },{
         classMethods : {
             associate : function(models){

@@ -11,6 +11,7 @@ var customer_routes     = require('./api_customers');
 var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
 var scheduller_routes   = require('./api_schedullers');
+var pushlauncher_routes = require('./api_pushlauncher');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
@@ -27,6 +28,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/segments',segment_routes);
     app.use(settings.api_prefix+'/schedullers',scheduller_routes);
     app.use(settings.api_prefix+'/platforms',platform_routes);
+    app.use(settings.api_prefix+'/pushlauncher',pushlauncher_routes);
 
 
     //Web routes

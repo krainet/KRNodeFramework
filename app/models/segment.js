@@ -5,10 +5,10 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Segment = sequelize.define("Segment", {
-        name          : DataTypes.STRING,
-        description   : DataTypes.STRING,
-        configuration : DataTypes.TEXT,
-        deleted       : DataTypes.BOOLEAN
+        name          : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
+        description   : {type:DataTypes.STRING,allowNull:true,defaultValue:'Desconocido'},
+        configuration : {type:DataTypes.TEXT,allowNull:true,defaultValue:''},
+        deleted       : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false}
     },{
         classMethods : {
             associate : function(models){
