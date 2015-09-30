@@ -21,30 +21,30 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
     ];
 
     var customer_data = [
-        {email: 'krainet1@gmail.com', id_customer: 1},
+        {email: 'krainet@gmail.com', id_customer: 1},
         {email: 'krainet2@gmail.com', id_customer: 2},
         {email: 'krainet3@gmail.com', id_customer: 3},
         {email: 'krainet4@gmail.com', id_customer: 4},
         {email: 'krainet5@gmail.com', id_customer: 5},
         {email: 'krainet6@gmail.com', id_customer: 6},
-        {email: 'krainet7@gmail.com', id_customer: 7},
-        {email: 'krainet8@gmail.com', id_customer: 8},
+        {email: 'mmateu@mequedouno.com', id_customer: 7},
+        {email: 'malcoceba@mequedouno.com', id_customer: 8},
         {email: 'krainet9@gmail.com', id_customer: 9},
         {email: 'krainet10@gmail.com', id_customer: 10}
     ];
 
 
     var devicetoken_data = [
-        {token: 'APA91bEMIzfC11yYk3sEUbhMgjx63skNcb9INc20mHfehiK09FIAHJEr43pFn4A8bkszkw54hTwwZpfCHut6U6rjxpYDKe6Kv8CiKBVW5NP99uZOw67RXm2kGsbeEBP39POP8thlm7r3',PlatformId:1,CustomerId:1},
-        {token: crypto.createHash('md5').update('krainet2@gmail.com').digest("hex"),PlatformId:1,CustomerId:1},
-        {token: crypto.createHash('md5').update('krainet3@gmail.com').digest("hex"),PlatformId:2,CustomerId:3},
-        {token: crypto.createHash('md5').update('krainet4@gmail.com').digest("hex"),PlatformId:2,CustomerId:4},
-        {token: crypto.createHash('md5').update('krainet5@gmail.com').digest("hex"),PlatformId:1,CustomerId:5},
-        {token: crypto.createHash('md5').update('krainet6@gmail.com').digest("hex"),PlatformId:2,CustomerId:6},
-        {token: crypto.createHash('md5').update('krainet7@gmail.com').digest("hex"),PlatformId:1,CustomerId:7},
-        {token: crypto.createHash('md5').update('krainet8@gmail.com').digest("hex"),PlatformId:1,CustomerId:8},
-        {token: crypto.createHash('md5').update('krainet9@gmail.com').digest("hex"),PlatformId:1,CustomerId:9},
-        {token: crypto.createHash('md5').update('krainet10@gmail.com').digest("hex"),PlatformId:2,CustomerId:10}
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:1,CustomerId:1},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:1,CustomerId:1},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:2,CustomerId:3},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:2,CustomerId:4},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:1,CustomerId:5},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:2,CustomerId:6},
+        {token: 'faPa98qZF2M:APA91bFHyyVFz_rAw964hh4QjVcQUEmBHvFCrcu5k1-HjA1X_jV92RZCcwz5Oi7FiAjH8np65MgnuAG0t3kg-FC1Ji_bPFKOe3kQdSiSIfeWp8g8E2TRzoGff-Gnp1kWvLcW4NItawNa',PlatformId:1,CustomerId:7},
+        {token: 'd5IRO3tZNhI:APA91bG4qhINWnOF3MsBdMZgTObi6vi8KLPb8d-7kdq9F8xAWSq54Zjmm6re45_-klcXX--01X19DD39mtV1MR2FBYi0pubfs4bmMwxAoa9_cObey7OTPkkQ30Qj7x2a0R1HiI3ZoIeu',PlatformId:1,CustomerId:8},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:1,CustomerId:9},
+        {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:2,CustomerId:10}
     ];
 
     var segment1 = {id_customer: {'<': 1}},segment2 = {id_customer: {'<': 2}},segment3 = {id_customer: {'<': 3}};

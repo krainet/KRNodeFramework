@@ -3,7 +3,7 @@ var router = express.Router();
 var pushlauncher_controller = require('../controllers/pushlauncher_controller');
 var jwtmiddleware       = require('./jwtmiddleware');
 
-jwtmiddleware(router);
+//jwtmiddleware(router);
 
 /* GET users listing. */
 

@@ -6,7 +6,7 @@ var helpers         = require('./_helpers');
 var settings        = require('../../config/settings');
 var models          = require('../models');
 var push_helper     = require('../helpers/push_helper')
-
+var b64             = require('../helpers/b64crypt');
 
 
 var controller_name = 'pushlauncher';
@@ -19,7 +19,8 @@ module.exports = {
     create: function (req, res, next) {
         var params = _.pick(req.body, 'devicetoken','scheduller');
         if(params.devicetoken){
-            push_helper.SendOnePush(params.devicetoken,function(err,response){
+            var decodedtoken = b64.decode(params.devicetoken);
+            push_helper.SendOnePush(decodedtoken,function(err,response){
                 if(err)
                     return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 else
