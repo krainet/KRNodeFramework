@@ -16,7 +16,7 @@ var Devicetoken = models.Devicetoken;
 module.exports = {
     list: function (req, res, next) {
         models.Devicetoken.findAll({
-            include: [ {model:models.Platform,as:'Platform'},{model:models.Customer,as:'Customer'},{model:models.Segment}]
+            include: [ {model:models.Platform,as:'Platform'},{model:models.Customer,as:'Customer'},{model:models.Segment},{model:models.Pushhistory,as:'Pushhistory'}]
         }).then(function(devicetoken) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken));
         });

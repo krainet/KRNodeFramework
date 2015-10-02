@@ -12,6 +12,7 @@ var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
 var scheduller_routes   = require('./api_schedullers');
 var pushlauncher_routes = require('./api_pushlauncher');
+var pushhistory_routes = require('./api_pushhistory');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
@@ -29,7 +30,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/schedullers',scheduller_routes);
     app.use(settings.api_prefix+'/platforms',platform_routes);
     app.use(settings.api_prefix+'/pushlauncher',pushlauncher_routes);
-
+    app.use(settings.api_prefix+'/pushhistory',pushhistory_routes);
 
     //Web routes
     app.use('/',home_routes);

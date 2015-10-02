@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
                 Devicetoken.belongsTo(models.Customer);
                 Devicetoken.belongsTo(models.Platform);
                 Devicetoken.belongsToMany(models.Segment,{through:'segment_devicetoken'});
+                Devicetoken.hasMany(models.Pushhistory,{as: 'Pushhistory'});
             }
         }
     });

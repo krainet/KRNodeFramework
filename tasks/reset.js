@@ -177,7 +177,6 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         function(next){
             models.Scheduller.bulkCreate(user_data)
                 .then(function(result){
-                    console.log(result);
                     next();
                 })
         }
