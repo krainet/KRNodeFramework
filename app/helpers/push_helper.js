@@ -11,8 +11,8 @@ var push_helper = {
     Apple : {
 
     },
-    SendOnePush : function(devicetoken,cb){
-        if(!devicetoken)
+    SendOnePush : function(token,title,message,cb){
+        if(!token)
             return cb('No device token',null);
 
         var message = new gcm.Message({
@@ -28,14 +28,14 @@ var push_helper = {
                 "From": "MQ1"
             },
             notification: {
-                body: "This is a notification that will be displayed ASAP.",
-                title: "Hello, World",
+                body: message,
+                title: title,
                 icon: "ic_launcher"
             }
         });
 
         var regIds = [];
-        regIds.push(devicetoken);
+        regIds.push(token);
 
         message.addData({
             key1: 'message1',

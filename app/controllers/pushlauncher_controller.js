@@ -17,10 +17,11 @@ module.exports = {
     return res.status(200).json(helpers.formatResponse(controller_name, req.method, helpers.formatResponse(controller_name,req.method,null,'Empty response')));
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'devicetoken','scheduller');
-        if(params.devicetoken){
-            var decodedtoken = b64.decode(params.devicetoken);
-            push_helper.SendOnePush(decodedtoken,function(err,response){
+        var params = _.pick(req.body, 'pushMessage','token','pushTitle','pushName');
+
+        if(params.token){
+            params.token = b64.decode(params.token);
+            push_helper.SendOnePush(params.token,params.pushTitle,params.pushMessage,function(err,response){
                 if(err)
                     return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 else
