@@ -5,57 +5,52 @@ var _               = require('lodash');
 var helpers         = require('./_helpers');
 var settings        = require('../../config/settings');
 var async           = require('async');
+var models          = require('../models');
 
 var controller_name = 'customers';
 
 
 module.exports = {
     list: function (req, res, next) {
-        req.models.customer.find().order('-id').all(function (err, customers) {
-            if (err) {
-                return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            }else{
-                return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(customers)));
-            }
+        models.Customer.findAll({
+            include: [{model: models.Devicetoken, as: 'Devicetoken', include: [{model: models.Platform, as: 'Platform'}]}],
+            //include: [{model: models.Segment, as: 'Segments'}],
+            //include: [{model: models.Devicetoken, as: 'Devicetoken'}]
+        }).then(function(customers) {
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customers));
         });
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'email', 'id_customer');
-        var tokenparams = _.pick(req.body, 'token');
+        var params = _.pick(req.body, 'email', 'id_customer','token','platform');
 
-        async.waterfall([
-            //Check if device token is registered
-            function(next){
-                req.models.devicetoken.count({token:tokenparams.token},function(err,devicetoken_count){
-                    if(err){
-                        return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
+        if(params.token && params.platform && params.id_customer){ //Devicetoken and id_customer
+            models.Customer
+                .findOrCreate({where:{id_customer: params.id_customer}})
+                .spread(function(customer,created){
+                    models.Devicetoken
+                        .findOrCreate({where: {token: params.token}})
+                        .spread(function(devicetoken, created) {
+                            if(created){
+                                models.devicetoken.setPlatform(params.platform);
+                                customer.addDevicetoken(devicetoken);
+                                return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer));
+                            }else{
+                                return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Device token allredy exist'));
+                            }
+                        });
+                });
+
+        }else if(params.token && params.platform){ //Only devicetoken
+            models.Devicetoken
+                .findOrCreate({where: {token: params.token}})
+                .spread(function(devicetoken, created) {
+                    if(created){
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken,'Created!'));
                     }else{
-                        if(devicetoken_count>0){
-                            return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Duplicated deviceToken'));
-                        }else{
-                            next();
-                        }
+                        return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Device token allredy exist.'));
                     }
                 });
-            },
-            //If not registered - register user & token
-            function(next){
-                req.models.customer.create(params, function(err,customer){
-                    if (err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-
-                    tokenparams.owner_id = customer.id;
-                    req.models.devicetoken.create(tokenparams, function (err, devicetoken) {
-
-                        if(err) {
-                            return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                        }
-                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
-                    });
-                });
-            }
-        ],function(err,result){
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-        });
+        }
     },
     get: function (req, res, next) {
         req.models.customer.get(req.params.id,function (err, customer) {

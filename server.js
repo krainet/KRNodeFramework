@@ -3,28 +3,30 @@ var express     = require('express');
 var settings    = require('./config/settings');
 var environment = require('./config/environment');
 var colors      = require('colors');
+var models      = require('./app/models');
+
 
 module.exports.start = function (done) {
     var app_api = express();
-    var app_web = express();
 
     environment(app_api,'API');
-    environment(app_web,'WEB');
 
-    app_api.listen(settings.port, function () {
-        console.log( ("KRNodeFramework listening on port " + settings.port).yellow );
+    models.sequelize.sync().then(function() {
+        app_api.listen(settings.port, function () {
+            console.log( ("KRNodeFramework listening on port " + settings.port).yellow );
 
-        if (done) {
+            if (done) {
 
-            return done(null, app, server);
-        }
-    }).on('error', function (e) {
-        if (e.code == 'EADDRINUSE') {
-            console.log('Address in use. Is the server already running?'.red);
-        }
-        if (done) {
-            return done(e);
-        }
+                return done(null, app, server);
+            }
+        }).on('error', function (e) {
+            if (e.code == 'EADDRINUSE') {
+                console.log('Address in use. Is the server already running?'.red);
+            }
+            if (done) {
+                return done(e);
+            }
+        });
     });
 }
 

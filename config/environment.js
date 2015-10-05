@@ -9,7 +9,7 @@ var applicationRouter = require('../app/routes/');
 var fs                = require('fs');
 var favicon           = require('serve-favicon');
 
-module.exports = function (app,config) {
+module.exports = function (app) {
 
     var accessLogStream = fs.createWriteStream(settings.logsdir, {flags: 'a'});
     app.use(logger('dev', {stream: accessLogStream}));
@@ -25,19 +25,15 @@ module.exports = function (app,config) {
 
     app.use(methodOverride());
 
-    app.use(function (req, res, next) {
-        models(function (err, db) {
-            if (err) {
-                res.status(500).json({success:false,message:'Unable to connect to DB'});
-                return next(err);
-            }
-
-            req.models = db.models;
-            req.db     = db;
-
-            return next();
-        });
+    //CORS
+    app.all('*', function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
     });
+
+    app.set('');
 
     applicationRouter(app);
 

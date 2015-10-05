@@ -4,5 +4,5 @@
 /config/settings.js
 /logs/access.log
 config/settings.js
-app/config/config.json
+app/config/*
 

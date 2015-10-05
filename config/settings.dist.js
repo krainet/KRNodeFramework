@@ -5,11 +5,10 @@ var settings = {
     port       : process.env.NODE_PORT || 3000,
     database   : {
         protocol : "mysql",
-        query    : { pool: true },
         host     : "127.0.0.1",
         database : "your_database",
-        user     : "db_user",
-        password : "db_password",
+        user     : "your_user",
+        password : "your_password",
         query    : {
             pool : false, //CACHE querys
             debug: true
@@ -17,25 +16,44 @@ var settings = {
     },
     logsdir     : __dirname + '/../logs/access.log',
     secret_jwt  : "crypt_key123",
-    //Auth permisions for controller routes
+
+    //JSON web tokens permissions
     auth_perms  : {
         "users" : {
-            disallow : [],                      //Only allow this methods to auth-users
-            allow    : ["post"]           //Not auth user can make post
+            disallow : [],
+            allow    : ["post","get","put","delete"]
         },
         "customers" : {
             disallow : [],
-            allow    : ["post"]
+            allow    : ["post","get","put","delete"]
         },
         "devicetokens" : {
             disallow : [],
-            allow    : ["post"]
+            allow    : ["post","get","put","delete"]
         },
         "auth" : {
             disallow : [],
-            allow    : ["post","get"]
+            allow    : ["post","get","put","delete"]
+        },
+        "segments" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
+        },
+        "schedullers" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
+        },
+        "platforms" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
+        },
+        "pushlauncher" : {
+            disallow : [],
+            allow    : ["post","get","put","delete"]
         }
     },
-    api_prefix  : '/api'
+    api_prefix  : '/api',
+    push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
+    push_key_ios: 'certificate.cer'
 };
 module.exports = settings;

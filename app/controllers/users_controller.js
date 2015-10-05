@@ -1,14 +1,16 @@
 var _               = require('lodash');
 var helpers         = require('./_helpers');
+var models          = require('../models');
 
 var controller_name = 'users';
 
 module.exports = {
     list: function (req, res, next) {
-        req.models.user.find().order('-id').all(function (err, users) {
-            if (err) return next(err);
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(users)));
-        });
+        models.User.findAll({
+            include: [ models.Task ]
+        }).then(function(users) {
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method,users));
+                });
     },
     create: function (req, res, next) {
         var params = _.pick(req.body, 'username', 'email','password');

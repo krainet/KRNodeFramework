@@ -1,35 +1,21 @@
-var moment = require('moment');
+/**
+ * Created by ramon on 25/09/15.
+ */
+"use strict";
 
-module.exports = function (orm, db) {
-    var User = db.define('user', {
-            username     : { type: 'text', required: true },
-            password     : { type: 'text', required: true,  big:  true },
-            email        : { type: 'text', required: true,  big:  true },
-            date_add     : { type: 'date', required: true, time: true },
-            date_upd     : { type: 'date', required: true, time: true }
-        },
-        {
-            hooks: {
-                beforeValidation: function () {
-                    this.date_add = new Date();
-                    this.date_upd = new Date();
-                }
-            },
-            validations: {
+module.exports = function(sequelize, DataTypes) {
+    var User = sequelize.define("User", {
+        username : DataTypes.STRING,
+        password : DataTypes.STRING,
+        email    : DataTypes.STRING,
+        deleted  : DataTypes.BOOLEAN,
+        level    : DataTypes.INTEGER
+    },{
+        classMethods : {
+            associate : function(models){
 
-            },
-            methods: {
-                serialize: function () {
-
-                    return {
-                        id            : this.id,
-                        username      : this.username,
-                        password      : this.password,
-                        email         : this.email,
-                        date_add      : moment(this.date_add).fromNow(),
-                        date_upd      : moment(this.date_upd).fromNow()
-                    };
-                }
             }
-        });
+        }
+    });
+    return User;
 };
