@@ -11,7 +11,8 @@ var Nshop = models.Nshop;
 module.exports = {
     list: function (req, res, next) {
         Nshop.findAll({
-            include: []
+            include: [],
+            attributes: ['shop_name', 'value']
         }).then(function(nshop) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,nshop));
         });
@@ -22,7 +23,7 @@ module.exports = {
 
         if(params.shop_name && params.value){
             Nshop
-                .findOrCreate({where: {shop_name: params.shop_name}})
+                .findOrCreate({where: {shop_name: params.shop_name}, defaults: {value: params.value}})
                 .spread(function(nshop, created) {
                     if(created)
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method,nshop));

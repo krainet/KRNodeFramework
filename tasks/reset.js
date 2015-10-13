@@ -135,18 +135,153 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: "Image 580", type: "image580", tconstructor: "", template: "", values: JSON.stringify({link:"http://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
         {name: "Image 270", type: "image270", tconstructor: "", template: "", values: JSON.stringify({link:"http://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
         {name: "Simple Text", type: "simpleText", tconstructor: "", template: "newsletterMaker/templates/simpleText.tpl.html", values: JSON.stringify({})},
-        {name: "Html", type: "freeHtml", tconstructor: "", template: "", values: JSON.stringify({html:'<table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(82, 79, 79);text-align: left;"><h1>Bienvenido al CLUB VIP</h1></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0" style="color: rgb(34, 34, 34);background-color: rgb(255, 255, 255);text-align: center;"><tbody><tr><td width="100%"> <table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(107, 107, 107);text-align: left;"><a href="http://hogar.mequedouno.com" target="_blank" style="color: rgb(248, 135, 0);"><strong>Tienes Envío Gratis hasta final de año</strong></a><br>Hola, eres un cliente VIP en MeQuedoUno. Y nos apetece compartirlo contigo. En algún momento de nuestra breve pero intensa historia has estado ahí, dándolo todo y disfrutando de las oportunidades más tentadoras, por eso, ahora que se acerca nuestro Sexto Aniversario<strong> ¡queremos celebrarlo contigo!</strong></td></tr></tbody></table></td></tr></tbody></table>'})},
+        {name: "Html", type: "freeHtml", tconstructor: "", template: "newsletterMaker/templates/FreeHtml.tpl.html", values: JSON.stringify({html:'<table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(82, 79, 79);text-align: left;"><h1>Bienvenido al CLUB VIP</h1></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0" style="color: rgb(34, 34, 34);background-color: rgb(255, 255, 255);text-align: center;"><tbody><tr><td width="100%"> <table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(107, 107, 107);text-align: left;"><a href="http://hogar.mequedouno.com" target="_blank" style="color: rgb(248, 135, 0);"><strong>Tienes Envío Gratis hasta final de año</strong></a><br>Hola, eres un cliente VIP en MeQuedoUno. Y nos apetece compartirlo contigo. En algún momento de nuestra breve pero intensa historia has estado ahí, dándolo todo y disfrutando de las oportunidades más tentadoras, por eso, ahora que se acerca nuestro Sexto Aniversario<strong> ¡queremos celebrarlo contigo!</strong></td></tr></tbody></table></td></tr></tbody></table>'})},
         {name: "Crosseling", type: "crosseling", tconstructor: "", template: "newsletterMaker/templates/Crosseling1.tpl.html", values: JSON.stringify({})},
         {name: "MOButton", type: "verMejoresB", tconstructor: "", template: "newsletterMaker/templates/VerMejoresB.tpl.html", values: JSON.stringify({})},
         {name: "¿Eres fan?", type: "fan", tconstructor: "", template: "newsletterMaker/templates/Fan.tpl.html", values: JSON.stringify({})},
         {name: "Barra", type: "bar", tconstructor: "", template: "newsletterMaker/templates/Bar.tpl.html", values: JSON.stringify({})},
         {name: "Apps", type: "apps", tconstructor: "", template: "newsletterMaker/templates/Apps.tpl.html", values: JSON.stringify({})},
-        {name: "Contenedor", tconstructor: "", template: "", type: "container", values: JSON.stringify({columns: [[], []]})},
+        {name: "Contenedor", tconstructor: "", template: "", type: "container", values: JSON.stringify({columns: [[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "http://str.yeeday.net/img/cm/es/mqu/no_image.png"}, "id": 1}],[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "http://str.yeeday.net/img/cm/es/mqu/no_image.png"}}]]})},
         {name: "Contenedor 3", tconstructor: "", template: "",type: "container3", values: JSON.stringify({columns: [[],[],[]]})}
+    ];
+
+   /* name    : DataTypes.STRING,
+        json    : DataTypes.TEXT,
+        html    : DataTypes.TEXT,*/
+    var nhistory_data = [
+        {name: "News de bla mes vella", shop:"mqu", expectedDate:"1989-05-10",json: JSON.stringify({model:[
+        {
+            "name": "Disclaimer",
+            "type": "disclaimer1",
+            "id": 1,
+            "template": "newsletterMaker/templates/Disclaimer1.tpl.html"
+        },
+        {
+            "name": "Barra",
+            "type": "bar",
+            "template": "newsletterMaker/templates/Bar.tpl.html",
+            "id": 1
+        },
+        {
+            "name": "Header",
+            "type": "header1",
+            "id": 1,
+            "template": "newsletterMaker/templates/Header1.tpl.html"
+        },
+        {
+            "name": "Image 580",
+            "type": "image580",
+            "id": 1,
+            "template": "",
+            "values": {"link": "http://str.yeeday.net/img/cm/es/mqu/15-09-14UnoMiniPreciosN1.jpg"}
+        },
+        {
+            "name": "¿Eres fan?",
+            "type": "fan",
+            "template": "newsletterMaker/templates/Fan.tpl.html",
+            "id": 1
+        },
+        {
+            "name": "Crosseling",
+            "type": "crosseling",
+            "template": "newsletterMaker/templates/Crosseling1.tpl.html",
+            "id": 1
+        },
+        {
+            "name": "Contenedor",
+            "type": "container",
+            "id": 1,
+            "columns": [
+                [
+                    {
+                        "name": "Image 270",
+                        "type": "image270",
+                        "id": 2,
+                        "template": "",
+                        "values": {"link": "http://str.yeeday.net/img/cm/es/mqd/15-09-07DeporteCiclismoN1.jpg",
+                        "footerText": "WOW!",
+                        "footerDiscount": "99% Dto."}
+                    }
+                ],
+                [
+                    {
+                        "name": "Image 270",
+                        "type": "image270",
+                        "id": 2,
+                        "template": "",
+                        "values": {"link": "http://str.yeeday.net/img/cm/es/mqs/15-09-07SuperMaxipacksN1.jpg",
+                        "footerText": "Megaventa",
+                        "footerDiscount": "80% Dto."}
+                    }
+                ]
+            ]
+        },
+        {
+            "name": "Contenedor",
+            "type": "container",
+            "id": 2,
+            "columns": [
+                [
+                    {
+                        "name": "Image 270",
+                        "type": "image270",
+                        "id": 2,
+                        "template": "",
+                        "values": {"link": "http://str.yeeday.net/img/cm/es/mqk/15-09-07KidsSillaRecaroN1.jpg"}
+                    }
+                ],
+                [
+                    {
+                        "name": "Image 270",
+                        "type": "image270",
+                        "id": 2,
+                        "template": "",
+                        "values": {"link": "http://str.yeeday.net/img/cm/es/mqc/15-09-07ChicPerfumescosmeticaN1.jpg"}
+                    }
+                ]
+            ]
+        },
+        {
+            "name": "Image 580",
+            "type": "image580",
+            "id": 1,
+            "template": "",
+            "values": {"color": "#bb2525",
+            "link": "http://str.yeeday.net/img/cm/es/mqs/15-09-14SuperCosmeticaNL.jpg",
+            "alt": "Bla Bla",
+            "footerText": "Super Campaña!",
+            "footerDiscount": "80% Dto."}
+        },
+        {
+            "name": "Apps",
+            "type": "apps",
+            "template": "newsletterMaker/templates/Apps.tpl.html",
+            "id": 1
+        },
+        {
+            "name": "Barra",
+            "type": "bar",
+            "template": "newsletterMaker/templates/Bar.tpl.html",
+            "id": 2
+        },
+        {
+            "name": "Footer",
+            "type": "footer1",
+            "id": 1,
+            "template": "newsletterMaker/templates/Footer1.tpl.html"
+        }] }),
+            html: "adadfa"}
+
     ];
 
 
     async.waterfall([
+        function(next){
+            models.Nhistory.bulkCreate(nhistory_data)
+                .then(function(result){
+                    next();
+                });
+        },
         function(next){
             models.Nshop.bulkCreate(nshops_data)
                 .then(function(result){

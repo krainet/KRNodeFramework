@@ -17,16 +17,11 @@ var pushhistory_routes  = require('./api_pushhistory');
 // NEWSLETTER
 var nshops_routes = require('./api_nshops');
 var ncomponents_routes = require('./api_ncomponents');
-/*
 var nhistory_routes = require('./api_nhistory');
-
-*/
-
+var nspecialday_routes = require('./api_nspecialday');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
-
-
 
 module.exports = function (app) {
 
@@ -42,11 +37,8 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/pushhistory',pushhistory_routes);
     app.use(settings.api_prefix+'/nshops',nshops_routes);
     app.use(settings.api_prefix+'/ncomponents',ncomponents_routes);
-/*
     app.use(settings.api_prefix+'/nhistory',nhistory_routes);
-
-*/
-
+    app.use(settings.api_prefix+'/nspecialday',nspecialday_routes);
     //Web routes
     app.use('/',home_routes);
-}
+};

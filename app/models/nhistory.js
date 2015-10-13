@@ -6,9 +6,11 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Nhistory = sequelize.define("Nhistory", {
-        name    : DataTypes.STRING,
-        json    : DataTypes.TEXT,
-        html    : DataTypes.TEXT,
+        name        : DataTypes.STRING,
+        shop        : DataTypes.STRING,
+        expectedDate: DataTypes.DATE,
+        json        : DataTypes.TEXT,
+        html        : DataTypes.TEXT,
         deleted     : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false}
     },{
         classMethods : {

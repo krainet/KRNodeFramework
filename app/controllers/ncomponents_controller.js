@@ -11,7 +11,8 @@ var Ncomponent = models.Ncomponent;
 module.exports = {
     list: function (req, res, next) {
         Ncomponent.findAll({
-            include: []
+            include: [],
+            attributes: ['name', 'type', 'tconstructor', 'template', 'values']
         }).then(function(ncomponent) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,ncomponent));
         });
@@ -72,7 +73,6 @@ module.exports = {
                     return res.status(500).json(helpers.formatResponse(controller_name,req.method,'Not found so not updated bro'));
                 }
             });
-
         }
         else if (searchtype){
             Ncomponent.update(
@@ -101,15 +101,15 @@ module.exports = {
         else {
             return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'I need something to update bro'));
         }
-
     },
     delete: function(req,res,next) {
-       var getId = req.params.id ? req.params.id : null;
-       var searchtype = req.params.searchtype ? req.params.searchtype : null;
+        var getId = req.params.id ? req.params.id : null;
+        var searchtype = req.params.searchtype ? req.params.searchtype : null;
 
 
-       if (searchtype){
-            Ncomponent.destroy(
+        if (searchtype){
+            Ncomponent.update(
+                {deleted :1},
                 {where: {type : searchtype}}
             ).then(function(deleted) {
                 console.log(deleted);
@@ -121,7 +121,8 @@ module.exports = {
             });
         }
         else if (getId){
-            Ncomponent.destroy(
+            Ncomponent.update(
+                {deleted :1},
                 {where: {id : getId}}
             ).then(function(deleted) {
                 if(deleted) {

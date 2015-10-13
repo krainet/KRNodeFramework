@@ -3,8 +3,6 @@ var router              = express.Router();
 var ncomponents_controller    = require('../controllers/ncomponents_controller');
 var jwtmiddleware       = require('./jwtmiddleware');
 
-
-
 jwtmiddleware(router);
 
 /* GET Newsletter Templates listing. */

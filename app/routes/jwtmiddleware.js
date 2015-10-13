@@ -12,13 +12,13 @@ module.exports = function (router) {
     // route middleware to verify a token
     router.use(function(req, res, next) {
 
-        //console.log(req.baseUrl);
+        console.log(req.baseUrl);
         var controller = req.baseUrl.replace(settings.api_prefix,'').substr(1);
-        //console.log(controller);
+        console.log(controller);
         var method = req.method.toLowerCase();
-        //console.log(method);
+        console.log(method);
         var allowed_methods = settings.auth_perms[controller]?settings.auth_perms[controller].allow:[];
-        //console.log(allowed_methods);
+        console.log(allowed_methods);
 
 
         if(allowed_methods.length>0 && _.contains(allowed_methods,method)){

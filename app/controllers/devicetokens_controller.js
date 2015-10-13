@@ -35,8 +35,6 @@ module.exports = {
                         return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Token allready exist!'));
                 });
         }
-
-
     },
     get: function (req, res, next) {
         var searchtoken = req.params.searchtoken ? req.params.searchtoken : null;
