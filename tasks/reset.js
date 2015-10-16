@@ -61,7 +61,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: 'Test segment 10', description: 'Segmento de pruebas n.10', configuration: JSON.stringify(segment3)},
     ];
 
-    var scheduller_data = [
+    var scheduler_data = [
         {
             name: 'Campaña 1',
             message: 'Compra en MeQuedoUno cupon SOLOAPP',
@@ -149,7 +149,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         json    : DataTypes.TEXT,
         html    : DataTypes.TEXT,*/
     var nhistory_data = [
-        {name: "News de bla mes vella", shop:"mqu", expectedDate:"1989-05-10",json: JSON.stringify({model:[
+        {name: "News de bla mes vella", shop:"mqu", expectedDate:"2015-10-09", sent:false, json: JSON.stringify({model:[
         {
             "name": "Disclaimer",
             "type": "disclaimer1",
@@ -334,14 +334,14 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
                 });
         },
         function (next) {
-            models.Scheduller.bulkCreate(scheduller_data)
+            models.Scheduler.bulkCreate(scheduler_data)
                 .then(function (result) {
                     models.Segment.findByPrimary(1)
                         .then(function(segment){
-                            segment.addScheduller([1]);
+                            segment.addScheduler([1]);
                             models.Segment.findByPrimary(1)
                                 .then(function(segment2){
-                                    segment2.addScheduller([2,1]).then(function(){next()});
+                                    segment2.addScheduler([2,1]).then(function(){next()});
                                 });
                         });
 
@@ -350,7 +350,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
             );
         },
         function(next){
-            models.Scheduller.bulkCreate(user_data)
+            models.scheduler.bulkCreate(user_data)
                 .then(function(result){
                     next();
                 });

@@ -7,15 +7,15 @@ var settings        = require('../../config/settings');
 var async           = require('async');
 var models          = require('../models');
 
-var controller_name = 'schedullers';
+var controller_name = 'schedulers';
 
 
 module.exports = {
     list: function (req, res, next) {
-        models.Scheduller.findAll({
+        models.scheduler.findAll({
             include: [{model: models.Segment, as: 'Segments'}]
-        }).then(function(schedullers) {
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,schedullers));
+        }).then(function(schedulers) {
+            return res.status(200).json(helpers.formatResponse(controller_name,req.method,schedulers));
         });
     },
     create: function (req, res, next) {

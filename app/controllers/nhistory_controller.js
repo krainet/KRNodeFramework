@@ -13,7 +13,7 @@ module.exports = {
         Nhistory.findAll({
             include: [],
             where: {deleted : 0},
-            attributes: ['name', 'expectedDate', 'shop', 'json', 'html']
+            attributes: ['name', 'shop',  'expectedDate', 'sent', 'json', 'html']
         }).then(function(nhistory) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,nhistory));
         });
@@ -69,7 +69,7 @@ module.exports = {
             else if (searchname == 'ids') {
                 Nhistory.findAll({
                     order: 'updatedAt ASC',
-                    attributes: ['id', 'name', 'expectedDate', 'shop', 'createdAt', 'updatedAt'],
+                    attributes: ['id', 'sent','name', 'expectedDate', 'shop', 'createdAt', 'updatedAt'],
                     where: {deleted : 0}
                 }).then(function(component) {
                     return res.status(200).json(helpers.formatResponse(controller_name,req.method,component));

@@ -16,8 +16,8 @@ models(function (err, db) {
     async.waterfall([
         function(next){
             var _this = this;
-            console.log('Processing scheduller ...'.blue);
-            db.models.scheduller.find({date_to_send:orm.lte(new Date()),processed:0,date_sent:null}).order('-id').all(function (err, sched) {
+            console.log('Processing scheduler ...'.blue);
+            db.models.scheduler.find({date_to_send:orm.lte(new Date()),processed:0,date_sent:null}).order('-id').all(function (err, sched) {
                 if (err) throw err;
 
                 sched.forEach(function(element,index,array){

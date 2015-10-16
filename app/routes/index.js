@@ -10,7 +10,7 @@ var platform_routes     = require('./api_platforms');
 var customer_routes     = require('./api_customers');
 var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
-var scheduller_routes   = require('./api_schedullers');
+var scheduler_routes   = require('./api_schedulers');
 var pushlauncher_routes = require('./api_pushlauncher');
 var pushhistory_routes  = require('./api_pushhistory');
 
@@ -19,6 +19,7 @@ var nshops_routes = require('./api_nshops');
 var ncomponents_routes = require('./api_ncomponents');
 var nhistory_routes = require('./api_nhistory');
 var nspecialday_routes = require('./api_nspecialday');
+var nsend_routes = require('./api_nsend');
 
 //WEB ROUTES
 var home_routes = require('./web_home');
@@ -31,7 +32,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/customers',customer_routes);
     app.use(settings.api_prefix+'/devicetokens',devicetoken_routes);
     app.use(settings.api_prefix+'/segments',segment_routes);
-    app.use(settings.api_prefix+'/schedullers',scheduller_routes);
+    app.use(settings.api_prefix+'/schedulers',scheduler_routes);
     app.use(settings.api_prefix+'/platforms',platform_routes);
     app.use(settings.api_prefix+'/pushlauncher',pushlauncher_routes);
     app.use(settings.api_prefix+'/pushhistory',pushhistory_routes);
@@ -39,6 +40,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/ncomponents',ncomponents_routes);
     app.use(settings.api_prefix+'/nhistory',nhistory_routes);
     app.use(settings.api_prefix+'/nspecialday',nspecialday_routes);
+    app.use(settings.api_prefix+'/nsend',nsend_routes);
     //Web routes
     app.use('/',home_routes);
 };

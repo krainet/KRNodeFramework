@@ -19,13 +19,22 @@ module.exports = {
 
     },
     get: function (req, res, next) {
-        var getId = req.params.id ? req.params.id : null;
-        var expectedDate = req.params.expectedDate ? req.params.expectedDate : null;
+        var getId = req.params.id ? req.params.id : 0;
+        var expectedDate = req.params.expectedDate ? req.params.expectedDate : 0;
+        var idOffer = req.params.idOffer ? req.params.idOffer : 0;
+        console.log(getId + " DATE " + expectedDate + " OFFER " + idOffer);
 
-       if(getId && expectedDate){
-           specialDay.getData(expectedDate, function(result) {
-               return res.status(200).json(helpers.formatResponse(controller_name,req.method,result[0]));
-           });
+        if(parseInt(getId) === 0 && parseInt(expectedDate) === 0 && idOffer>0) {
+            specialDay.getProduct(idOffer, function(result) {
+
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method,result[0]));
+            });
+        }
+        else if( parseInt(getId) === 0 && expectedDate){
+            specialDay.getSpecialdays(expectedDate, function(result) {
+                console.log(specialDay);
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method,result[0]));
+            });
         }
         else{
             return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));

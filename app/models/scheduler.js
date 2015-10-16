@@ -4,7 +4,7 @@
 "use strict";
 
 module.exports = function(sequelize, DataTypes) {
-    var Scheduller = sequelize.define("Scheduller", {
+    var Scheduler = sequelize.define("Scheduler", {
         name     : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
         message  : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
         date_send: {type:DataTypes.DATE,allowNull:false,defaultValue:sequelize.NOW},
@@ -14,10 +14,10 @@ module.exports = function(sequelize, DataTypes) {
     },{
         classMethods : {
             associate : function(models){
-                Scheduller.belongsToMany(models.Segment,{through:'segment_scheduller'});
+                Scheduler.belongsToMany(models.Segment,{through:'segment_scheduler'});
             }
         }
     });
 
-    return Scheduller;
+    return Scheduler;
 };

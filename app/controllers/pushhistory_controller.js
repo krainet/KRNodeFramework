@@ -17,7 +17,7 @@ module.exports = {
     return res.status(200).json(helpers.formatResponse(controller_name, req.method, helpers.formatResponse(controller_name,req.method,null,'Empty response')));
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'devicetoken','scheduller');
+        var params = _.pick(req.body, 'devicetoken','scheduler');
         if(params.devicetoken){
             var decodedtoken = b64.decode(params.devicetoken);
             push_helper.SendOnePush(decodedtoken,function(err,response){
