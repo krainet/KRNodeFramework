@@ -3,9 +3,6 @@
  */
 var models      = require('../app/models/');
 var async       = require('async');
-var colors      = require('colors');
-var crypto      = require('crypto');
-var orm         = require('orm');
 var Curl        = require('node-libcurl').Curl;
 
 var Nhistory = models.Nhistory;
