@@ -1,0 +1,76 @@
+{
+    "__ERROR_LOG__":"true",
+    "__ERROR_CONSOLE__":"true",
+    "LOGGER_ENABLED":"false",
+    "__EMV_VERBOSE__":"false",
+
+    "spain": {
+        "mqu" :{
+            "EMV_SERVER": "p5apic.emv2.com",
+            "EMV_USER": "mequedouno",
+            "EMV_PWD": "mqd15@cxac",
+            "EMV_KEY": "CdX7CrxL6ECalERSRcwg0beiSSkPaNKmhEftS5ieK2lOLkYU",
+            "FROM": "news@noreply.mequedouno.com"
+        },
+        "hs": {
+            "EMV_SERVER": "p3apic.emv2.com",
+            "EMV_USER": "mequedouno_HS",
+            "EMV_PWD": "han15bc@qsiop12",
+            "EMV_KEY": "CdX7CrxL6ECalERSRcwghLK0EjQLYs68hkftS5iSdgJkrkWy",
+            "FROM" :"news@welcome.mequedouno.com"
+        }
+    },
+
+    "mx": {
+        "mqu" :{
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "api_mqmexico",
+            "EMV_PWD": "hanmx@tyui12",
+            "EMV_KEY": "CdX7CrxH_ViwnFFQVdomuJXtVS0HacW6iUftS5hyjt02LkZu"
+        },
+        "hs":{
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "api_hansolo_mx",
+            "EMV_PWD": "mxghan26@bx",
+            "EMV_KEY": "CdX7CrBH_ViwmUFTQ80jtKWKYHYCbdOghUSiFNReaPDobzmWNJGTkw",
+            "FROM" :"news@welcome.mequedouno.com"
+        }
+    },
+    "br": {
+        "mqu" :{
+            "EMV_SERVER":"p6apic.emv2.com",
+            "EMV_USER":"api_mqbrasil",
+            "EMV_PWD":"br59831c@ky",
+            "EMV_KEY":"CdX7CrxH_ViwnFFfQsM8spbtVS0Iftygg0TtS5hyifdqLkbH"
+        },
+        "hs": {
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "api_hansolo_br",
+            "EMV_PWD": "hanbr4567@cbn",
+            "EMV_KEY": "CdX7CrBH_ViwmUFTQ80jtKWFanYCbdOghUSiFNtUaPDobzmWNJGT8Q",
+            "FROM" :"news@welcome.mequedouno.com"
+        }
+    },
+
+    "DB_HOST_DSYSUX":"lappux06.yeeday.net",
+    "DB_PORT_DSYSUX":"3312",
+    "DB_USER_DSYSUX":"",
+    "DB_PASS_DSYSUX":"",
+    "DB_NAME_DSYSUX":"emv",
+
+    "DB_HOST_REMLUX":"lappux06.yeeday.net",
+    "DB_PORT_REMLUX":"3307",
+    "DB_USER_REMLUX":"",
+    "DB_PASS_REMLUX":"",
+    "DB_NAME_REMLUX":"mktg",
+
+    "DB_HOST_BI":"lappux06.yeeday.net",
+    "DB_PORT_BI":"3306",
+    "DB_USER_BI":"",
+    "DB_PASS_BI":"",
+    "DB_NAME_BI":"dw_mktg",
+
+
+    "TOKEN_ENCRYPT_KEY":"ITPower",
+    "API_URL_CAPTACION":"https://ofertas.mequedouno.com/mqapi.php"
+}

@@ -6,42 +6,271 @@ var async       = require('async');
 var colors      = require('colors');
 var crypto      = require('crypto');
 var orm         = require('orm');
+var Curl        = require('node-libcurl').Curl;
 
-models(function (err, db) {
+var Nhistory = models.Nhistory;
 
-    var devicetokens_send=[];
+var sender = function() {
+    var curl;
+    return {
+        options : '',
+        token :'',
+        message :'',
+        id :'',
+        init : function(country, account, callback){
+            console.log('Init...'.yellow);
+            this.options = require('../config/settingsEMV.json')[country][account];
 
-    if (err) throw err;
+            console.info(this.options);
 
-    async.waterfall([
-        function(next){
+            var url_get_token = 'https://' + this.options.EMV_SERVER + '/apiccmd/services/rest/connect/open/' + this.options.EMV_USER + '/' + this.options.EMV_PWD + '/' + this.options.EMV_KEY;
+            console.info('Url token: ' + url_get_token);
+
+            curl = new Curl();
+            curl.setOpt('URL', url_get_token);
+
             var _this = this;
-            console.log('Processing scheduler ...'.blue);
-            db.models.scheduler.find({date_to_send:orm.lte(new Date()),processed:0,date_sent:null}).order('-id').all(function (err, sched) {
-                if (err) throw err;
 
-                sched.forEach(function(element,index,array){
-                    console.log('Element');
-                    console.log(element);
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    _this.token = result['response']['result'][0]['_'];
+                    console.info('Init done, TOKEN: '.green + result['response']['result'][0]['_'].red);
                 });
+                curl.close.bind(curl);
 
-
-                var items = sched.map(function (m) {
-                    return m.serialize();
-                });
-                items.forEach(function(element,index,array){
-                    console.log('Sending campaign::: '+element.name);
-                });
-                console.log('DONE...'.green);
-                next();
+                callback();
             });
+            curl.on('error', function(err) {
+                curl.close.bind(curl)
+                console.info('Init Failed');
+                callback();
+            });
+            curl.perform();
         },
-        function(next){
-            db.close();
-        }
-    ],function(err,result){
-        if(err) return err;
-        else return result;
-    });
 
+        createMessage: function (html, callback) {
+            console.log('Creating message..'.yellow);
+            var url = 'https://'+ this.options.EMV_SERVER + '/apiccmd/services/rest/message/create/' + this.token;
+            var header = ['content-type: text/xml'];
+            var data = '<message><type>email</type><body>[EMV HTMLPART]<![CDATA['+ html + ']]> </body> ' +
+                '<isBounceback>false</isBounceback> ' +
+                '<description>Test Marc :) </description> <encoding>UTF-8</encoding> ' +
+                '<from>'+ this.options.FROM +'</from> <name>Marc </name> ' +
+                '<replyTo>Test</replyTo> <replyToEmail>test@mequedouno.com</replyToEmail> ' +
+                '<subject>Testejant........... </subject> <to></to> ' +
+                '<hotmailUnsubFlg>true</hotmailUnsubFlg> ' +
+                '<hotmailUnsubUrl>http://www.smartfocus.com</hotmailUnsubUrl>' +
+                '</message>';
+
+            curl = new Curl();
+            curl.setOpt('HTTPHEADER',header);
+            curl.setOpt('VERBOSE', this.options.__EMV_VERBOSE__);
+            curl.setOpt('URL', url);
+            curl.setOpt('POST', 1);
+            curl.setOpt('POSTFIELDS', data);
+
+            var _this = this;
+
+            console.log('URL: ' + url);
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    var id = result['response']['result'][0]['_'];
+                    curl.close.bind(curl);
+                    console.info('Message sent, ID MESSAGE: '.green + id.red);
+                    _this.id = id;
+                    callback();
+                });
+
+            });
+            curl.on('error', function(err) {
+                curl.close.bind(curl);
+                callback();
+            });
+            curl.perform();
+
+        },
+        getMessage: function (callback) {
+            console.log('Getting message..'.yellow);
+            var url = 'https://'+ this.options.EMV_SERVER +'/apiccmd/services/rest/message/getMessage/' + this.token +  '/' +this.id;
+
+            curl = new Curl();
+            curl.setOpt('VERBOSE', this.options.__EMV_VERBOSE__);
+            curl.setOpt('URL', url);
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                //console.info(body);
+                var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    //   console.log(result['response']['message']);
+                    var message = result['response']['message'][0]['body'][0];
+                    console.info('#Message recovered OK: '.green);
+                    curl.close.bind(curl);
+                    callback(message);
+                });
+            });
+            curl.on('error', function(err) {
+                curl.close.bind(curl);
+                callback('');
+            });
+            curl.perform();
+        },
+        trackAllLinks: function (callback) {
+            console.log('Tracking All links..'.yellow);
+            var url = 'https://'+ this.options.EMV_SERVER + '/apiccmd/services/rest/message/trackAllLinks/' + this.token + '/' +this.id;
+            console.log('URL: ' + url);
+
+            curl = new Curl();
+            curl.setOpt('VERBOSE', this.options.__EMV_VERBOSE__);
+            curl.setOpt('URL', url);
+
+            var _this = this;
+
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                console.info(body);
+                var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    var links = result['response']['result'][0]['_'];
+                    console.info('#Links trackejats: '.green + links.red);
+                    curl.close.bind(curl);
+                    callback();
+                });
+            });
+            curl.on('error', function(err) {
+                curl.close.bind(curl);
+                callback();
+            });
+            curl.perform();
+        },
+        createMessageMirror: function (callback) {
+            // __EMV_MIRRORLINK_EMV__
+            console.log('Creating message mirror..'.yellow);
+            var url = 'https://' + this.options.EMV_SERVER + '/apiccmd/services/rest/url/createMirrorUrl/' + this.token + '/' +this.id +'/MirrorLink';
+            var header = ['content-type: text/xml'];
+            console.log('URL: ' + url);
+
+            curl = new Curl();
+            curl.setOpt('VERBOSE', this.options.__EMV_VERBOSE__);
+            curl.setOpt('HTTPHEADER',header);
+            curl.setOpt('URL', url);
+
+            var _this = this;
+
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                console.info(body);
+                var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    var idMirror = result['response']['result'][0]['_'];
+                    console.info('#Id Mirror: '.green + idMirror.red);
+                    curl.close.bind(curl);
+                    _this.getMessage(function(message){
+                        //    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".red);
+                        //  console.log(message);
+                        var ht = message.replace("__EMV_MIRRORLINK_EMV__", '[EMV LINK]' + idMirror +'[EMV /LINK]');
+                        _this.updateMessageMirror(ht, function(call) {
+                            callback();
+                        });
+
+                    });
+                    //   _this.updateMessage(id, html.replace("__EMV_MIRRORLINK_EMV__", '[EMV LINK]' + idMirror +'[EMV /LINK]') , function(call) {
+                    //  callback();
+                    //         });
+                });
+
+            });
+            curl.on('error', function(err) {
+                curl.close.bind(curl);
+                callback();
+            });
+            curl.perform();
+
+        },
+        updateMessageMirror: function (html, callback) {
+            console.log('Updating message mirror..'.yellow);
+            // console.log(html);
+            callback();
+            var url = 'https://' + this.options.EMV_SERVER + '/apiccmd/services/rest/url/createMirrorUrl/' + this.token + '/' +this.id +'/MirrorLink';
+            var header = ['content-type: text/xml'];
+            console.log('URL: ' + url);
+
+            updatedhtml = '[EMV HTMLPART]<![CDATA['+ html.replace('[EMV HTMLPART]','') + ']]>';
+            console.log(updatedhtml);
+            var data = '<message><id>'+ this.id+'</id><type>email</type><body>'+ updatedhtml+'</body></message>';
+
+            curl = new Curl();
+            curl.setOpt('HTTPHEADER',header);
+            curl.setOpt('VERBOSE', this.options.__EMV_VERBOSE__);
+            curl.setOpt('URL', url);
+            curl.setOpt('POST', 1);
+            curl.setOpt('POSTFIELDS', data);
+
+            var _this = this;
+
+            curl.on('end', function (statusCode, body, headers) {
+                console.info(headers);
+                console.info(body);
+               /* var parseString = require('xml2js').parseString;
+                parseString(body, {trim: true}, function (err, result) {
+                    var ok = result['response']['result'][0]['_'];
+                    console.info('#Id Mirror: '.green + idMirror.red);
+                    curl.close.bind(curl);
+                    callback();
+                });*/
+            });
+            curl.on('error', function(err) {
+                curl.close.bind(curl);
+                callback();
+            });
+            curl.perform();
+        }
+
+    };
+
+}();
+
+
+async.waterfall([
+    function(next){
+        sender.init('br', 'hs', function (result){
+            //console.log('AAAAAAAAAAAAAAAAAAAAAAA'  + result);
+            next();
+        });
+    },
+    function(next){
+        Nhistory.findOne({ where: {id: 1}},{attributes: ['html']})
+            .then(function(Nhistory) {
+                sender.createMessage(Nhistory.html,function (result){
+                    next();
+                });
+            });
+    },
+    function(next){
+        sender.trackAllLinks(function (result){
+            next();
+        });
+    },
+    function(next){
+        sender.createMessageMirror(function (result){
+            next();
+        });
+    },
+    /*function(next){
+     sender.updateMessage(function (result){
+     next();
+     })
+     }*/
+
+], function (err, result) {
+    if (err) {
+        console.log('ERROR'.red);
+        return err;
+    } else {
+        console.log('All inserted OK'.yellow);
+        return result;
+    }
 });
