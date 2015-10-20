@@ -11,7 +11,7 @@ exports.getSpecialdays = function(expectedDate, callbackFunc) {
         var minDate = new Date(expectedDate).getTime() - 345600000; //4 dies abans
 
     sequelizePresta.query(
-            "SELECT sp.id_specialday, sp.crosselling_imgpath as img_path, lang.crosselling_title as name " +
+            "SELECT sp.id_specialday, sp.id_category as category, sp.crosselling_imgpath as img_path, lang.crosselling_title as name " +
             "FROM mq_mqspecialday AS sp " +
             "INNER JOIN mq_mqspecialday_lang AS lang ON sp.id_specialday=lang.id_specialday " +
             "WHERE NOT sp.deleted " +
@@ -25,7 +25,7 @@ exports.getSpecialdays = function(expectedDate, callbackFunc) {
     };
 exports.getProduct = function(idOffer, callbackFunc) {
     sequelizePresta.query(
-            "SELECT img.id_image as id_product, prod.mq_bill_name " +
+            "SELECT img.id_image as id_product, prod.id_category_default as category, prod.mq_bill_name " +
             "FROM mq_mqoffer off " +
             "INNER JOIN mq_product prod ON off.id_product=prod.id_product " +
             "INNER JOIN mq_image img ON prod.id_product=img.id_product " +

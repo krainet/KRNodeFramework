@@ -119,7 +119,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
     ];
 
     var nshops_data = [
-        {shop_name:"mqu",value:JSON.stringify({color: "#e78808", name:"Tech",link: "http://tech.mequedouno.com",logo:"http://str.yeeday.net/img/cm/es/mqu/logo-mqu.png"})},
+        {shop_name:"mqu",value:JSON.stringify({color: "#e78808", name:"Tech", link: "http://tech.mequedouno.com",logo:"http://str.yeeday.net/img/cm/es/mqu/logo-mqu.png"})},
         {shop_name:"mqv",value:JSON.stringify({color: "#8C003a", name: "Vino",link: "http://vino.mequedouno.com",logo: "http://str.yeeday.net/img/cm/es/mqv/logo-mqv.png"})},
         {shop_name:"mqh",value:JSON.stringify({color: "#603619", name: "Hogar", link: "http://hogar.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqh/logo-mqh.png"})},
         {shop_name:"mqk",value:JSON.stringify({color: "#f21B19", name: "Kids", link: "http://kids.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqk/logmqk.png"})},

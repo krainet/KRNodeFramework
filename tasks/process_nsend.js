@@ -50,16 +50,17 @@ var sender = function() {
             curl.perform();
         },
 
-        createMessage: function (html, callback) {
+        createMessage: function (newsletter, callback) {
+            var html= newsletter.html;
             console.log('Creating message..'.yellow);
             var url = 'https://'+ this.options.EMV_SERVER + '/apiccmd/services/rest/message/create/' + this.token;
             var header = ['content-type: text/xml'];
             var data = '<message><type>email</type><body>[EMV HTMLPART]<![CDATA['+ html + ']]> </body> ' +
                 '<isBounceback>false</isBounceback> ' +
-                '<description>Test Marc :) </description> <encoding>UTF-8</encoding> ' +
-                '<from>'+ this.options.FROM +'</from> <name>Marc </name> ' +
+                '<description>Newsletter para: '+ newsletter.shop +', en '+ newsletter.expectedDate +'</description> <encoding>UTF-8</encoding> ' +
+                '<from>'+ this.options.FROM +'</from> <name>'+newsletter.name+'</name> ' +
                 '<replyTo>Test</replyTo> <replyToEmail>test@mequedouno.com</replyToEmail> ' +
-                '<subject>Testejant........... </subject> <to></to> ' +
+                '<subject>'+ newsletter.name +'</subject> <to></to> ' +
                 '<hotmailUnsubFlg>true</hotmailUnsubFlg> ' +
                 '<hotmailUnsubUrl>http://www.smartfocus.com</hotmailUnsubUrl>' +
                 '</message>';
@@ -169,17 +170,10 @@ var sender = function() {
                     console.info('#Id Mirror: '.green + idMirror.red);
                     curl.close.bind(curl);
                     _this.getMessage(function(message){
-                        //    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".red);
-                        //  console.log(message);
-                        var ht = message.replace("__EMV_MIRRORLINK_EMV__", '[EMV LINK]' + idMirror +'[EMV /LINK]');
-                        _this.updateMessageMirror(ht, function(call) {
+                        _this.updateMessageMirror(message.replace(/__EMV_MIRRORLINK_EMV__/g, '[EMV LINK]' + idMirror +'[EMV /LINK]'), function(call) {
                             callback();
                         });
-
                     });
-                    //   _this.updateMessage(id, html.replace("__EMV_MIRRORLINK_EMV__", '[EMV LINK]' + idMirror +'[EMV /LINK]') , function(call) {
-                    //  callback();
-                    //         });
                 });
 
             });
@@ -194,12 +188,12 @@ var sender = function() {
             console.log('Updating message mirror..'.yellow);
             // console.log(html);
             callback();
-            var url = 'https://' + this.options.EMV_SERVER + '/apiccmd/services/rest/url/createMirrorUrl/' + this.token + '/' +this.id +'/MirrorLink';
+            var url = 'https://' + this.options.EMV_SERVER + '/apiccmd/services/rest/message/update/' + this.token;
             var header = ['content-type: text/xml'];
             console.log('URL: ' + url);
 
-            updatedhtml = '[EMV HTMLPART]<![CDATA['+ html.replace('[EMV HTMLPART]','') + ']]>';
-            console.log(updatedhtml);
+            updatedhtml = '[EMV HTMLPART]<![CDATA['+ html.replace("[EMV HTMLPART]",'') + ']]>';
+            //console.log(updatedhtml);
             var data = '<message><id>'+ this.id+'</id><type>email</type><body>'+ updatedhtml+'</body></message>';
 
             curl = new Curl();
@@ -214,13 +208,7 @@ var sender = function() {
             curl.on('end', function (statusCode, body, headers) {
                 console.info(headers);
                 console.info(body);
-               /* var parseString = require('xml2js').parseString;
-                parseString(body, {trim: true}, function (err, result) {
-                    var ok = result['response']['result'][0]['_'];
-                    console.info('#Id Mirror: '.green + idMirror.red);
-                    curl.close.bind(curl);
-                    callback();
-                });*/
+
             });
             curl.on('error', function(err) {
                 curl.close.bind(curl);
@@ -228,49 +216,40 @@ var sender = function() {
             });
             curl.perform();
         }
-
     };
-
 }();
 
-
-async.waterfall([
-    function(next){
-        sender.init('br', 'hs', function (result){
-            //console.log('AAAAAAAAAAAAAAAAAAAAAAA'  + result);
-            next();
-        });
-    },
-    function(next){
-        Nhistory.findOne({ where: {id: 1}},{attributes: ['html']})
-            .then(function(Nhistory) {
-                sender.createMessage(Nhistory.html,function (result){
-                    next();
-                });
+module.exports.pujar = function (newsletter, callback) {
+    async.waterfall([
+        function(next){
+            sender.init('br', 'hs', function (result){
+                next();
             });
-    },
-    function(next){
-        sender.trackAllLinks(function (result){
-            next();
-        });
-    },
-    function(next){
-        sender.createMessageMirror(function (result){
-            next();
-        });
-    },
-    /*function(next){
-     sender.updateMessage(function (result){
-     next();
-     })
-     }*/
+        },
+        function(next){
+            sender.createMessage(newsletter,function (result){
+                next();
 
-], function (err, result) {
-    if (err) {
-        console.log('ERROR'.red);
-        return err;
-    } else {
-        console.log('All inserted OK'.yellow);
-        return result;
-    }
-});
+            });
+        },
+        function(next){
+            sender.trackAllLinks(function (result){
+                next();
+            });
+        },
+        function(next){
+            sender.createMessageMirror(function (result){
+                next();
+            });
+        }
+    ], function (err, result) {
+        if (err) {
+            console.log('ERROR'.red);
+            return callback(false);
+        } else {
+            console.log('All Updated OK'.yellow);
+            return callback(true);
+        }
+    });
+};
+

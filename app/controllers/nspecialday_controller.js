@@ -6,13 +6,7 @@ var controller_name = 'nspecialday';
 
 module.exports = {
     list: function (req, res, next) {
-       /* Nhistory.findAll({
-            include: [],
-            where: {deleted : 0},
-            attributes: ['name', 'shop', 'json', 'html']
-        }).then(function(nhistory) {
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,nhistory));
-        });*/
+
     },
 
     create: function (req, res, next) {
@@ -22,18 +16,41 @@ module.exports = {
         var getId = req.params.id ? req.params.id : 0;
         var expectedDate = req.params.expectedDate ? req.params.expectedDate : 0;
         var idOffer = req.params.idOffer ? req.params.idOffer : 0;
+
         console.log(getId + " DATE " + expectedDate + " OFFER " + idOffer);
+
+        var searchShop = function(inf) {
+            switch(inf.category) {
+                case 11: inf.shop_name = 'tech';    inf.shop = 'MQU';   break;
+                case 12: inf.shop_name = 'vino';    inf.shop = 'MQV';   break;
+                case 13: inf.shop_name = 'hogar';   inf.shop = 'MQH';   break;
+                case 14: inf.shop_name = 'kids';    inf.shop = 'MQK';   break;
+                case 15: inf.shop_name = 'chic';    inf.shop = 'MQC';   break;
+                case 16: inf.shop_name = 'deporte'; inf.shop = 'MQD';   break;
+                case 17: inf.shop_name = 'super';   inf.shop = 'MQS';   break;
+                case 18: inf.shop_name = 'www';     inf.shop = 'MQW';   break;
+            }
+            console.log(inf);
+            return inf;
+        };
+
 
         if(parseInt(getId) === 0 && parseInt(expectedDate) === 0 && idOffer>0) {
             specialDay.getProduct(idOffer, function(result) {
-
-                return res.status(200).json(helpers.formatResponse(controller_name,req.method,result[0]));
+                var inf = searchShop(result[0][0]);
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method, inf));
             });
         }
+
         else if( parseInt(getId) === 0 && expectedDate){
             specialDay.getSpecialdays(expectedDate, function(result) {
-                console.log(specialDay);
-                return res.status(200).json(helpers.formatResponse(controller_name,req.method,result[0]));
+
+                var info = result[0];
+                info.forEach(function(inf){
+                    inf = searchShop(inf);
+                });
+                //console.log(info);
+                return res.status(200).json(helpers.formatResponse(controller_name,req.method, info));
             });
         }
         else{
@@ -42,57 +59,9 @@ module.exports = {
 
     },
     put: function(req,res,next) {
-       /* var getId = req.params.id ? req.params.id : null;
-        var searchname = req.params.searchname ? req.params.searchname : null;
 
-        var params = _.pick(req.body,'name', 'shop', 'json', 'html');
-
-        if (searchname){
-            Nhistory.update(
-                params,
-                {where: {name: searchname, deleted: 0}}
-            ).then(function(updated) {
-                if(updated) {
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,'Updated OK' + getID));
-                } else {
-                    return res.status(500).json(helpers.formatResponse(controller_name,req.method,'Not found so not updated bro'));
-                }
-            });
-        }
-        else if (getId){
-            console.log("ha entrat aqui!");
-            //console.log(params);
-            Nhistory.update(
-                params,
-                {where: {id : getId, deleted: 0}}
-            ).then(function(updated) {
-                if(updated) {
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,'Updated OK'));
-                } else {
-                    return res.status(500).json(helpers.formatResponse(controller_name,req.method,'Not found so not updated bro'));
-                }
-            });
-        }
-        else {
-            return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'I need something to update bro'));
-        }*/
     },
-    /*delete: function(req,res,next) {
-        var getId = req.params.id ? req.params.id : null;
-        if (getId){
-            Nhistory.update(
-                {deleted :1},
-                {where: {id : getId}}
-            ).then(function(deleted) {
-                if(deleted) {
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,'deleted OK'));
-                } else {
-                    return res.status(500).json(helpers.formatResponse(controller_name,req.method,'Not found so not destroyed bro'));
-                }
-            });
-        }
-        else {
-            return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'I need something to destroy bro'));
-        }
-    }*/
+    delete: function(req,res,next) {
+
+    }
 };
