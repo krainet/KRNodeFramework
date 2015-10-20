@@ -229,7 +229,6 @@ module.exports.pujar = function (newsletter, callback) {
         function(next){
             sender.createMessage(newsletter,function (result){
                 next();
-
             });
         },
         function(next){

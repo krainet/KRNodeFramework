@@ -25,7 +25,7 @@ exports.getSpecialdays = function(expectedDate, callbackFunc) {
     };
 exports.getProduct = function(idOffer, callbackFunc) {
     sequelizePresta.query(
-            "SELECT img.id_image as id_product, prod.id_category_default as category, prod.mq_bill_name " +
+            "SELECT img.id_image, prod.id_product, prod.id_category_default as category, prod.mq_bill_name " +
             "FROM mq_mqoffer off " +
             "INNER JOIN mq_product prod ON off.id_product=prod.id_product " +
             "INNER JOIN mq_image img ON prod.id_product=img.id_product " +
