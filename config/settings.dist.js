@@ -1,6 +1,7 @@
 var path       = require('path');
 
 var settings = {
+    appMode    : 'test',
     path       : path.normalize(path.join(__dirname, '..')),
     port       : process.env.NODE_PORT || 3000,
     database   : {
@@ -49,6 +50,7 @@ var settings = {
     },
     api_prefix  : '/api',
     push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
-    push_key_ios: 'certificate.cer'
+    push_key_ios: 'certificate.cer',
+    use_env_variable : false
 };
 module.exports = settings;
