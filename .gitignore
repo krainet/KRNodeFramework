@@ -1,4 +1,3 @@
-/nbproject/*
 /node_modules/*
 .idea/*
 /config/settings.js
@@ -6,4 +5,5 @@
 config/settings.js
 config/settingsBBDD.js
 app/config/*
+config/settingsEMV.json
 
