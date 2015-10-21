@@ -8,22 +8,22 @@ var settingsBBDD = {
         appBBDD  : {
             "dev": {
                 "username": "root",
-                "password": "khqtzdlw",
-                "database": "test_api",
+                "password": "",
+                "database": "api_node",
                 "host": "127.0.0.1",
                 "dialect": "mysql"
             },
             "replica": {
                 "username": "root",
-                "password": "kqhtzdlw",
-                "database": "test_api",
+                "password": "",
+                "database": "api_node",
                 "host": "127.0.0.1",
                 "dialect": "mysql"
             },
             "prod": {
                 "username": "root",
-                "password": "kqhtzdlw",
-                "database": "test_api",
+                "password": "",
+                "database": "api_node",
                 "host": "127.0.0.1",
                 "dialect": "mysql"
             }
