@@ -1,6 +1,3 @@
-/**
- * Created by ramon on 22/09/15.
- */
 var models      = require('../app/models/');
 var async       = require('async');
 var Curl        = require('node-libcurl').Curl;
@@ -9,29 +6,6 @@ var striptags   = require('striptags');
 var Nhistory = models.Nhistory;
 
 var http = require('http');
-
-function getDataEmailVision(host, path, callback) {
-
-    return http.get({
-        host: host,
-        path: path
-    }, function(response) {
-        // Continuously update stream with data
-        var body = '';
-        response.on('data', function(d) {
-            body += d;
-        });
-        response.on('end', function() {
-
-            // Data reception is done, do whatever with it!
-            var parsed = JSON.parse(body);
-            callback(parsed);
-        });
-    });
-
-};
-
-
 
 var sender = function() {
     var curl;
@@ -142,14 +116,7 @@ var sender = function() {
             });
             curl.perform();
         },
-        getMessageJSON: function (callback) {
-            console.log('Getting message..'.yellow);
-            var url = 'https://'+ this.options.EMV_SERVER;
-            var path = '/apiccmd/services/rest/message/getMessage/' + this.token +  '/' +this.id;
-            getDataEmailVision(url, path, function (result) {
-                console.log(result);
-            });
-        },
+
         trackAllLinks: function (callback) {
             console.log('Tracking All links..'.yellow);
             var url = 'https://'+ this.options.EMV_SERVER + '/apiccmd/services/rest/message/trackAllLinks/' + this.token + '/' +this.id;
@@ -265,11 +232,6 @@ module.exports.pujar = function (newsletter, callback) {
         },
         function(next){
             sender.trackAllLinks(function (result){
-                next();
-            });
-        },
-        function(next){
-            sender.getMessageJSON(function (result){
                 next();
             });
         },
