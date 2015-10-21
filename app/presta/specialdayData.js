@@ -1,7 +1,11 @@
 var path       = require('path');
-var config    = require('../../config/config.json')['presta'];
+
+var settings     = require(__dirname + '/../../config/settings');
+var settingsBBDD = require(__dirname + '/../../config/settingsBBDD');
 var Sequelize = require('sequelize');
 
+
+var config = settingsBBDD.getBBDDSettings('mqpshBBDD',settings.appMode);
 var sequelizePresta = new Sequelize(config.database, config.username, config.password, config);
 
 //module.exports =
