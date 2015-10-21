@@ -1,5 +1,5 @@
 var _               = require('lodash');
-var helpers         = require('./_helpers');
+var helpers         = require('./../helpers/responseHelper');
 var models          = require('../models');
 var pnsend          = require('../../tasks/process_nsend');
 

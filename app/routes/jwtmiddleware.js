@@ -4,7 +4,7 @@
 var jwt                 = require('jsonwebtoken');
 var settings            = require('../../config/settings');
 var _                   = require('lodash');
-var helpers             = require('../controllers/_helpers.js')
+var helpers             = require('../helpers/responseHelper.js')
 
 
 module.exports = function (router) {
