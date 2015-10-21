@@ -30,7 +30,6 @@ module.exports = {
                 case 17: inf.shop_name = 'super';   inf.shop = 'MQS';   break;
                 case 18: inf.shop_name = 'www';     inf.shop = 'MQW';   break;
             }
-            console.log(inf);
             return inf;
         };
 
