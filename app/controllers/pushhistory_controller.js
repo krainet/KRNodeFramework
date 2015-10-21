@@ -2,7 +2,7 @@
  * Created by hadock on 15/09/15.
  */
 var _               = require('lodash');
-var helpers         = require('./_helpers');
+var helpers         = require('./../helpers/responseHelper');
 var settings        = require('../../config/settings');
 var models          = require('../models');
 var push_helper     = require('../helpers/push_helper')

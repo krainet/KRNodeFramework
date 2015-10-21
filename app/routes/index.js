@@ -3,16 +3,19 @@
  */
 var settings = require('../../config/settings');
 
-//API ROUTES
+//API ROUTES PUSH
 var auth_routes         = require('./api_auth');
 var user_routes         = require('./api_users');
 var platform_routes     = require('./api_platforms');
 var customer_routes     = require('./api_customers');
 var devicetoken_routes  = require('./api_devicetokens');
 var segment_routes      = require('./api_segments');
-var scheduler_routes   = require('./api_schedulers');
+var scheduler_routes    = require('./api_schedulers');
 var pushlauncher_routes = require('./api_pushlauncher');
 var pushhistory_routes  = require('./api_pushhistory');
+
+//API GET CONFIG FOR APPS
+var configapp_routes    = require('./api_configapp');
 
 // NEWSLETTER
 var nshops_routes = require('./api_nshops');

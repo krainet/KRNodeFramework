@@ -20,35 +20,30 @@ var settings = {
     //JSON web tokens permissions
     auth_perms  : {
         "users" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "customers" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "devicetokens" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "auth" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "segments" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "schedullers" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "platforms" : {
-            disallow : [],
             allow    : ["post","get","put","delete"]
         },
         "pushlauncher" : {
-            disallow : [],
+            allow    : ["post","get","put","delete"]
+        },
+        "configapp" : {
             allow    : ["post","get","put","delete"]
         }
     },
