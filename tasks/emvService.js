@@ -8,7 +8,7 @@ var credentials = {
     "apiKey": "CdX7CrBH_ViwmUFTQ80jtKWFanYCbdOghUSiFNtUaPDobzmWNJGT8Q"
 };
 
-var API_URL = 'https://apie.campaigncommander.com/transactional-api-ws';
+var API_URL = 'https://apie.campaigncommander.com/smartemail/v1';
 var API_URL2= 'https://apie.campaigncommander.com/transactional-api-ws';
 var rp = require('request-promise');
 
@@ -21,15 +21,17 @@ var options = {
 
 
 var message = {
-
-    "name":"test",
-    "subject":"testsubject",
-    "from":"PUTA",
-    "sender":"news@welcome.mequedouno.com.br",
-    "to":"to",
-    "encoding":"UTF-8",
-    "body":"[EMV HTMLPART]<html><body>test</body></html>",
-    "replyToEmail":"test@mequedouno.com"
+    "name": "MISSATGE ENESSIMA PROVA",
+    "status": "ready",
+    "mode": "html",
+    "version": "1",
+    "subject": "Acme News",
+    "fromEmail": "news@welcome.mequedouno.com.br",
+    "fromLabel": "Acme News",
+    "toLabel": "",
+    "replyToLabel": "Acme Contact",
+    "text": "Acme News",
+    "html": "<!DOCTYPE html><html><head><title>Acme News</title></head><body>\n<h1>Acme News</h1>\n<p>Our <a href=\"http://acme.com/products\">list of products</a>!</p>\n</body></html>"
 };
 
 rp(options)
@@ -38,9 +40,10 @@ rp(options)
         //  var b = ;
         var s = new Buffer(parsedBody.token).toString('base64');
         console.log(s);
-        /*var options2 = {
+
+        var postMessage = {
             method: 'POST',
-            uri: API_URL2+'/transactionalMessages',
+            uri: API_URL+'/messages',
             body: message,
             json: true,
             headers: {
@@ -48,14 +51,31 @@ rp(options)
             }
         };
 
-        rp(options2)
+        var getMessages = {
+            method: 'GET',
+            uri: API_URL+'/messages',
+            json: true,
+            headers: {
+                Authorization: 'Basic ' + new Buffer(parsedBody.token+':').toString('base64')
+            }
+        };
+        var getMessage = {
+            method: 'GET',
+            uri: API_URL+'/messages'+'/02e8baa1-0c19-4a8a-9021-684c6075e4a4',
+            json: true,
+            headers: {
+                Authorization: 'Basic ' + new Buffer(parsedBody.token+':').toString('base64')
+            }
+        };
+
+        rp(getMessage)
             .then(function (parsedBody2) {
                 console.log('????????????????????????????????????????????????????????????????????????????');
                 console.log(parsedBody2);
             }).catch(function(err){
             console.log('PUTAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
                 console.log(err);
-        }) ;*/
+        }) ;
 
 
 
