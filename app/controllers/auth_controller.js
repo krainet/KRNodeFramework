@@ -5,37 +5,50 @@ var _               = require('lodash');
 var helpers         = require('./../helpers/responseHelper');
 var settings        = require('../../config/settings');
 var jwt             = require('jsonwebtoken');
+var models          = require('../models');
 
 var controller_name = 'auth';
 
 
 module.exports = {
     list: function (req, res, next) {
-
-    },
-    create: function (req, res, next) {
-        if((req.body.email||req.body.username) && req.body.password){
-            req.models.user.find({or:[{email: req.body.email}, {username: req.body.username}],password:req.body.password},function(err,user){
-                if(user){
-                    var token = jwt.sign(user, settings.secret_jwt, {
-                        expiresInMinutes: 1 // expires in 24 hours
-                    });
+        models.User
+            .findAndCountAll({})
+            .then(function(users) {
+/*
+                console.log(users.count);
+                console.log(users.rows);
+*/
+                if(users){
+                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,users,null));
+                }else{
+                    return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Not found'));
                 }
 
-                if(err)
-                    return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-                else
-                    return res.status(200).json(helpers.formatResponse(controller_name,req.method,helpers.mapResults(user),null,token));
             });
+    },
+    create: function (req, res, next) {
+        if(req.body.username && req.body.password){
+            models.User.findOne({ where: {username: req.body.username,password:req.body.password} })
+                .then(function(user) {
+                    if(user){
+                        var token = jwt.sign(user, settings.secret_jwt, {
+                            expiresInMinutes: 5 // expires in 24 hours
+                        });
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,user,null,token));
+                    }
+                })
         }else{
             return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Parameters missing'));
         }
     },
     get: function (req, res, next) {
-        req.models.customer.get(req.params.id,function (err, customer) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
-        });
-
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
+    },
+    put: function(req,res,next) {
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
+    },
+    delete: function(req,res,next) {
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Empty'));
     }
 };

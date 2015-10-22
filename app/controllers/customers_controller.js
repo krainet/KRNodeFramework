@@ -31,7 +31,7 @@ module.exports = {
                         .findOrCreate({where: {token: params.token}})
                         .spread(function(devicetoken, created) {
                             if(created){
-                                models.devicetoken.setPlatform(params.platform);
+                                devicetoken.setPlatform(params.platform);
                                 customer.addDevicetoken(devicetoken);
                                 return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer));
                             }else{

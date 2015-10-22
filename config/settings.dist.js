@@ -1,4 +1,5 @@
 var path       = require('path');
+var appSettings  = require('./appSettings.dist.json');
 
 var settings = {
     appMode    : 'test',
@@ -40,6 +41,7 @@ var settings = {
     api_prefix  : '/api',
     push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
     push_key_ios: 'certificate.cer',
-    use_env_variable : false
+    use_env_variable : false,
+    app_extra_settings : ''
 };
 module.exports = settings;
