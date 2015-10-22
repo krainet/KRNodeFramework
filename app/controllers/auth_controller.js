@@ -36,6 +36,8 @@ module.exports = {
                             expiresInMinutes: 5 // expires in 24 hours
                         });
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method,user,null,token));
+                    }else{
+                        return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Authentication failed'));
                     }
                 })
         }else{
