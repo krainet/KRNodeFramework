@@ -44,6 +44,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/nhistory',nhistory_routes);
     app.use(settings.api_prefix+'/nspecialday',nspecialday_routes);
     app.use(settings.api_prefix+'/nsend',nsend_routes);
+    app.use(settings.api_prefix+'/configapp',configapp_routes);
     //Web routes
     app.use('/',home_routes);
 };

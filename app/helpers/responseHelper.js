@@ -39,6 +39,23 @@ module.exports = {
 
         return response;
     },
+    formatConfigResponse: function(data) {
+        var response = {};
+        data.forEach(function(element){
+            if(element['config_key']==='config_available_langs'){
+                response[element['config_key']] = JSON.parse(element.config_value);
+            }else{
+                var tmp_value = element.config_value==0?false:isNaN(element.config_value)==false?parseInt(element.config_value):element.config_value;
+                if(tmp_value === "false"){
+                    tmp_value = false;
+                }
+                response[element['config_key']] = tmp_value;
+            }
+        });
+
+
+        return response;
+    },
     mapResults: function(result){
         var items = result.map(function (m) {
             return m.serialize();

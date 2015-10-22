@@ -145,6 +145,47 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: "Contenedor 3", tconstructor: "", template: "",type: "container3", values: JSON.stringify({columns: [[],[],[]]})}
     ];
 
+    var nconfigapp_langs = {
+        es:{
+            Name: "Español",
+            URL: "http://msell.com.es/zacaris/flags/es.png"
+        }
+    }
+    var nconfigapp_data = [
+        {config_key : "config_open_app", config_value: "false"},
+        {config_key : "config_clean_all_cache", config_value: "false"},
+        {config_key : "config_open_app_android", config_value: "false"},
+        {config_key : "config_open_app_ios", config_value: "false"},
+        {config_key : "config_closed_app_msg_key_android",config_value:  "txt_closed_app_msg"},
+        {config_key : "config_closed_app_msg_key_ios", config_value: "txt_closed_app_msg"},
+        {config_key : "config_closed_app_title_key_android", config_value:  "txt_closed_app_title"},
+        {config_key : "config_closed_app_title_key_ios", config_value: "txt_closed_app_title"},
+        {config_key : "config_closed_btn_txt_key_android", config_value: "txt_closed_app_btn"},
+        {config_key : "config_closed_btn_txt_key_ios", config_value: "txt_closed_app_btn"},
+        {config_key : "config_closed_update_android", config_value: "false"},
+        {config_key : "config_closed_update_ios", config_value: "false"},
+        {config_key : "config_closed_version_base_android", config_value: 4},
+        {config_key : "config_closed_version_base_ios", config_value: 4},
+        {config_key : "config_closed_version_arg_android", config_value: "<"},
+        {config_key : "config_closed_version_arg_ios", config_value: "<"},
+        {config_key : "config_closed_version_arg_samples", config_value: "<,>,=,<=,>="},
+        {config_key : "config_url_base", config_value: "http://msell.com.es/MQ1/"},
+        {config_key : "config_url_i18n", config_value: "statics_texts.php"},
+        {config_key : "config_url_localized_config", config_value: "config.php"},
+        {config_key : "config_analytics_account_id", config_value: "UA-11055945-16"},
+        {config_key : "config_analytics_store_name", config_value: "MQ1"},
+        {config_key : "config_analytics_dispatch_period", config_value: 10},
+        {config_key : "config_push_app_id", config_value: 11},
+        {config_key : "config_push_domain", config_value: "msell.com.es/apns"},
+        {config_key : "config_push_discount_code", config_value: ""},
+        {config_key : "config_check_payment_interval", config_value: 1},
+        {config_key : "config_check_payment_attempts", config_value: 20},
+        {config_key : "config_page_size", config_value: 20},
+        {config_key : "url_paypal", config_value: "http://msell.com.es/zacaris/paypal-dev/sec.php"},
+        {config_key : "config_default_lang", config_value: "es"},
+        {config_key : "config_available_langs", config_value: JSON.stringify(nconfigapp_langs)}
+    ];
+
    /* name    : DataTypes.STRING,
         json    : DataTypes.TEXT,
         html    : DataTypes.TEXT,*/
@@ -283,6 +324,12 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
                 });
         },
         function(next){
+            models.Configapp.bulkCreate(nconfigapp_data)
+                .then(function(result){
+                    next();
+                });
+        },
+        function(next){
             models.Nshop.bulkCreate(nshops_data)
                 .then(function(result){
                     next();
@@ -341,7 +388,9 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
                             segment.addScheduler([1]);
                             models.Segment.findByPrimary(1)
                                 .then(function(segment2){
-                                    segment2.addScheduler([2,1]).then(function(){next()});
+                                    segment2.addScheduler([2,1]).then(function(){
+                                        next()
+                                    });
                                 });
                         });
 
@@ -349,12 +398,12 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
                 }
             );
         },
-        function(next){
+/*        function(next){
             models.scheduler.bulkCreate(user_data)
                 .then(function(result){
                     next();
                 });
-        }
+        }*/
     ], function (err, result) {
         if (err) {
             console.log('ERROR'.red);

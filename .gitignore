@@ -6,4 +6,4 @@ config/settings.js
 config/settingsBBDD.js
 app/config/*
 config/settingsEMV.json
-
+config/appSettings.json
