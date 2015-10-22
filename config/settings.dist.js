@@ -35,7 +35,22 @@ var settings = {
         },
         "configapp" : {
             allow    : ["post","get","put","delete"]
-        }
+        },
+        "nshops" : {
+            allow    : ["get"]
+        },
+        "ncomponents" : {
+            allow    : ["post","get","put","delete"]
+        },
+        "nhistory" : {
+            allow    : ["post","get","put","delete"]
+        },
+        "nspecialday" : {
+            allow    : ["get"]
+        },
+        "nsend" : {
+            allow    : ["get"]
+        },
     },
     api_prefix  : '/api',
     push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
