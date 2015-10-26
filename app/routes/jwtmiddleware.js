@@ -12,24 +12,27 @@ module.exports = function (router) {
     // route middleware to verify a token
     router.use(function(req, res, next) {
 
-      //  console.log(req.baseUrl);
+        //  console.log(req.baseUrl);
         var controller = req.baseUrl.replace(settings.api_prefix,'').substr(1);
-      //  console.log(controller);
+        //  console.log(controller);
         var method = req.method.toLowerCase();
-      //  console.log(method);
+        //  console.log(method);
         var allowed_methods = settings.auth_perms[controller]?settings.auth_perms[controller].allow:[];
-     //   console.log(allowed_methods);
+        //   console.log(allowed_methods);
 
 
         if(allowed_methods.length>0 && _.contains(allowed_methods,method)){
             //If method is allowed in settings don't use JWT
             next();
         } else {
-
+            if(req.method == 'OPTIONS') {
+                next();
+            }
             // check header or url parameters or post parameters for token
             var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-            // decode token
+            // decode tok
+            // en
             if (token) {
                 // verifies secret and checks exp
                 jwt.verify(token, settings.secret_jwt, function (err, decoded) {
@@ -57,11 +60,11 @@ module.exports = function (router) {
 
 /*
 
-// if user is found and password is right
-// create a token
-var token = jwt.sign(user, app.get('superSecret'), {
-expiresInMinutes: 1440 // expires in 24 hours
-});
+ // if user is found and password is right
+ // create a token
+ var token = jwt.sign(user, app.get('superSecret'), {
+ expiresInMinutes: 1440 // expires in 24 hours
+ });
 
  */
 

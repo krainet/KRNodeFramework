@@ -27,7 +27,7 @@ module.exports = function (app) {
 
     //CORS
     app.all('*', function(req, res, next) {
-        res.header('Access-Control-Allow-Origin', 'http://localhost:9000');
+        res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
         res.header('Access-Control-Expose-Headers', 'Set-Cookie');
 

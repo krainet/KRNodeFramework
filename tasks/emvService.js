@@ -8,25 +8,38 @@ var credentials = {
     "apiKey": "CdX7CrBH_ViwmUFTQ80jtKWFanYCbdOghUSiFNtUaPDobzmWNJGT8Q"
 };
 
-var API_URL = 'https://apie.campaigncommander.com/smartemail/v1';
+var credentials2 = {
+    "login": "mequedouno_HS",
+    "password": "han15bc@qsiop12",
+    "apiKey": "CdX7CrxL6ECalERSRcwghLK0EjQLYs68hkftS5iSdgJkrkWy"
+};
+
+var API_URL = 'https://apir.campaigncommander.com/smartemail/v1';
 var API_URL2= 'https://apie.campaigncommander.com/transactional-api-ws';
 var rp = require('request-promise');
 
 var options = {
     method: 'POST',
     uri: API_URL+'/authorization',
-    body: credentials,
-    json: true, // Automatically stringifies the body to JSON+
+    body: credentials2,
+    json: true // Automatically stringifies the body to JSON+
 };
+
+var draftMessage = {
+    "name": "Acme News",
+    "status": "draft",
+    "mode": "html",
+    "text": "Acme News",
+    "html": "<!DOCTYPE html><html><head><title>Acme News</title></head><body>\n<h1>Acme News</h1>\n<p>Our <a href=\"http://acme.com/products\">list of products</a>!</p>\n</body></html>"
+}
 
 
 var message = {
-    "name": "MISSATGE ENESSIMA PROVA",
+    "name": "MISSATGE PROVA",
     "status": "ready",
     "mode": "html",
-    "version": "1",
     "subject": "Acme News",
-    "fromEmail": "news@welcome.mequedouno.com.br",
+    "fromEmail": "news@welcome.mequedouno.com",
     "fromLabel": "Acme News",
     "toLabel": "",
     "replyToLabel": "Acme Contact",
@@ -36,10 +49,11 @@ var message = {
 
 rp(options)
     .then(function (parsedBody) {
-        console.log(parsedBody);
+        console.log('TOKEN=> ' + parsedBody.token);
         //  var b = ;
-        var s = new Buffer(parsedBody.token).toString('base64');
-        console.log(s);
+        var token64Buffer = new Buffer(parsedBody.token+':');
+        var token64 = token64Buffer.toString('base64');
+        console.log ('TOKEN BASE 64 => ' + token64);
 
         var postMessage = {
             method: 'POST',
@@ -47,16 +61,16 @@ rp(options)
             body: message,
             json: true,
             headers: {
-                Authorization: 'Basic ' + new Buffer(parsedBody.token+':').toString('base64')
+                Authorization: 'Basic ' + token64
             }
         };
 
         var getMessages = {
             method: 'GET',
-            uri: API_URL+'/messages',
+            uri: API_URL+'/messages?version=2',
             json: true,
             headers: {
-                Authorization: 'Basic ' + new Buffer(parsedBody.token+':').toString('base64')
+                Authorization: 'Basic ' + token64
             }
         };
         var getMessage = {
@@ -64,17 +78,17 @@ rp(options)
             uri: API_URL+'/messages'+'/02e8baa1-0c19-4a8a-9021-684c6075e4a4',
             json: true,
             headers: {
-                Authorization: 'Basic ' + new Buffer(parsedBody.token+':').toString('base64')
+                Authorization: 'Basic ' + token64
             }
         };
 
-        rp(getMessage)
+        rp(postMessage)
             .then(function (parsedBody2) {
                 console.log('????????????????????????????????????????????????????????????????????????????');
                 console.log(parsedBody2);
             }).catch(function(err){
             console.log('PUTAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
-                console.log(err);
+            console.log(err);
         }) ;
 
 
@@ -83,6 +97,7 @@ rp(options)
 
     })
     .catch(function (err) {
+        console.log("NO TINC NI TOKEN! FATAL ERROR");
         console.log(err);
     });
 
