@@ -23,7 +23,8 @@ module.exports = {
     create: function (req, res, next) {
         var params = _.pick(req.body, 'email', 'id_customer','token','platform');
 
-        if(params.token && params.id_customer){ //Devicetoken and id_customer
+        if(params.token && params.id_customer && params.platform){ //Devicetoken and id_customer
+
             models.Customer
                 .findOrCreate({where:{id_customer: params.id_customer}})
                 .spread(function(customer,created){
@@ -33,22 +34,24 @@ module.exports = {
                             if(created){
                                 if(params.platform){
                                     devicetoken.setPlatform(params.platform);
-                                }else{
-                                    devicetoken.setPlatform(0);
                                 }
-                                customer.addDevicetoken(devicetoken);
+                                devicetoken.setCustomer(customer);
                                 return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer));
                             }else{
-                                return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Device token allredy exist'));
+                                devicetoken.setCustomer(customer);
+                                return res.status(500).json(helpers.formatResponse(controller_name,req.method,devicetoken,'Device token allredy exist'));
                             }
                         });
                 });
 
-        }else if(params.token){ //Only devicetoken
+        }else if(params.token && params.platform){ //Only devicetoken
             models.Devicetoken
                 .findOrCreate({where: {token: params.token}})
                 .spread(function(devicetoken, created) {
                     if(created){
+                        if(params.platform){
+                            devicetoken.setPlatform(params.platform);
+                        }
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method,devicetoken,'Created!'));
                     }else{
                         return res.status(500).json(helpers.formatResponse(controller_name,req.method,null,'Device token allredy exist.'));
