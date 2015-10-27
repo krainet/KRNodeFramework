@@ -30,8 +30,10 @@ var push_helper = {
             notification: {
                 body: message,
                 title: title,
+                msg: message,
                 icon: "ic_launcher"
-            }
+            },
+            msg: 'Test123'
         });
 
         var regIds = [];
