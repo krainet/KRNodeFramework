@@ -23,8 +23,9 @@ module.exports = {
         var params = _.pick(req.body,'name', 'expectedDate', 'shop', 'json', 'html');
         console.log(params);
         if(params.name && params.json && params.html){
+            params.exepctedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
             Nhistory
-                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html, expectedDate: 'NEW DATE()'})
+                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html, expectedDate: params.expectedDate})
                 .then(function(created) {
                     if(created)
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method, created));
