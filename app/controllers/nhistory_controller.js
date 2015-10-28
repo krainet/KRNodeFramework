@@ -33,6 +33,9 @@ module.exports = {
                         return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Error while creating'));
                 });
         }
+        else {
+            return res.status(500).json(helpers.formatResponse(null, controller_name,req.method,'Error while creating'));
+        }
     },
     get: function (req, res, next) {
         var searchname = req.params.searchname ? req.params.searchname : null;
