@@ -21,7 +21,7 @@ var rp = require('request-promise');
 var options = {
     method: 'POST',
     uri: API_URL+'/authorization',
-    body: credentials2,
+    body: credentials,
     json: true // Automatically stringifies the body to JSON+
 };
 
@@ -35,11 +35,11 @@ var draftMessage = {
 
 
 var message = {
-    "name": "MISSATGE PROVA",
+    "name": "MISSATGE PROVA marc 28-octubre",
     "status": "ready",
     "mode": "html",
     "subject": "Acme News",
-    "fromEmail": "news@welcome.mequedouno.com",
+    "fromEmail": "news@welcome.mequedouno.com.br",
     "fromLabel": "Acme News",
     "toLabel": "",
     "replyToLabel": "Acme Contact",
@@ -75,20 +75,20 @@ rp(options)
         };
         var getMessage = {
             method: 'GET',
-            uri: API_URL+'/messages'+'/02e8baa1-0c19-4a8a-9021-684c6075e4a4',
+            uri: API_URL+'/messages'+'/880f993a-5bee-4133-8108-163a8b3799bd',
             json: true,
             headers: {
                 Authorization: 'Basic ' + token64
             }
         };
 
-        rp(postMessage)
+        rp(getMessages)
             .then(function (parsedBody2) {
                 console.log('????????????????????????????????????????????????????????????????????????????');
                 console.log(parsedBody2);
             }).catch(function(err){
             console.log('PUTAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
-            console.log(err);
+            console.log(err.error.details);
         }) ;
 
 
