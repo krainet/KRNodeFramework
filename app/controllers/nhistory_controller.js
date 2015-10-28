@@ -24,7 +24,7 @@ module.exports = {
         console.log(params);
         if(params.name && params.json && params.html){
             Nhistory
-                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html})
+                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html, expectedDate: 'NEW DATE()'})
                 .then(function(created) {
                     if(created)
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method, created));
