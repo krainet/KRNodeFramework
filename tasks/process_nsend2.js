@@ -63,7 +63,7 @@ var sender = function() {
                 .then(function (mess) {
                     _this.message = mess;
                     callback();
-                    console.log(parsedBody2);
+                   // console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
                     console.log(err.error.details);
