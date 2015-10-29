@@ -17,6 +17,7 @@ var sender = function() {
                 body: {"login": this.credentials.EMV_USER, "password": this.credentials.EMV_PWD, "apiKey": this.credentials.EMV_KEY},
                 json: true // Automatically stringifies the body to JSON+
             };
+            var _this = this;
             rp(options)
                 .then(function (parsedBody) {
                     console.log('TOKEN=> ' + parsedBody.token);
@@ -24,7 +25,7 @@ var sender = function() {
                     var token64Buffer = new Buffer(parsedBody.token+':');
                     var token64 = token64Buffer.toString('base64');
                     console.log ('TOKEN BASE 64 => ' + token64);
-                    this.token = token64;
+                    _this.token = token64;
                     callback();
                 })
                 .catch(function (err) {
