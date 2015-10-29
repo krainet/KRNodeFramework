@@ -4,6 +4,7 @@
 /logs/access.log
 config/settings.js
 config/settingsBBDD.js
+app/config/*
 config/settingsEMV.json
 config/appSettings.json
 config/cert_prod.pem

@@ -1,11 +1,11 @@
-/**
- * Created by ramon on 22/09/15.
- */
 var models      = require('../app/models/');
 var async       = require('async');
 var Curl        = require('node-libcurl').Curl;
+var striptags   = require('striptags');
 
 var Nhistory = models.Nhistory;
+
+var http = require('http');
 
 var sender = function() {
     var curl;
@@ -116,6 +116,7 @@ var sender = function() {
             });
             curl.perform();
         },
+
         trackAllLinks: function (callback) {
             console.log('Tracking All links..'.yellow);
             var url = 'https://'+ this.options.EMV_SERVER + '/apiccmd/services/rest/message/trackAllLinks/' + this.token + '/' +this.id;
@@ -190,7 +191,8 @@ var sender = function() {
             console.log('URL: ' + url);
 
             updatedhtml = '[EMV HTMLPART]<![CDATA['+ html.replace("[EMV HTMLPART]",'') + ']]>';
-            //console.log(updatedhtml);
+            plaintexthtml = striptags(updatedhtml);
+            // console.log(plaintexthtml);
             var data = '<message><id>'+ this.id+'</id><type>email</type><body>'+ updatedhtml+'</body></message>';
 
             curl = new Curl();

@@ -1,7 +1,7 @@
 var _               = require('lodash');
 var helpers         = require('./../helpers/responseHelper');
 var models          = require('../models');
-var pnsend          = require('../../tasks/process_nsend');
+var pnsend          = require('../../tasks/process_nsend2');
 
 var controller_name = 'nsend';
 var Nhistory = models.Nhistory;

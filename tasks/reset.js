@@ -119,21 +119,21 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
     ];
 
     var nshops_data = [
-        {shop_name:"mqu",value:JSON.stringify({color: "#e78808", name:"Tech", link: "http://tech.mequedouno.com",logo:"http://str.yeeday.net/img/cm/es/mqu/logo-mqu.png"})},
-        {shop_name:"mqv",value:JSON.stringify({color: "#8C003a", name: "Vino",link: "http://vino.mequedouno.com",logo: "http://str.yeeday.net/img/cm/es/mqv/logo-mqv.png"})},
-        {shop_name:"mqh",value:JSON.stringify({color: "#603619", name: "Hogar", link: "http://hogar.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqh/logo-mqh.png"})},
-        {shop_name:"mqk",value:JSON.stringify({color: "#f21B19", name: "Kids", link: "http://kids.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqk/logmqk.png"})},
-        {shop_name:"mqc",value:JSON.stringify({color: "#6a3792", name: "Chic", link: "http://chic.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqc/logochic.png"})},
-        {shop_name:"mqd",value:JSON.stringify({color: "#167daE", name: "Deporte", link: "http://deporte.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqd/logodepord.png"})},
-        {shop_name:"mqs",value:JSON.stringify({color: "#009343", name: "Super", link: "http://super.mequedouno.com", logo: "http://str.yeeday.net/img/cm/es/mqs/logo-mqs_nl.png"})}
+        {shop_name:"mqu",value:JSON.stringify({color: "#e78808", name:"Tech", link: "http://tech.mequedouno.com",logo:"https://str.yeeday.net/img/cm/es/mqu/logo-mqu.png"})},
+        {shop_name:"mqv",value:JSON.stringify({color: "#8C003a", name: "Vino",link: "http://vino.mequedouno.com",logo: "https://str.yeeday.net/img/cm/es/mqv/logo-mqv.png"})},
+        {shop_name:"mqh",value:JSON.stringify({color: "#603619", name: "Hogar", link: "http://hogar.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqh/logo-mqh.png"})},
+        {shop_name:"mqk",value:JSON.stringify({color: "#f21B19", name: "Kids", link: "http://kids.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqk/logmqk.png"})},
+        {shop_name:"mqc",value:JSON.stringify({color: "#6a3792", name: "Chic", link: "http://chic.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqc/logochic.png"})},
+        {shop_name:"mqd",value:JSON.stringify({color: "#167daE", name: "Deporte", link: "http://deporte.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqd/logodepord.png"})},
+        {shop_name:"mqs",value:JSON.stringify({color: "#009343", name: "Super", link: "http://super.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqs/logo-mqs_nl.png"})}
     ];
     
     var ncomponents_data = [
         {name: "Header", type: "header1", tconstructor: "",  template: "newsletterMaker/templates/Header1.tpl.html", values: JSON.stringify({})},
         {name: "Disclaimer", type: "disclaimer1", tconstructor: "", template: "newsletterMaker/templates/Disclaimer1.tpl.html", values: JSON.stringify({})},
         {name: "Footer", type: "footer1", tconstructor: "", template: "newsletterMaker/templates/Footer1.tpl.html", values: JSON.stringify({})},
-        {name: "Image 580", type: "image580", tconstructor: "", template: "", values: JSON.stringify({link:"http://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
-        {name: "Image 270", type: "image270", tconstructor: "", template: "", values: JSON.stringify({link:"http://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
+        {name: "Image 580", type: "image580", tconstructor: "", template: "", values: JSON.stringify({link:"https://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
+        {name: "Image 270", type: "image270", tconstructor: "", template: "", values: JSON.stringify({link:"https://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
         {name: "Simple Text", type: "simpleText", tconstructor: "", template: "newsletterMaker/templates/simpleText.tpl.html", values: JSON.stringify({})},
         {name: "Html", type: "freeHtml", tconstructor: "", template: "newsletterMaker/templates/FreeHtml.tpl.html", values: JSON.stringify({html:'<table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(82, 79, 79);text-align: left;"><h1>Bienvenido al CLUB VIP</h1></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0" style="color: rgb(34, 34, 34);background-color: rgb(255, 255, 255);text-align: center;"><tbody><tr><td width="100%"> <table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(107, 107, 107);text-align: left;"><a href="http://hogar.mequedouno.com" target="_blank" style="color: rgb(248, 135, 0);"><strong>Tienes Envío Gratis hasta final de año</strong></a><br>Hola, eres un cliente VIP en MeQuedoUno. Y nos apetece compartirlo contigo. En algún momento de nuestra breve pero intensa historia has estado ahí, dándolo todo y disfrutando de las oportunidades más tentadoras, por eso, ahora que se acerca nuestro Sexto Aniversario<strong> ¡queremos celebrarlo contigo!</strong></td></tr></tbody></table></td></tr></tbody></table>'})},
         {name: "Crosseling", type: "crosseling", tconstructor: "", template: "newsletterMaker/templates/Crosseling1.tpl.html", values: JSON.stringify({})},
@@ -141,7 +141,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: "¿Eres fan?", type: "fan", tconstructor: "", template: "newsletterMaker/templates/Fan.tpl.html", values: JSON.stringify({})},
         {name: "Barra", type: "bar", tconstructor: "", template: "newsletterMaker/templates/Bar.tpl.html", values: JSON.stringify({})},
         {name: "Apps", type: "apps", tconstructor: "", template: "newsletterMaker/templates/Apps.tpl.html", values: JSON.stringify({})},
-        {name: "Contenedor", tconstructor: "", template: "", type: "container", values: JSON.stringify({columns: [[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "http://str.yeeday.net/img/cm/es/mqu/no_image.png"}, "id": 1}],[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "http://str.yeeday.net/img/cm/es/mqu/no_image.png"}}]]})},
+        {name: "Contenedor", tconstructor: "", template: "", type: "container", values: JSON.stringify({columns: [[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "https://str.yeeday.net/img/cm/es/mqu/no_image.png"}, "id": 1}],[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "https://str.yeeday.net/img/cm/es/mqu/no_image.png"}}]]})},
         {name: "Contenedor 3", tconstructor: "", template: "",type: "container3", values: JSON.stringify({columns: [[],[],[]]})}
     ];
 
@@ -311,7 +311,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
             "id": 1,
             "template": "newsletterMaker/templates/Footer1.tpl.html"
         }] }),
-            html: "adadfa"}
+            html: "", text:""}
 
     ];
 

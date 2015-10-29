@@ -13,24 +13,28 @@ module.exports = {
         Nhistory.findAll({
             include: [],
             where: {deleted : 0},
-            attributes: ['name', 'shop',  'expectedDate', 'sent', 'json', 'html']
+            attributes: ['name', 'shop',  'expectedDate', 'sent', 'json', 'html', 'text']
         }).then(function(nhistory) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,nhistory));
         });
     },
 
     create: function (req, res, next) {
-        var params = _.pick(req.body,'name', 'expectedDate', 'shop', 'json', 'html');
+        var params = _.pick(req.body,'name', 'expectedDate', 'shop', 'json', 'html', 'text');
         console.log(params);
         if(params.name && params.json && params.html){
+            params.expectedDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
             Nhistory
-                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html})
+                .create({name: params.name, shop: params.shop, json: params.json,  html: params.html, expectedDate: params.expectedDate})
                 .then(function(created) {
                     if(created)
                         return res.status(200).json(helpers.formatResponse(controller_name,req.method, created));
                     else
                         return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Error while creating'));
                 });
+        }
+        else {
+            return res.status(500).json(helpers.formatResponse(null, controller_name,req.method,'Error while creating'));
         }
     },
     get: function (req, res, next) {
@@ -40,7 +44,7 @@ module.exports = {
         if(searchname){
             if (getId && searchname == 'duplicate') {
                 Nhistory.findOne({
-                    attributes: ['name', 'expectedDate', 'shop', 'json', 'html'],
+                    attributes: ['name', 'expectedDate', 'shop', 'json', 'html', 'text'],
                     where: {id: getId, deleted : 0}
                 }).then(function(component) {
                     console.log(component.name);
@@ -60,7 +64,7 @@ module.exports = {
                 Nhistory.findAll({
                     order: 'updatedAt DESC',
                     limit: 1,
-                    attributes: ['id', 'name', 'expectedDate', 'shop', 'json', 'html'],
+                    attributes: ['id', 'name', 'expectedDate', 'shop', 'json', 'html', 'text'],
                     where: {deleted : 0}
                 }).then(function(component) {
                     return res.status(200).json(helpers.formatResponse(controller_name,req.method,component));
@@ -77,7 +81,7 @@ module.exports = {
             }
             else {
                 Nhistory.findOne({
-                    attributes: ['id','name', 'expectedDate', 'shop', 'json', 'html'],
+                    attributes: ['id','name', 'expectedDate', 'shop', 'json', 'html', 'text'],
                     where: {name: searchname, deleted :0}
                 }).then(function(component) {
                     return res.status(200).json(helpers.formatResponse(controller_name,req.method,component));
@@ -86,7 +90,7 @@ module.exports = {
         }
         else if(getId){
             Nhistory.findOne({
-                attributes: ['id', 'name', 'expectedDate', 'shop', 'json', 'html'],
+                attributes: ['id', 'name', 'expectedDate', 'shop', 'json', 'html', 'text'],
                 where: {id: getId, deleted : 0}
             }).then(function(component) {
                 return res.status(200).json(helpers.formatResponse(controller_name,req.method,component));
@@ -101,7 +105,7 @@ module.exports = {
         var getId = req.params.id ? req.params.id : null;
         var searchname = req.params.searchname ? req.params.searchname : null;
 
-        var params = _.pick(req.body,'name', 'expectedDate', 'shop', 'json', 'html');
+        var params = _.pick(req.body,'name', 'expectedDate', 'shop', 'json', 'html','text');
 
         if (searchname){
             Nhistory.update(

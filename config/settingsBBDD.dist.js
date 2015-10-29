@@ -3,11 +3,6 @@
  */
 
 var settingsBBDD = {
-    getBBDDSettings : function(database,environment){
-        connections.forEach(function(item){
-            console.log(item);
-        });
-    },
     connections : {
         appBBDD  : {
             "dev": {
