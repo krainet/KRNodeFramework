@@ -83,7 +83,7 @@ var sender = function() {
             var updateMessage = {
                 method: 'POST',
                 uri: API_URL+'/messages/'+ this.message.id,
-                body: {links: this.message.links, text: "aja"},
+                body: {links: this.message.links, text: this.html.replace(/(<([^>]+)>)/ig,"")},
                 json: true,
                 headers: {
                     Authorization: 'Basic ' + this.token
