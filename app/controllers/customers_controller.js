@@ -23,8 +23,6 @@ module.exports = {
     create: function (req, res, next) {
         var params = _.pick(req.body, 'email', 'id_customer','token','platform');
 
-        console.log(req.body);
-
         if(params.token && params.id_customer && params.platform){ //Devicetoken and id_customer
 
             models.Customer
