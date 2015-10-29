@@ -16,14 +16,11 @@
     "morgan": "^1.6.1",
     "mysql": "^2.9.0",
     "node-gcm": "^0.12.0",
-    "node-libcurl": "^0.6.3",
     "nodemon": "^0.7.10",
     "request-promise": "^1.0.1",
     "sequelize": "^3.9.0",
     "sequelize-cli": "^1.9.1",
-    "serve-favicon": "^2.3.0",
-    "striptags": "^2.0.4",
-    "xml2js": "^0.4.13"
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "nodemon": "^0.7.10",
