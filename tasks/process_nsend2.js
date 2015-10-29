@@ -9,6 +9,7 @@ var sender = function() {
     return {
         credentials:'',
         token :'',
+        message : '',
         init : function(country, account, callback){
             this.credentials  = require('../config/settingsEMV.json')[country][account];
             var options = {
@@ -58,13 +59,45 @@ var sender = function() {
                 }
             };
             console.log("WTF? No hi ha token??? >"  + this.token);
+            _this = this;
             rp(postMessage)
-                .then(function (parsedBody2) {
+                .then(function (mess) {
+                    _this.message = mess;
                     callback();
                     console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
                     console.log(err.error.details);
+            });
+
+        },
+        createMessageMirror: function (newsletter, callback) {
+            this.message.links.forEach(function(link){
+                if (link.url == 'http://__EMV_MIRRORLINK_EMV__') {
+                    link.type = 'mirror';
+                    delete link.url;
+                }
+            });
+
+            var updateMessage = {
+                method: 'POST',
+                uri: API_URL+'/messages/'+ this.message.id,
+                body: this.message.links,
+                json: true,
+                headers: {
+                    Authorization: 'Basic ' + this.token
+                }
+            };
+            console.log("WTF? No hi ha token??? >"  + this.token);
+            _this = this;
+            rp(updateMessage)
+                .then(function (mess) {
+                    _this.message = mess;
+                    callback();
+                    console.log(parsedBody2);
+                }).catch(function(err){
+                console.log("NO S'HA POGUT ACTUALITZAR EL MISSATGE");
+                console.log(err.error.details);
             });
 
         }
@@ -84,6 +117,12 @@ module.exports.pujar = function (newsletter, callback) {
                 next();
             });
         },
+        function(next){
+            sender.createMessageMirror(function (result){
+                next();
+            });
+        },
+
         /*function(next){
             sender.trackAllLinks(function (result){
                 next();
