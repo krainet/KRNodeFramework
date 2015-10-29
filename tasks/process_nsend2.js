@@ -71,7 +71,7 @@ var sender = function() {
             });
 
         },
-        createMessageMirror: function (newsletter, callback) {
+        createMessageMirror: function ( callback) {
             this.message.links.forEach(function(link){
                 if (link.url == 'http://__EMV_MIRRORLINK_EMV__') {
                     link.type = 'mirror';
