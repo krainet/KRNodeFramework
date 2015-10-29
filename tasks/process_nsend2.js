@@ -47,7 +47,8 @@ var sender = function() {
                 "toLabel": "Test",
                 "replyToLabel": "test@mequedouno.com",
                 "replyToEmail": "test@mequedouno.com",
-                "html": newsletter.html
+                "html": newsletter.html,
+                "text": ""
             };
             var postMessage = {
                 method: 'POST',
@@ -78,11 +79,11 @@ var sender = function() {
                     delete link.url;
                 }
             });
-
+            var text = this.html.replace(/(<([^>]+)>)/ig,"");
             var updateMessage = {
                 method: 'POST',
                 uri: API_URL+'/messages/'+ this.message.id,
-                body: {links: this.message.links, text: this.html.replace(/(<([^>]+)>)/ig,"") },
+                body: {"links": this.message.links, "text": text },
                 json: true,
                 headers: {
                     Authorization: 'Basic ' + this.token
