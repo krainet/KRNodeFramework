@@ -191,7 +191,7 @@ var sender = function() {
             console.log('URL: ' + url);
 
             updatedhtml = '[EMV HTMLPART]<![CDATA['+ html.replace("[EMV HTMLPART]",'') + ']]>';
-            plaintexthtml = striptags(updatedhtml);
+            //plaintexthtml = striptags(updatedhtml);
             // console.log(plaintexthtml);
             var data = '<message><id>'+ this.id+'</id><type>email</type><body>'+ updatedhtml+'</body></message>';
 

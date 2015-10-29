@@ -1,7 +1,6 @@
 var models      = require('../app/models/');
 var async       = require('async');
 var http = require('http');
-var striptags   = require('striptags');
 
 var API_URL = 'https://apir.campaigncommander.com/smartemail/v1';
 var rp = require('request-promise');
@@ -17,22 +16,18 @@ var sender = function() {
                 method: 'POST',
                 uri: API_URL+'/authorization',
                 body: {"login": this.credentials.EMV_USER, "password": this.credentials.EMV_PWD, "apiKey": this.credentials.EMV_KEY},
-                json: true // Automatically stringifies the body to JSON+
+                json: true
             };
             var _this = this;
             rp(options)
                 .then(function (parsedBody) {
-                    console.log('TOKEN=> ' + parsedBody.token);
-                    //  var b = ;
-                    var token64Buffer = new Buffer(parsedBody.token+':');
-                    var token64 = token64Buffer.toString('base64');
-                    console.log ('TOKEN BASE 64 => ' + token64);
+                    var token64 = new Buffer(parsedBody.token+':').toString('base64');
                     _this.token = token64;
                     callback();
                 })
                 .catch(function (err) {
                     console.log("NO TINC NI TOKEN! FATAL ERROR");
-                    console.log(err);
+                    //console.log(err);
                 });
         },
 
@@ -65,10 +60,9 @@ var sender = function() {
                 .then(function (mess) {
                     _this.message = mess;
                     callback();
-                   // console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
-                    console.log(err.error.details);
+                    //console.log(err.error.details);
             });
 
         },
@@ -95,14 +89,11 @@ var sender = function() {
                 .then(function (mess) {
                     _this.message = mess;
                     callback();
-                //    console.log(parsedBody2);
                 }).catch(function(err){
                 console.log("NO S'HA POGUT ACTUALITZAR EL MISSATGE");
                 console.log(err.error);
             });
-
         }
-
     };
 }();
 
@@ -122,24 +113,14 @@ module.exports.pujar = function (newsletter, callback) {
             sender.createMessageMirror(function (result){
                 next();
             });
-        },
+        }
 
-        /*function(next){
-            sender.trackAllLinks(function (result){
-                next();
-            });
-        },
-        function(next){
-            sender.createMessageMirror(function (result){
-                next();
-            });
-        }*/
     ], function (err, result) {
         if (err) {
             console.log('ERROR'.red);
             return callback(false);
         } else {
-            console.log('All Updated OK'.yellow);
+            console.log('Tot OK pujant el Missatge'.green);
             return callback(true);
         }
     });
