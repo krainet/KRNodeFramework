@@ -47,8 +47,9 @@ var sender = function() {
                 "toLabel": "Test",
                 "replyToLabel": "test@mequedouno.com",
                 "replyToEmail": "test@mequedouno.com",
-                "text": "Not done yet",
+                "text": newsletter.text,
                 "html": newsletter.html
+
             };
             var postMessage = {
                 method: 'POST',

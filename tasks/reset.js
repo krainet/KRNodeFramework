@@ -311,7 +311,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
             "id": 1,
             "template": "newsletterMaker/templates/Footer1.tpl.html"
         }] }),
-            html: "adadfa"}
+            html: "", text:""}
 
     ];
 
