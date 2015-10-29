@@ -47,7 +47,6 @@ var sender = function() {
                 "toLabel": "Test",
                 "replyToLabel": "test@mequedouno.com",
                 "replyToEmail": "test@mequedouno.com",
-                "text": striptags(newsletter.html),
                 "html": newsletter.html
             };
             var postMessage = {
