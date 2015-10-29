@@ -58,7 +58,6 @@ var sender = function() {
                     Authorization: 'Basic ' + this.token
                 }
             };
-            console.log("WTF? No hi ha token??? >"  + this.token);
             _this = this;
             rp(postMessage)
                 .then(function (mess) {
@@ -74,6 +73,7 @@ var sender = function() {
         createMessageMirror: function ( callback) {
             this.message.links.forEach(function(link){
                 if (link.url == 'http://__EMV_MIRRORLINK_EMV__') {
+                    console.log('HI HA UN LINK MIRROR');
                     link.type = 'mirror';
                     delete link.url;
                 }
@@ -88,7 +88,6 @@ var sender = function() {
                     Authorization: 'Basic ' + this.token
                 }
             };
-            console.log("WTF? No hi ha token??? >"  + this.token);
             _this = this;
             rp(updateMessage)
                 .then(function (mess) {
