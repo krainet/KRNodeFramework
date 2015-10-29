@@ -56,13 +56,14 @@ var sender = function() {
                     Authorization: 'Basic ' + this.token
                 }
             };
+            console.log("WTF? No hi ha token??? >"  + this.token);
             rp(postMessage)
                 .then(function (parsedBody2) {
                     callback();
                     console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
-                    console.log(err);
+                    //console.log(err);
             });
 
         }
