@@ -6,3 +6,5 @@ config/settings.js
 config/settingsBBDD.js
 config/settingsEMV.json
 config/appSettings.json
+config/cert_prod.pem
+config/key_prod.pem
