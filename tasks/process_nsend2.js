@@ -96,7 +96,7 @@ var sender = function() {
                 //    console.log(parsedBody2);
                 }).catch(function(err){
                 console.log("NO S'HA POGUT ACTUALITZAR EL MISSATGE");
-                console.log(err.error.details);
+                console.log(err.error);
             });
 
         }
