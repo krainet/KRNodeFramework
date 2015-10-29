@@ -62,7 +62,7 @@ var sender = function() {
                     console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
-                    console.log(err.error.details);
+                    console.log(err);
             });
 
         }
