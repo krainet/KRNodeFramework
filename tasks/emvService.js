@@ -15,7 +15,6 @@ var credentials2 = {
 };
 
 var API_URL = 'https://apir.campaigncommander.com/smartemail/v1';
-var API_URL2= 'https://apie.campaigncommander.com/transactional-api-ws';
 var rp = require('request-promise');
 
 var options = {
@@ -33,7 +32,6 @@ var draftMessage = {
     "html": "<!DOCTYPE html><html><head><title>Acme News</title></head><body>\n<h1>Acme News</h1>\n<p>Our <a href=\"http://acme.com/products\">list of products</a>!</p>\n</body></html>"
 }
 
-
 var message = {
     "name": "MISSATGE PROVA marc 28-octubre",
     "status": "ready",
@@ -47,57 +45,80 @@ var message = {
     "html": "<!DOCTYPE html><html><head><title>Acme News</title></head><body>\n<h1>Acme News</h1>\n<p>Our <a href=\"http://acme.com/products\">list of products</a>!</p>\n</body></html>"
 };
 
-rp(options)
-    .then(function (parsedBody) {
-        console.log('TOKEN=> ' + parsedBody.token);
-        //  var b = ;
-        var token64Buffer = new Buffer(parsedBody.token+':');
-        var token64 = token64Buffer.toString('base64');
-        console.log ('TOKEN BASE 64 => ' + token64);
+var postMessage = {
+    method: 'POST',
+    uri: API_URL+'/messages',
+    body: message,
+    json: true,
+    headers: {
+        Authorization: 'Basic ' + token64
+    }
+};
 
-        var postMessage = {
-            method: 'POST',
-            uri: API_URL+'/messages',
-            body: message,
-            json: true,
-            headers: {
-                Authorization: 'Basic ' + token64
-            }
-        };
+var getMessages = {
+    method: 'GET',
+    uri: API_URL+'/messages?version=2',
+    json: true,
+    headers: {
+        Authorization: 'Basic ' + token64
+    }
+};
+var getMessage = {
+    method: 'GET',
+    uri: API_URL+'/messages'+'/880f993a-5bee-4133-8108-163a8b3799bd',
+    json: true,
+    headers: {
+        Authorization: 'Basic ' + token64
+    }
+};
 
-        var getMessages = {
-            method: 'GET',
-            uri: API_URL+'/messages?version=2',
-            json: true,
-            headers: {
-                Authorization: 'Basic ' + token64
-            }
-        };
-        var getMessage = {
-            method: 'GET',
-            uri: API_URL+'/messages'+'/880f993a-5bee-4133-8108-163a8b3799bd',
-            json: true,
-            headers: {
-                Authorization: 'Basic ' + token64
-            }
-        };
-
-        rp(getMessages)
-            .then(function (parsedBody2) {
-                console.log('????????????????????????????????????????????????????????????????????????????');
-                console.log(parsedBody2);
-            }).catch(function(err){
-            console.log('PUTAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
-            console.log(err.error.details);
-        }) ;
+module.exports.pujar = function (newsletter, callback) {
+    async.waterfall([
+        function(next){
+            rp(options)
+                .then(function (parsedBody) {
+                    console.log('TOKEN=> ' + parsedBody.token);
+                    //  var b = ;
+                    var token64Buffer = new Buffer(parsedBody.token+':');
+                    var token64 = token64Buffer.toString('base64');
+                    console.log ('TOKEN BASE 64 => ' + token64);
 
 
+                    next();
+                })
+                .catch(function (err) {
+                    console.log("NO TINC NI TOKEN! FATAL ERROR");
+                    console.log(err);
+                });
+        },
+        function(next){
 
-
-
-    })
-    .catch(function (err) {
-        console.log("NO TINC NI TOKEN! FATAL ERROR");
-        console.log(err);
+            rp(getMessages)
+                .then(function (parsedBody2) {
+                    console.log('????????????????????????????????????????????????????????????????????????????');
+                    console.log(parsedBody2);
+                }).catch(function(err){
+                console.log('PUTAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!');
+                console.log(err.error.details);
+            }) ;
+        },
+        function(next){
+            sender.trackAllLinks(function (result){
+                next();
+            });
+        },
+        function(next){
+            sender.createMessageMirror(function (result){
+                next();
+            });
+        }
+    ], function (err, result) {
+        if (err) {
+            console.log('ERROR'.red);
+            return callback(false);
+        } else {
+            console.log('All Updated OK'.yellow);
+            return callback(true);
+        }
     });
-
+};
