@@ -47,8 +47,8 @@ var sender = function() {
                 "toLabel": "Test",
                 "replyToLabel": "test@mequedouno.com",
                 "replyToEmail": "test@mequedouno.com",
-                "html": newsletter.html,
-                "text": ""
+                "text": "Not done yet",
+                "html": newsletter.html
             };
             var postMessage = {
                 method: 'POST',
@@ -67,7 +67,7 @@ var sender = function() {
                    // console.log(parsedBody2);
                 }).catch(function(err){
                     console.log("NO S'HA POGUT PUJAR EL MISSATGE");
-                    console.log(err.error);
+                    console.log(err.error.details);
             });
 
         },
@@ -79,11 +79,11 @@ var sender = function() {
                     delete link.url;
                 }
             });
-            var text = this.html.replace(/(<([^>]+)>)/ig,"");
+
             var updateMessage = {
                 method: 'POST',
                 uri: API_URL+'/messages/'+ this.message.id,
-                body: {"links": this.message.links, "text": text },
+                body: {links: this.message.links, text: "aja"},
                 json: true,
                 headers: {
                     Authorization: 'Basic ' + this.token
