@@ -1,6 +1,7 @@
 var models      = require('../app/models/');
 var async       = require('async');
 var http = require('http');
+var striptags   = require('striptags');
 
 var API_URL = 'https://apir.campaigncommander.com/smartemail/v1';
 var rp = require('request-promise');
@@ -46,7 +47,7 @@ var sender = function() {
                 "toLabel": "Test",
                 "replyToLabel": "test@mequedouno.com",
                 "replyToEmail": "test@mequedouno.com",
-                "text": "Not done yet",
+                "text": striptags(newsletter.html),
                 "html": newsletter.html
             };
             var postMessage = {
