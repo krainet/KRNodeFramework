@@ -28,10 +28,6 @@ module.exports = {
         if(token.length){
             //TODO save push history to BBDD
             token = b64.decode(token);
-/*            console.log(token);
-            console.log(title);
-            console.log(msg);
-            console.log(platform);*/
             push_helper.SendOnePush(token,title,msg,platform,function(err,response){
                 if(err)
                     return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));

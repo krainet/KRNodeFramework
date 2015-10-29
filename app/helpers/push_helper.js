@@ -7,21 +7,13 @@ var apn         = require('apn');
 
 
 var push_helper = {
-    Android : {
-
-    },
-    Apple : {
-
-    },
     SendOnePush : function(token,title,message,platform,cb){
-
         switch(platform){
             case 1:
                 var callback = function(errorNum, notification){
-                    console.log('Error is: %s', errorNum);
-                    console.log("Note " + notification);
+                    push_helper.processErrorCodeApn(errorNum);
                 }
-                settings.apn_options.callback=callback;
+                settings.apn_options.errorCallback=callback;
                 var note = new apn.Notification();
                 note.badge = 1;
                 note.sound = "notification-beep.wav";
@@ -30,6 +22,21 @@ var push_helper = {
                 note.payload = {'messageFrom': 'MeQuedoUno'};
                 var apnConnection = new apn.Connection(settings.apn_options);
                 apnConnection.pushNotification(note, token);
+
+                /*
+                //TODO feedback APN por implementar.
+                 function handleFeedback(feedbackData) {
+                 feedbackData.forEach(function(feedbackItem) {
+                 console.log("Device: " + feedbackItem.device.toString("hex") + " has been unreachable, since: " + feedbackItem.time);
+                 });
+                 }
+                settings.apn_options.interval=10;
+                var feedback = new apn.feedback(settings.apn_options);
+                feedback.on("feedback", handleFeedback);
+                feedback.on("feedbackError", console.error);
+                */
+
+                cb(null,note);
                 break;
             case 2:
                 //ANDROID
@@ -74,6 +81,46 @@ var push_helper = {
         }
 
 
+    },
+    processErrorCodeApn : function(err_code){
+        switch(err_code){
+            case 0:
+                console.log('No se encontraron errores');
+                break;
+            case 1:
+                console.log('Error al procesar');
+                break;
+            case 2:
+                console.log('No se encontro el devicetoken');
+                break;
+            case 3:
+                console.log('No se encontro topic');
+                break;
+            case 4:
+                console.log('No se envio payload');
+                break;
+            case 5:
+                console.log('Error longitud token');
+                break;
+            case 6:
+                console.log('Error longitud topic');
+                break;
+            case 7:
+                console.log('Invalid payload size')
+                break;
+            case 8:
+                console.log('Invalid token');
+                break;
+            case 10:
+                console.log('Shutdown');
+                break;
+            case 255:
+                console.log('None unknown');
+                break;
+            default:
+                console.log('Error desconocido');
+                break;
+        }
     }
 }
 
