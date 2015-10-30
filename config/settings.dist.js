@@ -69,6 +69,7 @@ var settings = {
         cacheLength: 100
     },
     use_env_variable : false,
-    app_extra_settings : ''
+    app_extra_settings : '',
+    csrftoken : 'X-Origin-Provider'
 };
 module.exports = settings;

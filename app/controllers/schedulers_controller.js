@@ -12,7 +12,7 @@ var controller_name = 'schedulers';
 
 module.exports = {
     list: function (req, res, next) {
-        models.scheduler.findAll({
+        models.Scheduler.findAll({
             include: [{model: models.Segment, as: 'Segments'}]
         }).then(function(schedulers) {
             return res.status(200).json(helpers.formatResponse(controller_name,req.method,schedulers));

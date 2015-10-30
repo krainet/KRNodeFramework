@@ -12,20 +12,19 @@ var controller_name = 'auth';
 
 module.exports = {
     list: function (req, res, next) {
+        return res.status(200).json(helpers.formatResponse(controller_name,req.method,req.decoded,null));
+/*
         models.User
             .findAndCountAll({})
             .then(function(users) {
-/*
-                console.log(users.count);
-                console.log(users.rows);
-*/
                 if(users){
                     return res.status(200).json(helpers.formatResponse(controller_name,req.method,users,null));
                 }else{
                     return res.status(500).json(helpers.formatErrors(null,controller_name,req.method,'Not found'));
                 }
-
             });
+*/
+
     },
     create: function (req, res, next) {
         if(req.body.username && req.body.password){
