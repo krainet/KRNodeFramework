@@ -17,11 +17,18 @@ module.exports = {
     return res.status(200).json(helpers.formatResponse(controller_name, req.method, helpers.formatResponse(controller_name,req.method,null,'Empty response')));
     },
     create: function (req, res, next) {
-        var params = _.pick(req.body, 'pushMessage','token','pushTitle','pushName');
+        var params = _.pick(req.body, 'pushMessage','token','pushTitle','pushName','platform');
 
-        if(params.token){
-            params.token = b64.decode(params.token);
-            push_helper.SendOnePush(params.token,params.pushTitle,params.pushMessage,function(err,response){
+        var token = params.token?params.token:'';
+        var title = params.pushTitle?params.pushTitle:'Push title';
+        var msg = params.pushMessage?params.pushMessage:'Push message';
+        var pushname = params.pushName?params.pushName:'No push name';
+        var platform = params.platform?params.platform:0;
+
+        if(token.length){
+            //TODO save push history to BBDD
+            token = b64.decode(token);
+            push_helper.SendOnePush(token,title,msg,platform,function(err,response){
                 if(err)
                     return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
                 else

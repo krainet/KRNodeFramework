@@ -10,8 +10,8 @@ module.exports = function(sequelize, DataTypes) {
     },{
         classMethods : {
             associate : function(models){
-                Devicetoken.belongsTo(models.Customer);
-                Devicetoken.belongsTo(models.Platform);
+                Devicetoken.belongsTo(models.Customer,{as:'Customer'});
+                Devicetoken.belongsTo(models.Platform, {as:'Platform'});
                 Devicetoken.belongsToMany(models.Segment,{through:'segment_devicetoken'});
                 Devicetoken.hasMany(models.Pushhistory,{as: 'Pushhistory'});
             }

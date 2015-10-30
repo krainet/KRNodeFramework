@@ -55,7 +55,19 @@ var settings = {
     },
     api_prefix  : '/api',
     push_key_gcm: 'AIzaSyB6ecfFxTGLxl3zefruWWLDLS8q4p_EG1Y',
-    push_key_ios: 'certificate.cer',
+    push_key_ios: 'ck.pem',
+    push_key_passphrase: 'your_key',
+    options : {
+        gateaway: 'gateway.push.apple.com',
+        production: true,
+        errorCallback: callback,
+        cert: 'cert_prod.pem',
+        key:  'key_prod.pem',
+        passphrase: 'your_key',
+        port: 2195,
+        enhanced: true,
+        cacheLength: 100
+    },
     use_env_variable : false,
     app_extra_settings : ''
 };
