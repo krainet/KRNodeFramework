@@ -36,12 +36,12 @@ var sender = function() {
                 "name": newsletter.name,
                 "status": "ready",
                 "mode": "html",
-                "subject": newsletter.name,
+                "subject": newsletter.subject,
                 "fromEmail": this.credentials.FROM,
                 "fromLabel": "Test",
                 "toLabel": "Test",
-                "replyToLabel": "test@mequedouno.com",
-                "replyToEmail": "test@mequedouno.com",
+                "replyToLabel": newsletter.replyToLabel,
+                "replyToEmail": newsletter.replyToEmail,
                 "text": newsletter.text,
                 "html": newsletter.html
 
