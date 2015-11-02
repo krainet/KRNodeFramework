@@ -100,7 +100,7 @@ var sender = function() {
 module.exports.pujar = function (newsletter, callback) {
     async.waterfall([
         function(next){
-            sender.init('br', 'hs', function (result){
+            sender.init(newsletter.country, newsletter.account, function (result){
                 next();
             });
         },
