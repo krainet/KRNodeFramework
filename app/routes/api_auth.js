@@ -5,8 +5,6 @@ var jwtmiddleware       = require('./jwtmiddleware');
 
 jwtmiddleware(router);
 
-/* GET users listing. */
-
 router.get('/',auth_controller.list);
 router.post('/',auth_controller.create);
 
