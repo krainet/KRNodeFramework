@@ -6,7 +6,8 @@
 module.exports = function(sequelize, DataTypes) {
     var Scheduler = sequelize.define("Scheduler", {
         name     : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
-        message  : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
+        message_apple    : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
+        message_android  : {type:DataTypes.STRING,allowNull:false,defaultValue:'Desconocido'},
         date_send: {type:DataTypes.DATE,allowNull:false,defaultValue:sequelize.NOW},
         is_draft : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:true},
         processed: {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false},
