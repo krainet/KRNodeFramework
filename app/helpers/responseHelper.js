@@ -61,6 +61,18 @@ module.exports = {
             return m.serialize();
         });
         return items;
+    },
+    formatCreateErrors: function(errorsIn,controller,action) {
+        var response = responseTpls.newResponse();
+        response.success = false;
+        response.controller = controller?controller:null;
+        response.action = action?action:null;
+        response.data = [];
+        //response.message = message?message:null;
+        //response.message = errorsIn.errors[0].message;
+        response.data.push(errorsIn.errors);
+
+        return response;
     }
 
 };
