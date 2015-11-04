@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
             associate : function(models){
                 Segment.hasMany(models.Devicetoken);
                 Segment.belongsToMany(models.Customer,{through:'segment_customer'});
-                Segment.belongsToMany(models.Scheduler,{through:'segment_scheduler'});
+                Segment.belongsToMany(models.Scheduler,{through:'segment_scheduler',as:'Scheduler'});
                 Segment.belongsToMany(models.Devicetoken,{through:'segment_devicetoken'});
             }
         }

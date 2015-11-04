@@ -17,7 +17,8 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {username: 'krainet7', password: 'Basura7', email: 'krainet7@gmail.com',level:5},
         {username: 'krainet8', password: 'Basura8', email: 'krainet8@gmail.com',level:2},
         {username: 'krainet9', password: 'Basura9', email: 'krainet9@gmail.com',level:3},
-        {username: 'krainet10', password: 'Basura10', email: 'krainet10@gmail.com',level:8}
+        {username: 'krainet10', password: 'Basura10', email: 'krainet10@gmail.com',level:8},
+        {username: 'admin', password: 'admin', email: 'krainet@gmail.com',level:10}
     ];
 
     var customer_data = [
@@ -47,7 +48,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {token: 'cGigjoJotfo:APA91bHxdwY9CFp70DXeY8nB6ar65rFLRdfTUpR6Y5AF2RqrWlF8oUZZU8vuQ2Wuqwkbu79FhW2TNL8hh_VMCUcdvIFvTC5okjJ-50Y_veRahQdjsVT_WmK_G_YSfS5GAIKyOFp9Le7b',PlatformId:2,CustomerId:10}
     ];
 
-    var segment1 = {id_customer: {'<': 1}},segment2 = {id_customer: {'<': 2}},segment3 = {id_customer: {'<': 3}};
+    var segment1 = {PlatformId: 1},segment2 = {id_customer: {'<': 2}},segment3 = {id_customer: {'<': 3}};
     var segment_data = [
         {name: 'Test segment 1', description: 'Segmento de pruebas n.1', configuration: JSON.stringify(segment1)},
         {name: 'Test segment 2', description: 'Segmento de pruebas n.2', configuration: JSON.stringify(segment2)},
@@ -58,13 +59,14 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: 'Test segment 7', description: 'Segmento de pruebas n.7', configuration: JSON.stringify(segment1)},
         {name: 'Test segment 8', description: 'Segmento de pruebas n.8', configuration: JSON.stringify(segment2)},
         {name: 'Test segment 9', description: 'Segmento de pruebas n.9', configuration: JSON.stringify(segment3)},
-        {name: 'Test segment 10', description: 'Segmento de pruebas n.10', configuration: JSON.stringify(segment3)},
+        {name: 'Test segment 10', description: 'Segmento de pruebas n.10', configuration: JSON.stringify(segment3)}
     ];
 
     var scheduler_data = [
         {
             name: 'Campaña 1',
             message: 'Compra en MeQuedoUno cupon SOLOAPP',
+            is_draft: true,
             is_draft: true,
             processed: false,
             date_send: new Date(),
@@ -316,6 +318,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
     ];
 
 
+/*
     async.waterfall([
         function(next){
             models.Nhistory.bulkCreate(nhistory_data)
@@ -398,12 +401,12 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
                 }
             );
         },
-/*        function(next){
-            models.scheduler.bulkCreate(user_data)
+        function(next){
+            models.User.bulkCreate(user_data)
                 .then(function(result){
                     next();
                 });
-        }*/
+        },
     ], function (err, result) {
         if (err) {
             console.log('ERROR'.red);
@@ -413,5 +416,6 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
             return result;
         }
     });
+*/
 
 });
