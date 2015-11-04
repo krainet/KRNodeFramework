@@ -320,7 +320,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
     ];
 
 
-/*
+
     async.waterfall([
         function(next){
             models.Nhistory.bulkCreate(nhistory_data)
@@ -418,6 +418,6 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
             return result;
         }
     });
-*/
+
 
 });

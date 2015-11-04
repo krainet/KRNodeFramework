@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         username : DataTypes.STRING,
         password : DataTypes.STRING,
         email    : DataTypes.STRING,
-        deleted  : DataTypes.BOOLEAN,
+        deleted  : {type:DataTypes.BOOLEAN,allowNull:false,defaultValue:false},
         level    : DataTypes.INTEGER
     },{
         classMethods : {
