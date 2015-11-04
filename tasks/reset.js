@@ -129,14 +129,16 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {shop_name:"mqd",value:JSON.stringify({color: "#167daE", name: "Deporte", link: "http://deporte.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqd/logodepord.png"})},
         {shop_name:"mqs",value:JSON.stringify({color: "#009343", name: "Super", link: "http://super.mequedouno.com", logo: "https://str.yeeday.net/img/cm/es/mqs/logo-mqs_nl.png"})}
     ];
-    
+
+    //ELIMINATS DE MOMENT
+    //{name: "Contenedor 3", tconstructor: "", template: "",type: "container3", values: JSON.stringify({columns: [[],[],[]]})}
+    //{name: "Simple Text", type: "simpleText", tconstructor: "", template: "newsletterMaker/templates/simpleText.tpl.html", values: JSON.stringify({})},
     var ncomponents_data = [
-        {name: "Header", type: "header1", tconstructor: "",  template: "newsletterMaker/templates/Header1.tpl.html", values: JSON.stringify({})},
         {name: "Disclaimer", type: "disclaimer1", tconstructor: "", template: "newsletterMaker/templates/Disclaimer1.tpl.html", values: JSON.stringify({})},
+        {name: "Header", type: "header1", tconstructor: "",  template: "newsletterMaker/templates/Header1.tpl.html", values: JSON.stringify({})},
         {name: "Footer", type: "footer1", tconstructor: "", template: "newsletterMaker/templates/Footer1.tpl.html", values: JSON.stringify({})},
         {name: "Image 580", type: "image580", tconstructor: "", template: "", values: JSON.stringify({link:"https://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
         {name: "Image 270", type: "image270", tconstructor: "", template: "", values: JSON.stringify({link:"https://str.yeeday.net/img/cm/es/mqu/no_image.png"})},
-        {name: "Simple Text", type: "simpleText", tconstructor: "", template: "newsletterMaker/templates/simpleText.tpl.html", values: JSON.stringify({})},
         {name: "Html", type: "freeHtml", tconstructor: "", template: "newsletterMaker/templates/FreeHtml.tpl.html", values: JSON.stringify({html:'<table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(82, 79, 79);text-align: left;"><h1>Bienvenido al CLUB VIP</h1></td></tr></tbody></table><table width="100%" border="0" cellpadding="0" cellspacing="0" style="color: rgb(34, 34, 34);background-color: rgb(255, 255, 255);text-align: center;"><tbody><tr><td width="100%"> <table width="580" border="0" cellpadding="0" cellspacing="0" style="text-align: center;"><tbody><tr><td style="color: rgb(107, 107, 107);text-align: left;"><a href="http://hogar.mequedouno.com" target="_blank" style="color: rgb(248, 135, 0);"><strong>Tienes Envío Gratis hasta final de año</strong></a><br>Hola, eres un cliente VIP en MeQuedoUno. Y nos apetece compartirlo contigo. En algún momento de nuestra breve pero intensa historia has estado ahí, dándolo todo y disfrutando de las oportunidades más tentadoras, por eso, ahora que se acerca nuestro Sexto Aniversario<strong> ¡queremos celebrarlo contigo!</strong></td></tr></tbody></table></td></tr></tbody></table>'})},
         {name: "Crosseling", type: "crosseling", tconstructor: "", template: "newsletterMaker/templates/Crosseling1.tpl.html", values: JSON.stringify({})},
         {name: "MOButton", type: "verMejoresB", tconstructor: "", template: "newsletterMaker/templates/VerMejoresB.tpl.html", values: JSON.stringify({})},
@@ -144,7 +146,7 @@ models.sequelize.sync({force:true,omitNull:true}).then(function() {
         {name: "Barra", type: "bar", tconstructor: "", template: "newsletterMaker/templates/Bar.tpl.html", values: JSON.stringify({})},
         {name: "Apps", type: "apps", tconstructor: "", template: "newsletterMaker/templates/Apps.tpl.html", values: JSON.stringify({})},
         {name: "Contenedor", tconstructor: "", template: "", type: "container", values: JSON.stringify({columns: [[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "https://str.yeeday.net/img/cm/es/mqu/no_image.png"}, "id": 1}],[{"name": "Image 270", "type": "image270", "tconstructor": "", "template": "", "values": {"link": "https://str.yeeday.net/img/cm/es/mqu/no_image.png"}}]]})},
-        {name: "Contenedor 3", tconstructor: "", template: "",type: "container3", values: JSON.stringify({columns: [[],[],[]]})}
+
     ];
 
     var nconfigapp_langs = {
