@@ -6,7 +6,7 @@
 
 module.exports = function(sequelize, DataTypes) {
     var Nhistory = sequelize.define("Nhistory", {
-        status      : {type: DataTypes.STRING,  allowNull: false, defaultValue: "draft"},
+        status      : {type: DataTypes.STRING,  allowNull: false, defaultValue: "ready"},
         name        : {type: DataTypes.STRING,  allowNull: false, defaultValue: "new Newsletter"},
         shop        : {type: DataTypes.STRING,  allowNull: false, defaultValue: "mqu"},
         account     : {type: DataTypes.STRING,  allowNull: false, defaultValue: "mqu"},
