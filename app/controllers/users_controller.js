@@ -1,6 +1,7 @@
 var _               = require('lodash');
 var helpers         = require('./../helpers/responseHelper');
 var models          = require('../models');
+var crypto          = require('crypto');
 
 var controller_name = 'users';
 
@@ -14,6 +15,7 @@ module.exports = {
     },
     create: function (req, res, next) {
         var params = _.pick(req.body, 'username', 'email','password');
+        params.password = crypto.createHash('md5').update(params.password).digest("hex");
         req.models.user.create(params, function (err, users) {
             if(err) {
                 if(Array.isArray(err)) {

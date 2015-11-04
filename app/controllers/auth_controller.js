@@ -6,6 +6,7 @@ var helpers         = require('./../helpers/responseHelper');
 var settings        = require('../../config/settings');
 var jwt             = require('jsonwebtoken');
 var models          = require('../models');
+var crypto          = require('crypto');
 
 var controller_name = 'auth';
 
@@ -28,7 +29,7 @@ module.exports = {
     },
     create: function (req, res, next) {
         if(req.body.username && req.body.password){
-            models.User.findOne({ where: {username: req.body.username,password:req.body.password} })
+            models.User.findOne({ where: {username: req.body.username,password: crypto.createHash('md5').update(req.body.password).digest("hex")} })
                 .then(function(user) {
                     if(user){
                         var token = jwt.sign(user, settings.secret_jwt, {

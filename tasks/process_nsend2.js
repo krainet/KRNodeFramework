@@ -18,6 +18,7 @@ var sender = function() {
                 body: {"login": this.credentials.EMV_USER, "password": this.credentials.EMV_PWD, "apiKey": this.credentials.EMV_KEY},
                 json: true
             };
+           // console.log(options);
             var _this = this;
             rp(options)
                 .then(function (parsedBody) {

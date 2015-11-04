@@ -16,11 +16,11 @@ module.exports = function (router) {
         var method = req.method.toLowerCase();
         var allowed_methods = settings.auth_perms[controller]?settings.auth_perms[controller].allow:[];
 
-/*        console.log('------ REQUEST DEBUG ------')
+        console.log('------ REQUEST DEBUG ------')
         console.log(controller);
         console.log(method);
         console.log(allowed_methods);
-        console.log('===========================');*/
+        console.log('===========================');
 
 
         if(allowed_methods.length>0 && _.contains(allowed_methods,method)){
@@ -37,7 +37,7 @@ module.exports = function (router) {
                     // verifies secret and checks exp
                     jwt.verify(token, settings.secret_jwt, function (err, decoded) {
                         if (err) {
-                            return res.json({success: false, message: 'Failed to authenticate token.'});
+                            return res.status(403).json({success: false, message: 'Failed to authenticate token.'});
                         } else {
                             // if everything is good, save to request for use in other routes
                             req.decoded = decoded;
