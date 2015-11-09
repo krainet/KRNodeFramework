@@ -24,7 +24,6 @@ module.exports = {
     },
     create: function (req, res, next) {
         var params = _.pick(req.body, 'token','platform');
-
         if(params.token && params.platform){
             Devicetoken
                 .findOrCreate({where: {token: params.token}})

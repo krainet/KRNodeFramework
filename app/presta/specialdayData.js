@@ -42,3 +42,15 @@ exports.getProduct = function(idOffer, callbackFunc) {
         return('');
 };
 
+exports.getIdCustomerFromEmail = function(email,cb) {
+    sequelizePresta.query(
+        "SELECT c.id_customer " +
+        "FROM mq_customer c " +
+        "WHERE c.email='" + email +"' " +
+        "limit 1;"
+    ).spread(function (res, metadata) {
+            cb(res,metadata);
+    });
+    //return('');
+};
+

@@ -62,11 +62,37 @@ module.exports = {
         }
     },
     get: function (req, res, next) {
-        req.models.customer.get(req.params.id,function (err, customer) {
-            if(err) return res.status(500).json(helpers.formatErrors(err,controller_name,req.method));
-            return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer.serialize()));
-        });
+        if(req.params.id_customer){
+            models.Customer.findAll({
+                include: [{model: models.Devicetoken, as: 'Devicetoken', include: [{model: models.Platform, as: 'Platform',where: {active: false}}]}],
+                where: {id_customer : req.params.id_customer}
+            })
+                .then(function(customer){
+                    if(customer){
 
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer));
+                    }else{
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Not found'));
+                    }
+                })
+                .catch(function(err){
+                    return res.status(500).json(helpers.formatResponse(controller_name,req.method,err));
+                });
+        }else{
+            models.Customer.findById(req.params.id,{
+                //include: [{model: models.Segment, as: 'Segments'}]
+            })
+                .then(function(customer){
+                    if(customer){
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,customer));
+                    }else{
+                        return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Not found'));
+                    }
+                })
+                .catch(function(err){
+                    return res.status(500).json(helpers.formatResponse(controller_name,req.method,err));
+                });
+        }
     },
     put: function(req,res,next) {
         var params = _.pick(req.body, 'username', 'email','password','id_customer','token');
@@ -84,7 +110,6 @@ module.exports = {
                 }else{
                     return res.status(200).json(helpers.formatResponse(controller_name,req.method,null,'Customer deleted'));
                 }
-
             })
         });
     }

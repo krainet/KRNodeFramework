@@ -14,6 +14,7 @@ var scheduler_routes    = require('./api_schedulers');
 var campaigns_routes    = require('./api_campaigns');
 var pushlauncher_routes = require('./api_pushlauncher');
 var pushhistory_routes  = require('./api_pushhistory');
+var mqpsh_routes        = require('./api_mqpsh');
 
 //API GET CONFIG FOR APPS
 var configapp_routes    = require('./api_configapp');
@@ -47,6 +48,7 @@ module.exports = function (app) {
     app.use(settings.api_prefix+'/nspecialday',nspecialday_routes);
     app.use(settings.api_prefix+'/nsend',nsend_routes);
     app.use(settings.api_prefix+'/configapp',configapp_routes);
+    app.use(settings.api_prefix+'/mqpsh',mqpsh_routes);
     //Web routes
     app.use('/',home_routes);
 };

@@ -9,6 +9,7 @@ jwtmiddleware(router);
 
 router.get('/',customer_controller.list);
 router.get('/:id',customer_controller.get);
+router.get('/:id/:id_customer/',customer_controller.get);
 router.post('/',customer_controller.create);
 router.put('/:id',customer_controller.put);
 router.delete('/:id',customer_controller.delete);
