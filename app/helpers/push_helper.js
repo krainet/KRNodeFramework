@@ -12,7 +12,7 @@ var push_helper = {
             case 1:
                 var callback = function(errorNum, notification){
                     push_helper.processErrorCodeApn(errorNum);
-                }
+                };
                 settings.apn_options.errorCallback=callback;
                 var note = new apn.Notification();
                 note.badge = 1;
@@ -44,8 +44,10 @@ var push_helper = {
                     collapseKey: "demo",
                     priority: "high",
                     contentAvailable: true,
-                    delayWhileIdle: true,
+                    delayWhileIdle: false,
                     timeToLive: 3,
+                    sound: 1,
+                    vibrate: 2,
                     //restrictedPackageName: "somePackageName",
                     dryRun: false,
                     data: {
@@ -69,9 +71,11 @@ var push_helper = {
                     key2: 'message2'
                 });
 
-                // Set up the sender with you API key
+
                 var sender = new gcm.Sender(settings.push_key_gcm);
                 sender.sendNoRetry(message, { registrationIds: regIds }, function(err, result) {
+                    console.log(err);
+                    console.log(result);
                     return cb(err,result);
                 });
                 break;
