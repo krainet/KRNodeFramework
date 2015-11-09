@@ -1,0 +1,76 @@
+{
+    "__ERROR_LOG__":"true",
+    "__ERROR_CONSOLE__":"true",
+    "LOGGER_ENABLED":"false",
+    "__EMV_VERBOSE__":"false",
+
+    "spain": {
+        "mqu" :{
+            "EMV_SERVER": "p5apic.emv2.com",
+            "EMV_USER": "xxx",
+            "EMV_PWD": "xxx",
+            "EMV_KEY": "xxx",
+            "FROM": "news@noreply.mequedouno.com"
+        },
+        "hs": {
+            "EMV_SERVER": "p3apic.emv2.com",
+            "EMV_USER": "xxx",
+            "EMV_PWD": "xxx",
+            "EMV_KEY": "xxx",
+            "FROM" :"your@email"
+        }
+    },
+
+    "mx": {
+        "mqu" :{
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "xxx",
+            "EMV_PWD": "xxx",
+            "EMV_KEY": "xxx"
+        },
+        "hs":{
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "xxx",
+            "EMV_PWD": "xxx",
+            "EMV_KEY": "xxx",
+            "FROM" :"xxx@email.com"
+        }
+    },
+    "br": {
+        "mqu" :{
+            "EMV_SERVER":"p6apic.emv2.com",
+            "EMV_USER":"xxx",
+            "EMV_PWD":"xxx",
+            "EMV_KEY":"xxx"
+        },
+        "hs": {
+            "EMV_SERVER": "p6apic.emv2.com",
+            "EMV_USER": "xxx",
+            "EMV_PWD": "xxx",
+            "EMV_KEY": "xxx",
+            "FROM" :"news@email.br"
+        }
+    },
+
+    "DB_HOST_DSYSUX":"yourdb.net",
+    "DB_PORT_DSYSUX":"3312",
+    "DB_USER_DSYSUX":"",
+    "DB_PASS_DSYSUX":"",
+    "DB_NAME_DSYSUX":"emv",
+
+    "DB_HOST_REMLUX":"yourdb.net",
+    "DB_PORT_REMLUX":"3307",
+    "DB_USER_REMLUX":"",
+    "DB_PASS_REMLUX":"",
+    "DB_NAME_REMLUX":"mktg",
+
+    "DB_HOST_BI":"yourdb.net",
+    "DB_PORT_BI":"3306",
+    "DB_USER_BI":"",
+    "DB_PASS_BI":"",
+    "DB_NAME_BI":"dw_mktg",
+
+
+    "TOKEN_ENCRYPT_KEY":"yourCrypt",
+    "API_URL_CAPTACION":"https://ofertas.url.com"
+}
